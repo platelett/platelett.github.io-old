@@ -86,7 +86,7 @@ int main() {
 
 #### 常数优化
 
-由于 ```double``` 乘法快于 ```long long``` 乘法，可以预处理 $1-\sqrt n$ 的倒数。
+由于 ```double``` 乘法快于 ```long long``` 除法，可以预处理 $1-\sqrt n$ 的倒数。
 
 ```cpp
 #include <bits/stdc++.h>

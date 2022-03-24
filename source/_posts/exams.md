@@ -1,8 +1,6 @@
 ---
 title: 考试题
 date: 2021-09-17 16:27:28
-tags:
-top: 3
 ---
 ### AUOJ1760
 
@@ -80,7 +78,7 @@ $$
 
 效率还行，但不稳定，对于少数 $n$ 速度极慢，$n\le 10^4$ 是完全没有问题的。
 
-<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
+<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">�鿴����</span></summary>
 ```cpp
 #include <bits/stdc++.h>
 #define rep(i, l, r) for(int i = (l); i <= (r); i++)
@@ -168,11 +166,11 @@ int main() {
 - 先分组，取若干个组和一个不完整的组作为初始解，那么 $\forall j\in[1,m],|\sum_{i=1}^nA_{i,j}|\le 1$。
 - 对于每个 $j$，如果 $\sum_{i=1}^nA_{i,j}=-1$，找到一个 $i$ 满足 $A_{i,j}<1$ 并且将 $A_{i,j}$ 增大一后仍然合法，然后将 $A_{i,j}$ 加一。
 
-会有极个别 $n$ 求出的解不合法，$10^6$ 以内应该不会超过 $10$ 个，而且都比较小，取决于初始解（所有可以通过）。
+会有极个别 $n$ 求出的解不合法，$10^6$ 以内应该不会超过 $10$ 个，而且都比较小，取决于初始解（所以可以 AC）。
 
 结合思路一可以构造出 $10^6$ 内的所有 $n$。
 
-<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
+<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">�鿴����</span></summary>
 ```cpp
 #include <bits/stdc++.h>
 #define rep(i, l, r) for(int i = (l); i <= (r); i++)
@@ -250,7 +248,7 @@ int main() {
 
 实测能构造出 $10^6$ 内的所有 $n$。
 
-<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
+<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">�鿴����</span></summary>
 ```cpp
 #include <bits/stdc++.h>
 #define rep(i, l, r) for(int i = (l); i <= (r); i++)
@@ -397,3 +395,15 @@ $$
 由于 `+-` 的对称性，$f_{i,j}=f_{i,-j},g_{i,j}=g_{i,-j}$，实现上并不需要存下标为负数的状态。
 
 复杂度 $O(n^3\log n)$。
+
+### CatOJ1062
+
+> 在一个 $n\times m$ 的矩形中，一个点初始位于 $(r,c)$，每一次等概率地朝上下左右四个方向移动一 步，如果移出了矩形它将消失。
+>
+> 求 $S$ 步后点没有消失的概率，模 $998244353$。
+>
+> $n,m,S\le 5\cdot 10^5$
+
+对始终不走出矩阵的方案数计数，最后再除以 $4^S$。
+
+设这 $S$ 步中有 $s$ 步是左右移动，另外 $S-s$ 步是上下移动，需要分别求出 $s$ 步左右移动不出界的方案数和 $S-s$ 步上下移动不出界的方案数。

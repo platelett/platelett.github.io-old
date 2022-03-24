@@ -2,7 +2,6 @@
 title: 每周日练习
 date: 2021-09-17 16:27:28
 tags:
-top: 2
 ---
 ### URAL2118
 
@@ -91,7 +90,7 @@ $$
 
 `Generator` ：参数 $T,A,B,C,D$ 可调，分别表示数据组数和树 $A,X,B,Y$ 的大小。
 
-<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
+<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">�鿴����</span></summary>
 ```cpp
 #include <bits/stdc++.h>
 #define rep(i, l, r) for(int i = (l); i <= (r); i++)
@@ -173,7 +172,7 @@ int main() {
 
 `Special judge`：假设保存为 `checker.cpp`，编译后在命令行中使用：`checker <input-file> <output-file>`，答案正确返回值为 $0$，否则返回值为 $1$，输出为第一组出错的数据。
 
-<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
+<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">�鿴����</span></summary>
 ```cpp
 #include <bits/stdc++.h>
 #define rep(i, l, r) for(int i = (l); i <= (r); i++)
@@ -313,7 +312,7 @@ $i_x+1$。每个单调栈元素意味着一次区间赋值，所以只需要 $n$
 
 复杂度 $O(n\log n)$，实现难度较大，附上代码：
 
-<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
+<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">�鿴����</span></summary>
 ```cpp
 #include <bits/stdc++.h>
 #define rep(i, l, r) for(int i = (l); i <= (r); i++)
@@ -420,7 +419,7 @@ int main() {
 
 这样递归做下去，即可 $O(n\log V)$ 地求出答案。
 
-### OpenCup11931
+### OpenCup
 
 > [题目链接](https://official.contest.yandex.ru/opencupXIX/contest/11931/problems/D/?lang=en) [提交记录](https://official.contest.yandex.ru/opencupXIX/contest/11931/run-report/52963174/)
 >
@@ -499,7 +498,7 @@ int main() {
 
 直接统计有多少对边权值相等就行了，复杂度 $O(n\log n)$ 或 $O(n)$（哈希表）。
 
-### OpenCup747E
+### OpenCup
 
 > [题目链接](https://official.contest.yandex.ru/opencupXVIII/contest/5917/problems/E/?success=53051713&lang=en) [提交记录](https://official.contest.yandex.ru/opencupXVIII/contest/5917/run-report/53051713/)
 >
@@ -509,8 +508,8 @@ int main() {
 
 先考虑一个 $O(n^2)$ 的 `DP`，设 $f_{i,j}$ 表示使 $s_{1\cdot i}$ 和 $t_{1\cdots j}$ 相等的最小代价，转移为：
 
-- $f_{i,j}\rightarrow f_{i-1,j-1}(s_i=t_j)$。
-- $f_{i,j}\rightarrow f_{i-1,j}(t_{1\cdots j} 或 t_{j+1\cdots |t|} 中没有字符s_i)$。
+- $f_{i,j}\leftarrow f_{i-1,j-1}(s_i=t_j)$。
+- $f_{i,j}\leftarrow f_{i-1,j}(t_{1\cdots j} 或 t_{j+1\cdots |t|} 中没有字符s_i)$。
 
 设 $first(c)$ 表示字符 $c$ 在 $t$ 中第一次出现的位置，$last(c)$ 表示最后一次出现的位置，那么转移二的条件可以改写为 $j<first(s_i)\lor j\ge last(s_i)$。
 
@@ -519,3 +518,44 @@ int main() {
 把所有的 $first(c),last(c)$ 标记为关键值，那么最多有 $52$ 个关键值，考虑只计算 $j$ 为关键值的 $f_{i,j}$，设 $j$ 之后的一个关键值为 $j'$，先从 $f_{*,j}$ 转移到 $f_{*,j'-1}$，在这一过程，$s$ 中一些字符必须进行转移一，其他字符必须进行转移二，因此一个 $f_{i,j}$ 最多能转移到一个的 $f_{i',j'-1}$，具体转移到哪一个 $i'$ 可以通过 KMP 算出，然后再从 $f_{*,j'-1}$ 转移到 $f_{*,j'}$
 
 复杂度 $O(26n)$。
+
+### OpenCup
+
+> [题目链接](https://official.contest.yandex.ru/opencupXX/contest/17756/problems/J/) [提交记录](https://official.contest.yandex.ru/opencupXX/contest/17756/run-report/53639932/)
+>
+> 给定两个长度为 $n$ 的 01 串 $s,t$，可以对 $s$ 进行以下三种操作任意次：
+>
+> - 令 $s_i=0$，代价为 $t_0$。
+> - 令 $s_i=1$，代价为 $t_1$。
+> - 交换 $s_i,s_{i+1}$，代价为 $t_s$。
+>
+> $n \le 4\cdot 10^6$
+
+可以把所有交换操作调整到最前面，即先用交换操作把 $s$ 变成 $s'$，再用修改操作把 $s'$ 变成 $t$。
+
+考虑 $s$ 变成 $s'$ 的最小代价，假设 $s_i$ 交换后的位置为 $s'_{p_i}$，可以证明最优的 $p$ 满足：$p_{p_i}=i$。可以认为交换位置 $i,j$ 的代价是 $t_s|i-j|$，任何位置最多参与一次交换。
+
+对于满足 $s_i=t_i$ 的 $i$，它们没有必要参与交换，删除这些位置后满足两个性质：
+
+- 任何交换 $(i_1,j_1),(i_2,j_2)$ 都是不相交的，即区间 $[i_1,j_1]$ 和区间 $[i_2,j_2]$ 不相交。
+- 对于任何交换 $(i,j)$，区间 $(i,j)$ 中所有位置都参与交换。
+
+综上，对于所有的极大交换 $(i,j)$，不妨假设 $s_i=0,s_j=1$，把 $0$ 变成 '('，$1$ 变成 ')'，区间 $[i,j]$ 是一个合法括号串，并且 $i$ 和 $j$ 是匹配的。这意味着如果 $s_i$ 要和 $s_j(j<i)$ 交换，那么 $j$ 是唯一的（或者没有，当所有的 $[j,i]$ 都不是合法括号串时）。
+
+然后就可以 `DP` 了，设 $f_i$ 表示把 $s[1\cdots i] \rightarrow t[1\cdots i]$ 的最小代价，转移为：
+
+$$
+f_i=\min(f_{i-1}+t_{1-s_i},f_{j-1}+\text{cost}(j,i))
+$$
+
+其中 $j$ 是和 $i$ 匹配的位置，$\text{cost}(j,i)$ 是区间 $[j,i]$ 中所有匹配的位置 $x,y$ 的 $t_s|x-y|$ 之和，可以用栈维护。
+
+另一个正确的转移为：
+
+$$
+f_i=\min(f_{i-1}+t_{1-s_i},f_{j-1}+f_{i-1}-f_j)
+$$
+
+正确的原因是 $f_{j-1}+f_{i-1}-f_j \le f_{j-1}+\text{cost}(j,i)$，并且 $f_{j-1}+f_{i-1}-f_j \le f_{j-1}$ 是一个合法方案的代价（那个方案的描述有点复杂，略）。
+
+复杂度 $O(n)$。
