@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Barrett reduction 取模优化  计算 \(ab\bmod m(0\le a,b&lt;m&lt;2^{31})\)。  如果 \(m\) 在编译时已知，那么编译器就会帮你完成这个优化，否则你可以自己实现。 首先，设 \(m^{-1}\) 表示浮点数形式的 \(\frac 1m\)。 \[ ab\bmod m&#x3D;ab-\lfloor ab\cdot m^{-1}\rfloor m \]">
+<meta name="description" content="Barrett reduction 取模优化  计算 \(ab\bmod m(0\le a,b&lt;m&lt;2^{31})\)。  如果 \(m\) 在编译时已知，那么编译器就会帮你完成这个优化（准确地说是下面的变种），否则你可以自己实现。 原生算法 首先，设 \(m^{-1}\) 表示浮点数形式的 \(\frac 1m\)。 \[ ab\bmod m&#x3D;ab-\lfloor ab\cdot m">
 <meta property="og:type" content="article">
 <meta property="og:title" content="杂项">
 <meta property="og:url" content="http://example.com/misc/index.html">
 <meta property="og:site_name" content="platelet&#39;s blog">
-<meta property="og:description" content="Barrett reduction 取模优化  计算 \(ab\bmod m(0\le a,b&lt;m&lt;2^{31})\)。  如果 \(m\) 在编译时已知，那么编译器就会帮你完成这个优化，否则你可以自己实现。 首先，设 \(m^{-1}\) 表示浮点数形式的 \(\frac 1m\)。 \[ ab\bmod m&#x3D;ab-\lfloor ab\cdot m^{-1}\rfloor m \]">
+<meta property="og:description" content="Barrett reduction 取模优化  计算 \(ab\bmod m(0\le a,b&lt;m&lt;2^{31})\)。  如果 \(m\) 在编译时已知，那么编译器就会帮你完成这个优化（准确地说是下面的变种），否则你可以自己实现。 原生算法 首先，设 \(m^{-1}\) 表示浮点数形式的 \(\frac 1m\)。 \[ ab\bmod m&#x3D;ab-\lfloor ab\cdot m">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-08-23T15:35:20.000Z">
 <meta property="article:modified_time" content="2021-08-23T15:35:20.000Z">
@@ -150,7 +150,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#barrett-reduction-%E5%8F%96%E6%A8%A1%E4%BC%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">Barrett reduction 取模优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%89%A9%E5%B1%95"><span class="nav-number">2.</span> <span class="nav-text">卡特兰数的两个扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lucaslehmer-%E7%B4%A0%E6%80%A7%E6%A3%80%E9%AA%8C"><span class="nav-number">3.</span> <span class="nav-text">Lucas–Lehmer 素性检验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%85%E5%88%86%E6%80%A7"><span class="nav-number">3.1.</span> <span class="nav-text">充分性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%85%E8%A6%81%E6%80%A7"><span class="nav-number">3.2.</span> <span class="nav-text">必要性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E7%AE%80%E5%8D%95%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">一个非常简单的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E5%9B%B0%E9%9A%BE%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">一个非常困难的问题</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#barrett-reduction-%E5%8F%96%E6%A8%A1%E4%BC%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">Barrett reduction 取模优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E7%94%9F%E7%AE%97%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">原生算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E8%AF%AF%E5%B7%AE%E9%99%A4%E6%B3%95%E7%9A%84%E5%8F%98%E7%A7%8D"><span class="nav-number">1.2.</span> <span class="nav-text">无误差除法的变种</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9F%E5%BA%A6%E6%9B%B4%E5%BF%AB%E7%9A%84-lemire-reduction"><span class="nav-number">1.3.</span> <span class="nav-text">速度更快的 Lemire reduction</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%89%A9%E5%B1%95"><span class="nav-number">2.</span> <span class="nav-text">卡特兰数的两个扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lucaslehmer-%E7%B4%A0%E6%80%A7%E6%A3%80%E9%AA%8C"><span class="nav-number">3.</span> <span class="nav-text">Lucas–Lehmer 素性检验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%85%E5%88%86%E6%80%A7"><span class="nav-number">3.1.</span> <span class="nav-text">充分性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%85%E8%A6%81%E6%80%A7"><span class="nav-number">3.2.</span> <span class="nav-text">必要性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%89%8D-k-%E4%B8%AA%E6%AD%A3%E5%A5%87%E6%95%B0%E4%B9%98%E7%A7%AF%E6%A8%A1-2m"><span class="nav-number">4.</span> <span class="nav-text">关于前 \(k\) 个正奇数乘积模 \(2^m\)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E5%9B%B0%E9%9A%BE%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">一个非常困难的问题</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -254,22 +254,6 @@
     </span>
 
   
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Changyan：</span>
-    
-    
-      <a title="changyan" href="/misc/#SOHUCS" itemprop="discussionUrl">
-        <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="misc/" itemprop="commentCount"></span>
-      </a>
-    
-  </span>
-  
-  
     <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
@@ -298,7 +282,8 @@
 <blockquote>
 <p>计算 <span class="math inline">\(ab\bmod m(0\le a,b&lt;m&lt;2^{31})\)</span>。</p>
 </blockquote>
-<p>如果 <span class="math inline">\(m\)</span> 在编译时已知，那么编译器就会帮你完成这个优化，否则你可以自己实现。</p>
+<p>如果 <span class="math inline">\(m\)</span> 在编译时已知，那么编译器就会帮你完成这个优化（准确地说是下面的变种），否则你可以自己实现。</p>
+<h4 id="原生算法">原生算法</h4>
 <p>首先，设 <span class="math inline">\(m^{-1}\)</span> 表示浮点数形式的 <span class="math inline">\(\frac 1m\)</span>。 <span class="math display">\[
 ab\bmod m=ab-\lfloor ab\cdot m^{-1}\rfloor m
 \]</span> 即使预处理了 <span class="math inline">\(m^{-1}\)</span>，由于浮点数乘法比整数除法快不了多少，考虑进一步优化，取 <span class="math inline">\(\frac {m&#39;}{2^k}\approx m^{-1}\)</span>，然后 <span class="math display">\[
@@ -317,9 +302,9 @@ ab\bmod m=ab-\lfloor ab\cdot m^{-1}\rfloor m
 <p>实践中可以令 <span class="math inline">\(k=64\)</span>，可以用 <code>~0ull / m + 1</code> 来计算 <span class="math inline">\(m&#39;\)</span>。</p>
 <details>
 <summary>
-<span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span>
+<span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">�鿴����</span>
 </summary>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> uint = <span class="keyword">unsigned</span> <span class="keyword">int</span>;</span><br><span class="line"><span class="keyword">using</span> ull = <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">barrett</span> &#123;</span></span><br><span class="line">    uint m; ull im;</span><br><span class="line">    <span class="built_in">barrett</span>(uint m) :<span class="built_in">m</span>(m), <span class="built_in">im</span>(~<span class="number">0ull</span> / m + <span class="number">1</span>) &#123;&#125;</span><br><span class="line">    <span class="function">uint <span class="title">mul</span><span class="params">(uint a, uint b)</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">        ull z = (ull)a * b;</span><br><span class="line">        ull x = (<span class="keyword">unsigned</span> __int128)z * im &gt;&gt; <span class="number">64</span>;</span><br><span class="line">        uint v = z - x * m;</span><br><span class="line">        <span class="keyword">return</span> m &lt;= v ? v + m : v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> uint = <span class="keyword">unsigned</span> <span class="keyword">int</span>;</span><br><span class="line"><span class="keyword">using</span> ull = <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">barrett</span> &#123;</span></span><br><span class="line">    uint m; ull im;</span><br><span class="line">    <span class="built_in">barrett</span>(uint m) :<span class="built_in">m</span>(m), <span class="built_in">im</span>(~<span class="number">0ull</span> / m + <span class="number">1</span>) &#123;&#125;</span><br><span class="line">    <span class="function">uint <span class="title">mul</span><span class="params">(uint a, uint b)</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">        ull z = (ull)a * b;</span><br><span class="line">        uint v = z - <span class="built_in">uint</span>((<span class="keyword">__uint128_t</span>)z * im &gt;&gt; <span class="number">64</span>) * m;</span><br><span class="line">        <span class="keyword">return</span> m &lt;= v ? v + m : v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 </details>
 <p>速度比较：先在 <span class="math inline">\([0, m)\)</span> 中随机生成 <span class="math inline">\(10^5\)</span> 个数，然后计算两两乘积模 <span class="math inline">\(m\)</span> 的异或和。</p>
 <p>测试系统 <code>ubuntu-21.04</code>（因为 <code>Linux</code> 比较稳定），每个格子前者为直接取模的时间，后者为 <code>Barrett reduction</code> 取模的时间。</p>
@@ -350,6 +335,10 @@ ab\bmod m=ab-\lfloor ab\cdot m^{-1}\rfloor m
 </tr>
 </tbody>
 </table>
+<h4 id="无误差除法的变种">无误差除法的变种</h4>
+<p><del>很快就会写。</del></p>
+<h4 id="速度更快的-lemire-reduction">速度更快的 Lemire reduction</h4>
+<p><del>很快就会写。</del></p>
 <p>另外，笔者想到了两个可以应用的地方。</p>
 <ul>
 <li><p>高精度计算 <span class="math inline">\(ab\bmod m\)</span>，高精度乘法是可以用 <code>FFT</code> 优化到 <span class="math inline">\(O(\log m\log\log m)\)</span> 的（严格来讲，如果 <span class="math inline">\(m\)</span> 位数过于巨大，以致于直接求卷积会溢出时，需要用到 <code>Schönhage-Strassen</code> 算法，复杂度 <span class="math inline">\(O(\log m\log\log m\log \log \log m)\)</span>，这里粗略地分析为 <span class="math inline">\(O(\log m\log\log m)\)</span>，后面的复杂度分析也是如此），而取模只能 <span class="math inline">\(O(\log^2 m)\)</span>。当 <span class="math inline">\(m\)</span> 固定时，可以事先 <span class="math inline">\(O(\log^2 m)\)</span> 计算出 <span class="math inline">\(m&#39;\)</span>，然后就可以 <span class="math inline">\(O(\log m\log\log m)\)</span> 地取模了。将此应用于 <code>Miller Rabin</code> 素性检验可以将复杂度优化到 <span class="math inline">\(O(k\log^2n\log\log n)\)</span>。</p></li>
@@ -451,7 +440,7 @@ s_{n-1}^2-2\bmod M_p&amp;(i&gt;1)
 (2+\sqrt 3)^{2^{p-2}}+(2-\sqrt 3)^{2^{p-2}}&amp;=0
 \end{aligned}
 \]</span></p>
-<h3 id="一个非常简单的问题">一个非常简单的问题</h3>
+<h3 id="关于前-k-个正奇数乘积模-2m">关于前 <span class="math inline">\(k\)</span> 个正奇数乘积模 <span class="math inline">\(2^m\)</span></h3>
 <blockquote>
 <p>求 <span class="math inline">\(2^n\)</span> 内所有奇数的乘积 <span class="math inline">\(\bmod 2^n\)</span>。</p>
 <p><span class="math inline">\(n \le 10^4\)</span></p>
@@ -512,7 +501,6 @@ f_{n+1}&amp;=(f_n+k2^n)^2\bmod 2^{n+1}\\
 
 
 
-    <div class="comments" id="SOHUCS"></div>
 </div>
   </main>
 
@@ -522,7 +510,7 @@ f_{n+1}&amp;=(f_n+k2^n)^2\bmod 2^{n+1}\\
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -534,14 +522,14 @@ f_{n+1}&amp;=(f_n+k2^n)^2\bmod 2^{n+1}\\
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">197k</span>
+    <span title="站点总字数">199k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:59</span>
+    <span title="站点阅读时长">3:01</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
@@ -571,8 +559,6 @@ f_{n+1}&amp;=(f_n+k2^n)^2\bmod 2^{n+1}\\
 <script src="/js/third-party/math/mathjax.js"></script>
 
 
-<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyvEvVbLv","appkey":"5ad530a5ec52a4592621eb7b7437748c"}</script>
-<script src="/js/third-party/comments/changyan.js"></script>
 
 </body>
 </html>

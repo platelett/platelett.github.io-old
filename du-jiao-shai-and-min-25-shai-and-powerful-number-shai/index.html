@@ -258,22 +258,6 @@
     </span>
 
   
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Changyan：</span>
-    
-    
-      <a title="changyan" href="/du-jiao-shai-and-min-25-shai-and-powerful-number-shai/#SOHUCS" itemprop="discussionUrl">
-        <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="du-jiao-shai-and-min-25-shai-and-powerful-number-shai/" itemprop="commentCount"></span>
-      </a>
-    
-  </span>
-  
-  
     <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
@@ -330,7 +314,7 @@ g(1)S(n) = \sum\limits_{i=1}^n (f*g)(i) - \sum\limits_{i=2}^n g(i)S(\big\lfloor 
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> N = <span class="built_in">sqrt</span>(<span class="number">1e11</span>) + <span class="number">5</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line">ll n, f1[N], f2[N];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">int</span> lim = <span class="built_in">sqrt</span>(n);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, lim) f1[i] = i - <span class="number">1</span>, f2[i] = n / i - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">rep</span>(p, <span class="number">2</span>, lim) <span class="keyword">if</span> (f1[p] ^ f1[p - <span class="number">1</span>]) &#123;</span><br><span class="line">        <span class="keyword">int</span> w1 = lim / p;</span><br><span class="line">        ll x = f1[p - <span class="number">1</span>], w3 = (ll)p * p, w2 = <span class="built_in">min</span>((ll)lim, n / w3), d = n / p;</span><br><span class="line">        <span class="built_in">rep</span>(i, <span class="number">1</span>, w1) f2[i] -= f2[i * p] - x;</span><br><span class="line">        <span class="built_in">rep</span>(i, w1 + <span class="number">1</span>, w2) f2[i] -= f1[d / i] - x;</span><br><span class="line">        <span class="built_in">per</span>(i, lim, w3) f1[i] -= f1[i / p] - x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; f2[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="常数优化">常数优化</h4>
-<p>由于 <code>double</code> 乘法快于 <code>long long</code> 乘法，可以预处理 <span class="math inline">\(1-\sqrt n\)</span> 的倒数。</p>
+<p>由于 <code>double</code> 乘法快于 <code>long long</code> 除法，可以预处理 <span class="math inline">\(1-\sqrt n\)</span> 的倒数。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> N = <span class="built_in">sqrt</span>(<span class="number">1e11</span>) + <span class="number">5</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> Eps = <span class="number">1e-7</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line">ll n, f1[N], f2[N];</span><br><span class="line"><span class="keyword">double</span> inv[N];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">int</span> lim = <span class="built_in">sqrt</span>(n);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, lim) f1[i] = i - <span class="number">1</span>, f2[i] = n / i - <span class="number">1</span>, inv[i] = <span class="number">1.0</span> / i;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">rep</span>(p, <span class="number">2</span>, lim) <span class="keyword">if</span> (f1[p] ^ f1[p - <span class="number">1</span>]) &#123;</span><br><span class="line">        <span class="keyword">int</span> w1 = lim / p;</span><br><span class="line">        ll x = f1[p - <span class="number">1</span>], w3 = (ll)p * p, w2 = <span class="built_in">min</span>((ll)lim, n / w3), d = n / p;</span><br><span class="line">        <span class="built_in">rep</span>(i, <span class="number">1</span>, w1) f2[i] -= f2[i * p] - x;</span><br><span class="line">        <span class="built_in">rep</span>(i, w1 + <span class="number">1</span>, w2) f2[i] -= f1[<span class="built_in"><span class="keyword">int</span></span>(d * inv[i] + Eps)] - x;</span><br><span class="line">        <span class="built_in">per</span>(i, lim, w3) f1[i] -= f1[<span class="built_in"><span class="keyword">int</span></span>(i * inv[p] + Eps)] - x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; f2[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="powerful-number-筛">Powerful Number 筛</h3>
 <p>定义：所有质因子的指数都大于 <span class="math inline">\(1\)</span> 的数叫 <code>Powerful Number</code>。</p>
@@ -386,7 +370,6 @@ g(1)S(n) = \sum\limits_{i=1}^n (f*g)(i) - \sum\limits_{i=2}^n g(i)S(\big\lfloor 
 
 
 
-    <div class="comments" id="SOHUCS"></div>
 </div>
   </main>
 
@@ -396,7 +379,7 @@ g(1)S(n) = \sum\limits_{i=1}^n (f*g)(i) - \sum\limits_{i=2}^n g(i)S(\big\lfloor 
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -408,14 +391,14 @@ g(1)S(n) = \sum\limits_{i=1}^n (f*g)(i) - \sum\limits_{i=2}^n g(i)S(\big\lfloor 
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">197k</span>
+    <span title="站点总字数">199k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:59</span>
+    <span title="站点阅读时长">3:01</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
@@ -445,8 +428,6 @@ g(1)S(n) = \sum\limits_{i=1}^n (f*g)(i) - \sum\limits_{i=2}^n g(i)S(\big\lfloor 
 <script src="/js/third-party/math/mathjax.js"></script>
 
 
-<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyvEvVbLv","appkey":"5ad530a5ec52a4592621eb7b7437748c"}</script>
-<script src="/js/third-party/comments/changyan.js"></script>
 
 </body>
 </html>

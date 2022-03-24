@@ -21,17 +21,17 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="懒得分开写咕咕咕。 TC13459 “1”的限制分两种，在同一行或在同一列，但 “1” 的数量很多，不能枚举每个“1”是哪一种，设“在同一行”的边为白边，“在同一列的”的边为黑白，考虑边之间的约束关系。 考虑两条边 \((i,j),(i,k)\)，当边 \((j,k)\) 存在时说明 \((i,j)\) 和 \((i,k)\) 的颜色相同，反之亦然。 这样就可以表示出所有的约束，必要性显然，充分性">
+<meta name="description" content="懒得分开写咕咕咕。 TC13459 “1”的限制分两种，在同一行或在同一列，但 “1” 的数量很多，不能枚举每个“1”是哪一种，设“在同一行”的边为白边，“在同一列的”的边为黑边，考虑边之间的约束关系。 考虑两条边 \((i,j),(i,k)\)，当边 \((j,k)\) 存在时说明 \((i,j)\) 和 \((i,k)\) 的颜色相同，反之亦然。 这样就可以表示出所有的约束，必要性显然，充分性">
 <meta property="og:type" content="article">
 <meta property="og:title" content="部分题解合集">
 <meta property="og:url" content="http://example.com/solutions/index.html">
 <meta property="og:site_name" content="platelet&#39;s blog">
-<meta property="og:description" content="懒得分开写咕咕咕。 TC13459 “1”的限制分两种，在同一行或在同一列，但 “1” 的数量很多，不能枚举每个“1”是哪一种，设“在同一行”的边为白边，“在同一列的”的边为黑白，考虑边之间的约束关系。 考虑两条边 \((i,j),(i,k)\)，当边 \((j,k)\) 存在时说明 \((i,j)\) 和 \((i,k)\) 的颜色相同，反之亦然。 这样就可以表示出所有的约束，必要性显然，充分性">
+<meta property="og:description" content="懒得分开写咕咕咕。 TC13459 “1”的限制分两种，在同一行或在同一列，但 “1” 的数量很多，不能枚举每个“1”是哪一种，设“在同一行”的边为白边，“在同一列的”的边为黑边，考虑边之间的约束关系。 考虑两条边 \((i,j),(i,k)\)，当边 \((j,k)\) 存在时说明 \((i,j)\) 和 \((i,k)\) 的颜色相同，反之亦然。 这样就可以表示出所有的约束，必要性显然，充分性">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2021/09/08/4ragjEUYIev5wot.png">
 <meta property="og:image" content="https://i.loli.net/2021/09/08/a4fEq6tJWRbrxDy.png">
 <meta property="article:published_time" content="2021-09-08T07:09:11.000Z">
-<meta property="article:modified_time" content="2021-09-22T07:38:33.262Z">
+<meta property="article:modified_time" content="2022-03-24T03:37:00.889Z">
 <meta property="article:author" content="platelet">
 <meta property="article:tag" content="platelet">
 <meta name="twitter:card" content="summary">
@@ -251,25 +251,9 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-09-22 15:38:33" itemprop="dateModified" datetime="2021-09-22T15:38:33+08:00">2021-09-22</time>
+        <time title="修改时间：2022-03-24 11:37:00" itemprop="dateModified" datetime="2022-03-24T11:37:00+08:00">2022-03-24</time>
       </span>
 
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Changyan：</span>
-    
-    
-      <a title="changyan" href="/solutions/#SOHUCS" itemprop="discussionUrl">
-        <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="solutions/" itemprop="commentCount"></span>
-      </a>
-    
-  </span>
-  
   
     <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
@@ -297,15 +281,14 @@
     <div class="post-body" itemprop="articleBody">
         <p>懒得分开写咕咕咕。</p>
 <h3 id="tc13459">TC13459</h3>
-<p>“1”的限制分两种，在同一行或在同一列，但 “1” 的数量很多，不能枚举每个“1”是哪一种，设“在同一行”的边为白边，“在同一列的”的边为黑白，考虑边之间的约束关系。</p>
+<p>“1”的限制分两种，在同一行或在同一列，但 “1” 的数量很多，不能枚举每个“1”是哪一种，设“在同一行”的边为白边，“在同一列的”的边为黑边，考虑边之间的约束关系。</p>
 <p>考虑两条边 <span class="math inline">\((i,j),(i,k)\)</span>，当边 <span class="math inline">\((j,k)\)</span> 存在时说明 <span class="math inline">\((i,j)\)</span> 和 <span class="math inline">\((i,k)\)</span> 的颜色相同，反之亦然。</p>
-<p>这样就可以表示出所有的约束，必要性显然，充分性是因为合法解中同色边一定构成了若干不含公共点的团，这种对于相邻两条边的约束关系就很充分了。</p>
-<p>在所有的约束条件下，所有的边及其约束关系构成类似二分图的结构，联通块分两类，一类是整个连通块一定同色，另一类是一定包含两种颜色。</p>
-<p>设第一类连通块有 <span class="math inline">\(x\)</span> 个，第二类连通块有 <span class="math inline">\(y\)</span> 个，枚举第一类连通块有 <span class="math inline">\(i\)</span> 个白色，即可得到答案： <span class="math display">\[
-\sum_{i=0}^x\binom xi2^yn^{\underline{i+y}}n^{\underline{x-i+y}}
-\]</span> 复杂度 <span class="math inline">\(O(n^3)\)</span>（DFS 求连通块）或 <span class="math inline">\(O(n^3\alpha(n^2))\)</span>（并查集求连通块）。</p>
+<p>这样就可以表示出所有的约束，必要性显然，充分性是因为合法解中同色边一定构成了若干不含公共边的团，这种对于相邻两条边的约束关系就很充分了。</p>
+<p>在所有的约束条件下，所有的边及其约束关系构成类似二分图的结构，对于每个连通块，设它一部分的所有边形成了 <span class="math inline">\(x\)</span> 个点连通块，另一部分的所有边形成了 <span class="math inline">\(y\)</span> 个点连通块，那么它可以占用 <span class="math inline">\(x\)</span> 行 <span class="math inline">\(y\)</span> 列或 <span class="math inline">\(y\)</span> 行 <span class="math inline">\(x\)</span> 列。</p>
+<p>最后可以通过简单 DP 计算答案。</p>
+<p>复杂度 <span class="math inline">\(O(n^3)\)</span>。</p>
 <h3 id="tc12909">TC12909</h3>
-<p>任意时刻局面的样子都是若干个连续段，我们只关心每个连续段的样子和它们在环上的相对顺序，而不关心空白的位置，因为只有知道前者的方案数，当前局面的方案数是可以算的。</p>
+<p>任意时刻局面的样子都是若干个连续段，我们只关心每个连续段的样子和它们在环上的相对顺序，而不关心空白的位置，因为只要知道前者的方案数，当前局面的方案数是可以算的。</p>
 <p>设 <span class="math inline">\(f_{i,j}\)</span> 表示当前已经来了 <span class="math inline">\(i\)</span> 个朋友，共构成 <span class="math inline">\(j\)</span> 个连续段的方案数，转移分三种：</p>
 <ul>
 <li>第 <span class="math inline">\(i+1\)</span> 个朋友新开一个连续段，<span class="math inline">\(f_{i+1,j+1} \leftarrow j \cdot f_{i,j}\)</span>。</li>
@@ -313,17 +296,18 @@
 <li>第 <span class="math inline">\(i+1\)</span> 个朋友将两个连续段接在了一起，<span class="math inline">\(f_{i+1,j-1} \leftarrow j \cdot f_{i,j}\)</span>。</li>
 </ul>
 <p>只需要保证 <span class="math inline">\(j \le G\)</span> 就行了，而不需要考虑连续段过多而导致前两种转移不合法，因为不合法了贡献系数一定为 <span class="math inline">\(0\)</span>。</p>
-<p>最后是贡献系数，假设 <span class="math inline">\(K\)</span> 个人到齐后有 <span class="math inline">\(x\)</span> 个连续段，则贡献系数为 <span class="math inline">\(N\binom{N-K-1}{K-1}\)</span>。</p>
+<p>最后是贡献系数，假设 <span class="math inline">\(K\)</span> 个人到齐后有 <span class="math inline">\(x\)</span> 个连续段，则贡献系数为 <span class="math inline">\(N\binom{N-K-1}{x-1}\)</span>。</p>
+<p>特判 <span class="math inline">\(k=n\)</span> 时，答案为 <span class="math inline">\(N\cdot f_{n-1,1}\)</span>。</p>
 <p>复杂度 <span class="math inline">\(O(N^2)\)</span>。</p>
 <h3 id="tc13692">TC13692</h3>
 <p>搬家具的排列很像拓扑序，但又有点区别。</p>
-<p>枚举 <span class="math inline">\(S_1-S_2\)</span> 路径上第一个选的点 <span class="math inline">\(u\)</span>，再对每条边定向定向，然后就转化成了一张图的拓扑序，记这个东西为 <span class="math inline">\(f_u\)</span>。当 <span class="math inline">\(u=S_1\)</span> 或 <span class="math inline">\(S_2\)</span> 时这张图就是树，否则这张图和树唯一的区别是点 <span class="math inline">\(u\)</span> 有两个父亲，但这张图的拓扑序并不好算，单次复杂度只能做到 <span class="math inline">\(O(n^2)\)</span>，无法通过。</p>
+<p>枚举 <span class="math inline">\(S_1-S_2\)</span> 路径上第一个选的点 <span class="math inline">\(u\)</span>，再对每条边定向，然后就转化成了一张图的拓扑序，记这个东西为 <span class="math inline">\(f_u\)</span>。当 <span class="math inline">\(u=S_1\)</span> 或 <span class="math inline">\(S_2\)</span> 时这张图就是树，否则这张图和树唯一的区别是点 <span class="math inline">\(u\)</span> 有两个父亲，但这张图的拓扑序并不好算，单次复杂度只能做到 <span class="math inline">\(O(n^2)\)</span>，无法通过。</p>
 <p>注意到这题只需要求出 <span class="math inline">\(S_1-S_2\)</span> 路径上每个点 <span class="math inline">\(f\)</span> 的总和。</p>
-<p>枚举 <span class="math inline">\(S_1-S_2\)</span> 路径上的一条边 <span class="math inline">\((u,v)\)</span>，然后断开 <span class="math inline">\((u,v)\)</span>，再对每条边定向定向，然后就转化成了两棵树的拓扑序，这个是可以 <span class="math inline">\(O(n)\)</span> 算的，发现算出来的正好是 <span class="math inline">\(f_u+f_v\)</span>。</p>
+<p>枚举 <span class="math inline">\(S_1-S_2\)</span> 路径上的一条边 <span class="math inline">\((u,v)\)</span>，然后断开 <span class="math inline">\((u,v)\)</span>，再对每条边定向，然后就转化成了两棵树的拓扑序，这个是可以 <span class="math inline">\(O(n)\)</span> 算的，发现算出来的正好是 <span class="math inline">\(f_u+f_v\)</span>。</p>
 <p>最后把前一步骤的计算结果加起来，再加上 <span class="math inline">\(f_{S_1}+f_{S_2}\)</span> 并除以二，即是答案。</p>
 <h3 id="agc017f">AGC017F</h3>
 <p>容易想到用位向量来表示折线，<span class="math inline">\(0\)</span> 表示这一步向左走，<span class="math inline">\(1\)</span> 表示向右，容易得到折线的形态只有 <span class="math inline">\(2^{N-1}\)</span> 种。</p>
-<p>由于相邻两条折线 <span class="math inline">\(S,T\)</span> 的约束关系是 <span class="math inline">\(T\)</span> 的每个前缀后都大于等于 <span class="math inline">\(S\)</span> 的对应前缀和。</p>
+<p>由于相邻两条折线 <span class="math inline">\(S,T\)</span> 的约束关系是 <span class="math inline">\(T\)</span> 的每个前缀和都大于等于 <span class="math inline">\(S\)</span> 的对应前缀和。</p>
 <p>不难想到轮廓线 <code>DP</code>，设 <span class="math inline">\(f_{i,j,k,S}\)</span> 表示满足以下条件的方案数：</p>
 <ul>
 <li>第 <span class="math inline">\(i\)</span> 条折线已经填了前 <span class="math inline">\(j\)</span> 位。</li>
@@ -357,7 +341,7 @@
 <li>设 <span class="math inline">\(f_S\)</span> 表示点集 <span class="math inline">\(S\)</span> 已经被考虑时，最大的保留边权之和。</li>
 <li>转移为：<span class="math inline">\(f_S \leftarrow f_{S-T} + g_T({T \subseteq S})\)</span>，其中 <span class="math inline">\(T\)</span> 恰好包含一个关键点。</li>
 </ul>
-<p>由于并不知道这条路径，所以需要该一下 <code>DP</code> 状态：</p>
+<p>由于并不知道这条路径，所以需要改一下 <code>DP</code> 状态：</p>
 <p>设 <span class="math inline">\(f_{i,S}\)</span> 表示点集 <span class="math inline">\(S\)</span> 已经被考虑且 <span class="math inline">\(1-i\)</span> 只有一条路径时，最大的保留边权之和。</p>
 <p>转移为:</p>
 <ul>
@@ -447,23 +431,23 @@
 <h3 id="zoj3970">ZOJ3970</h3>
 <p>考虑在操作序列中有相邻的加减操作并且加操作在前面，应用如下调整：</p>
 <ul>
-<li>如果两个操作区间无交，则交换操作顺序。</li>
-<li>如果有交，那么相交的部分相当于什么都没做，直接去掉相交部分，变成上一种情况。</li>
+<li>两个操作区间无交，则交换操作顺序。</li>
+<li>相互包含，可以变成两个加操作或两个减操作。</li>
+<li>有交但不包含，那么相交的部分相当于什么都没做，直接去掉相交部分，变成第一种情况。</li>
 </ul>
 <p>经过有限步调整，操作序列变成了若干减后若干加。</p>
 <p>假设已知第 <span class="math inline">\(i\)</span> 个位置需要进行 <span class="math inline">\(a_i\)</span> 次减操作，那么最小操作次数为 <span class="math inline">\(\sum_{i=2}^n\max(0,a_i-a_{i-1})\)</span>。</p>
 <p>加操作同理。</p>
 <p>设 <span class="math inline">\(pre_i\)</span> 表示上一个满足 <span class="math inline">\(t_j&gt;0\)</span> 的位置 <span class="math inline">\(j\)</span>。</p>
 <p><span class="math inline">\(f_{i,j}\)</span> 表示考虑了前 <span class="math inline">\(i\)</span> 个位置，其中第 <span class="math inline">\(i\)</span> 个位置被 <span class="math inline">\(j\)</span> 个减操作覆盖时的最小操作次数。</p>
-<p>转移为：</p>
-<p><span class="math display">\[
+<p>转移为： <span class="math display">\[
 f_{i,j}=\min_kf_{pre_i,k}+\max(0,j-k)+\max(0,t_i-s_i+j-t_{pre_i}+s_{pre_i}-k)+\max(0,\max_{pre_i&lt;x&lt;i}s_x-\max(j,k))
 \]</span></p>
 <p>其中最后一项表示将区间 <span class="math inline">\((pre_i,i)\)</span> 减成 <span class="math inline">\(0\)</span> 需要的额外减操作次数。</p>
 <p>复杂度 <span class="math inline">\(O(nV^2)\)</span>，无法通过。</p>
 <p>打表发现函数 <span class="math inline">\(f_i\)</span> 分三段，每一段都是一次函数，并且斜率递增。</p>
 <p>注意到转移方程后面的每一项都是分段一次函数，因此它们的和也是分段一次函数，所以 <span class="math inline">\(\min\)</span> 只会在拐点处取到，这样就可以 <span class="math inline">\(O(1)\)</span> 算出一个 <span class="math inline">\(f_{i,j}\)</span>。</p>
-<p>求函数 <span class="math inline">\(f_i\)</span> 的两个拐点？考虑分治，对于一个区间 <span class="math inline">\([l,r]\)</span>，如果 <span class="math inline">\(f_{i,l},f_{i,mid},f_{i,r}\)</span> 等差，说明 <span class="math inline">\([l,r]\)</span> 一定在同一个段，否则递归左右两半。</p>
+<p>求函数 <span class="math inline">\(f_i\)</span> 的两个拐点？二分两次即可。</p>
 <p>复杂度 <span class="math inline">\(O(n\log V)\)</span>。</p>
 <h3 id="zoj3989">ZOJ3989</h3>
 <p>为了方便处理，先对所有点旋转一个角度，使所有点横坐标两两不同。</p>
@@ -531,14 +515,14 @@ f_{i,j}=\min_kf_{pre_i,k}+\max(0,j-k)+\max(0,t_i-s_i+j-t_{pre_i}+s_{pre_i}-k)+\m
 <p>这是一个经典问题，一般做法有两种：状压 <code>DP</code> 和 <code>min-max</code> 容斥。</p>
 <p>它们的复杂度都是 <span class="math inline">\(O(n2^n)\)</span> 或 <span class="math inline">\(O(2^n)\)</span> 的，然而这题数据范围是 <span class="math inline">\(400\)</span>，说明需要用的此题的特殊性质。</p>
 <p>通过 <code>min-max</code> 容斥可以得出答案为 <span class="math display">\[
-\sum_{S}(-1)^{|S|}\frac{\sum_{i=1}^n A_i}{\sum_{i \in S} A_i}
-\]</span> 发现分母是小于 <span class="math inline">\(400\)</span> 的非负整数！可以用背包数出每种分母的贡献 <span class="math inline">\(\sum_S(-1)^{|S|}\)</span>。</p>
+\sum_{S}(-1)^{|S|+1}\frac{\sum_{i=1}^n A_i}{\sum_{i \in S} A_i}
+\]</span> 发现分母是小于 <span class="math inline">\(400\)</span> 的非负整数！可以用背包数出每种分母的贡献 <span class="math inline">\(\sum_S(-1)^{|S|+1}\)</span>。</p>
 <p>设 <span class="math display">\[
-f_{i,j} = \sum_{S \subseteq \{1,2,\cdots,i\}}(-1)^{|S|}[\sum_{i \in S}A_i=j]
+f_{i,j} = \sum_{S \subseteq \{1,2,\cdots,i\}}(-1)^{|S|+1}[\sum_{i \in S}A_i=j]
 \]</span> 转移为 <span class="math inline">\(f_{i,j}=f_{i-1,j}-f_{i-1,j-A_i}\)</span>，答案为 <span class="math display">\[
 (\sum_{i=1}^n A_i)\sum_{i=0}^{400}\frac{f_{n,i}}i
 \]</span> 现在回到原问题，还是考虑 <code>min-max</code> 容斥，答案就是 <span class="math display">\[
-\sum_{S}(-1)^{|S|}[S 中第一次有元素达到目标时的期望步数]
+\sum_{S}(-1)^{|S|+1}[S 中第一次有元素达到目标时的期望步数]
 \]</span></p>
 <p>设 <span class="math inline">\(p_i=\frac{A_i}{\sum_{j \in S}A_j}\)</span>。</p>
 <p>根据期望的线性性质，期望步数可以分摊到经过每个状态上。所以后面那坨东西为： <span class="math display">\[
@@ -550,17 +534,17 @@ f_{i,j} = \sum_{S \subseteq \{1,2,\cdots,i\}}(-1)^{|S|}[\sum_{i \in S}A_i=j]
 \]</span></p>
 <p>把前面说的东西拼起来，答案为： <span class="math display">\[
 \begin{aligned}
-&amp;\sum_S(-1)^{|S|}\sum_{\forall i \in S,c_i&lt;B_i}\frac{(\sum_{i \in S}c_i)!}{\prod_{i \in S} c_i!}\prod_{i \in S}A_i^{c_i} \cdot \frac{\sum_{i=1}^n A_i}{(\sum_{i \in S} A_i)^{(\sum_{i \in S}c_i)+1}}\\
-&amp;=(\sum_{i=1}^n A_i)\sum_S(-1)^{|S|}\sum_{\forall i \in S,c_i&lt;B_i}\frac{(\sum_{i \in S}c_i)!}{(\sum_{i \in S} A_i)^{(\sum_{i \in S}c_i)+1}} \cdot \prod_{i \in S}\frac{A_i^{c_i}}{c_i!}
+&amp;\sum_S(-1)^{|S|+1}\sum_{\forall i \in S,c_i&lt;B_i}\frac{(\sum_{i \in S}c_i)!}{\prod_{i \in S} c_i!}\prod_{i \in S}A_i^{c_i} \cdot \frac{\sum_{i=1}^n A_i}{(\sum_{i \in S} A_i)^{(\sum_{i \in S}c_i)+1}}\\
+&amp;=(\sum_{i=1}^n A_i)\sum_S(-1)^{|S|+1}\sum_{\forall i \in S,c_i&lt;B_i}\frac{(\sum_{i \in S}c_i)!}{(\sum_{i \in S} A_i)^{(\sum_{i \in S}c_i)+1}} \cdot \prod_{i \in S}\frac{A_i^{c_i}}{c_i!}
 \end{aligned}
 \]</span></p>
 <p>式子中比较难转移的东西就是 <span class="math inline">\(\sum_{i \in S} A_i\)</span> 和 <span class="math inline">\(\sum_{i \in S}c_i\)</span>，把它们记状态里就行了。</p>
 <p>状态为 <span class="math display">\[
-f_{i,j,k}=\sum_{S \subseteq \{1,2,\cdots,i\}}(-1)^{|S|}\sum_{\forall i \in S,c_i&lt;B_i}\prod_{i \in S}\frac{A_i^{c_i}}{c_i!}[\sum_{i \in S} A_i=j \land \sum_{i \in S}c_i=k]
+f_{i,j,k}=\sum_{S \subseteq \{1,2,\cdots,i\}}(-1)^{|S|+1}\sum_{\forall i \in S,c_i&lt;B_i}\prod_{i \in S}\frac{A_i^{c_i}}{c_i!}[\sum_{i \in S} A_i=j \land \sum_{i \in S}c_i=k]
 \]</span> 转移为 <span class="math display">\[
 f_{i,j,k}=f_{i-1,j,k}-\sum_{c=0}^{B_i-1}f_{i-1,j-A_i,k-c}\frac{A_i^c}{c!}
 \]</span> 答案为 <span class="math display">\[
-(\sum_{i=1}^n A_i)\sum_{i=0}^{400}\sum_{j=0}^{400}\frac{j!f_{n,i,j}}{i^{j+1}}
+(\sum_{i=1}^n A_i)\sum_{i=1}^{400}\sum_{j=0}^{400}\frac{j!f_{n,i,j}}{i^{j+1}}
 \]</span> 分析一下时间复杂度，虽然每次转移的枚举量是 <span class="math inline">\(B_i\)</span>，但由于 <span class="math inline">\(\sum_{i=1}^nB_i\)</span> 是 <span class="math inline">\(O(n)\)</span> 的，所以总复杂度是 <span class="math inline">\(O(n^3)\)</span>，空间复杂度可以用滚动数组优化到 <span class="math inline">\(O(n^2)\)</span>。</p>
 <hr />
 <h3 id="agc037d">AGC037D</h3>
@@ -1184,7 +1168,9 @@ xp&#39;&amp;(x\not|p&#39;)
 \frac 32\left(\sum_{i=1}^nw_i\sqrt{\text{dis}(i,u)}-2\sum_{i\in \text{subree}(v)}w_i\sqrt{\text{dis}(i,u)}\right)
 \]</span> 可以 <span class="math inline">\(O(n)\)</span> 求出 <span class="math inline">\(u\)</span> 向每个儿子的导数，复杂度 <span class="math inline">\(O(n\log n)\)</span>。</p>
 <h3 id="cf1545c">CF1545C</h3>
+<blockquote>
 <h3 id="cf1149c">CF1149C</h3>
+</blockquote>
 <blockquote>
 <p>给定一个长度为 <span class="math inline">\(2(n-1)\)</span> 的合法括号序列，还有 <span class="math inline">\(q\)</span> 次交换操作（保证交换后合法）。</p>
 <p>求每次交换后括号序列建出来的树的直径。</p>
@@ -1239,7 +1225,6 @@ xp&#39;&amp;(x\not|p&#39;)
 
 
 
-    <div class="comments" id="SOHUCS"></div>
 </div>
   </main>
 
@@ -1249,7 +1234,7 @@ xp&#39;&amp;(x\not|p&#39;)
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1261,14 +1246,14 @@ xp&#39;&amp;(x\not|p&#39;)
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">197k</span>
+    <span title="站点总字数">199k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:59</span>
+    <span title="站点阅读时长">3:01</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
@@ -1298,8 +1283,6 @@ xp&#39;&amp;(x\not|p&#39;)
 <script src="/js/third-party/math/mathjax.js"></script>
 
 
-<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyvEvVbLv","appkey":"5ad530a5ec52a4592621eb7b7437748c"}</script>
-<script src="/js/third-party/comments/changyan.js"></script>
 
 </body>
 </html>
