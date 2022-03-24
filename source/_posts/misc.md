@@ -37,7 +37,7 @@ $$
 
 实践中可以令 $k=64$，可以用 `~0ull / m + 1` 来计算 $m'$。
 
-<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">�鿴����</span></summary>
+<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
 ```cpp
 using uint = unsigned int;
 using ull = unsigned long long;

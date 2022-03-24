@@ -90,7 +90,7 @@ $$
 
 `Generator` ：参数 $T,A,B,C,D$ 可调，分别表示数据组数和树 $A,X,B,Y$ 的大小。
 
-<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">�鿴����</span></summary>
+<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
 ```cpp
 #include <bits/stdc++.h>
 #define rep(i, l, r) for(int i = (l); i <= (r); i++)
@@ -172,7 +172,7 @@ int main() {
 
 `Special judge`：假设保存为 `checker.cpp`，编译后在命令行中使用：`checker <input-file> <output-file>`，答案正确返回值为 $0$，否则返回值为 $1$，输出为第一组出错的数据。
 
-<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">�鿴����</span></summary>
+<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
 ```cpp
 #include <bits/stdc++.h>
 #define rep(i, l, r) for(int i = (l); i <= (r); i++)
@@ -312,7 +312,7 @@ $i_x+1$。每个单调栈元素意味着一次区间赋值，所以只需要 $n$
 
 复杂度 $O(n\log n)$，实现难度较大，附上代码：
 
-<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">�鿴����</span></summary>
+<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
 ```cpp
 #include <bits/stdc++.h>
 #define rep(i, l, r) for(int i = (l); i <= (r); i++)
