@@ -1,5 +1,5 @@
 ---
-title: 杜教筛 & Min-25 筛 & Powerful Number 筛
+title: 杜教筛 & min25 筛 & Powerful Number 筛
 date: 2021-03-13 23:13:29
 updated: 2021-03-13 23:13:29
 tags: [知识总结,数论,杜教筛,Min-25 筛,Powerful Number 筛]
@@ -29,7 +29,7 @@ $p_i$ 表示第 $i$ 个质数，$d_i$ 表示 $i$ 的最小质因子。
 
 $S(n, i) = \sum\limits_{j = 2}^n [d_j > p_i]f(j)$
 
-那么答案是 $S(N, 0)$。
+那么答案是 $S(N, 0)+1$。
 
 有递推 $S(n, i) = \sum\limits_{j = i+1}^{p_j \le n} f(p_j) + \sum\limits_{j = i+1}^{p_j^2 \le n}\sum\limits_{k=1}^{p_j^k \le n} f(p_j^k)(S(\big\lfloor \dfrac n{p_j^k} \big\rfloor, j) + [k>1])$。
 
@@ -63,30 +63,28 @@ $S(n, i) = \sum\limits_{j = 2}^n [d_j > p_i]f(j)$
 #define per(i, r, l) for(int i = (r); i >= (l); i--)
 
 using namespace std;
+using ll = long long;
 constexpr int N = sqrt(1e11) + 5;
-typedef long long ll;
+
 ll n, f1[N], f2[N];
 int main() {
     cin >> n;
     int lim = sqrt(n);
     rep(i, 1, lim) f1[i] = i - 1, f2[i] = n / i - 1;
-
-    rep(p, 2, lim) if (f1[p] ^ f1[p - 1]) {
+    rep(p, 2, lim) if (f1[p] != f1[p - 1]) {
         int w1 = lim / p;
         ll x = f1[p - 1], w3 = (ll)p * p, w2 = min((ll)lim, n / w3), d = n / p;
         rep(i, 1, w1) f2[i] -= f2[i * p] - x;
         rep(i, w1 + 1, w2) f2[i] -= f1[d / i] - x;
         per(i, lim, w3) f1[i] -= f1[i / p] - x;
     }
-
     cout << f2[1];
-    return 0;
 }
 ```
 
 #### 常数优化
 
-由于 ```double``` 乘法快于 ```long long``` 除法，可以预处理 $1-\sqrt n$ 的倒数。
+由于 ```double``` 乘法快于 ```long long``` 除法，可以预处理 $1-\sqrt n$ 的倒数，速度大概提高到原来的 $5$ 倍。
 
 ```cpp
 #include <bits/stdc++.h>
@@ -94,26 +92,56 @@ int main() {
 #define per(i, r, l) for(int i = (r); i >= (l); i--)
 
 using namespace std;
+using ll = long long;
 constexpr int N = sqrt(1e11) + 5;
 const double Eps = 1e-7;
-typedef long long ll;
+
 ll n, f1[N], f2[N];
 double inv[N];
 int main() {
     cin >> n;
     int lim = sqrt(n);
     rep(i, 1, lim) f1[i] = i - 1, f2[i] = n / i - 1, inv[i] = 1.0 / i;
-
-    rep(p, 2, lim) if (f1[p] ^ f1[p - 1]) {
+    rep(p, 2, lim) if (f1[p] != f1[p - 1]) {
         int w1 = lim / p;
         ll x = f1[p - 1], w3 = (ll)p * p, w2 = min((ll)lim, n / w3), d = n / p;
         rep(i, 1, w1) f2[i] -= f2[i * p] - x;
         rep(i, w1 + 1, w2) f2[i] -= f1[int(d * inv[i] + Eps)] - x;
         per(i, lim, w3) f1[i] -= f1[int(i * inv[p] + Eps)] - x;
     }
-
     cout << f2[1];
-    return 0;
+}
+```
+
+使用 [`Barrett reduction` 的无误差除法变种](http://platelet.top/misc/) 速度还能提高一倍。
+
+```cpp
+#include <bits/stdc++.h>
+#define rep(i, l, r) for(int i = (l); i <= (r); i++)
+#define per(i, r, l) for(int i = (r); i >= (l); i--)
+
+using namespace std;
+using ll = long long;
+constexpr int N = sqrt(1e11) + 5;
+
+ll n, f1[N], f2[N];
+uint64_t inv[N];
+
+inline ll Div(ll n, int m) {
+    return (__uint128_t)n * inv[m] >> 64;
+}
+int main() {
+    cin >> n;
+    int lim = sqrt(n);
+    rep(i, 1, lim) f1[i] = i - 1, f2[i] = n / i - 1, inv[i] = ~0ULL / i + 1;
+    rep(p, 2, lim) if (f1[p] != f1[p - 1]) {
+        int w1 = lim / p;
+        ll x = f1[p - 1], w3 = (ll)p * p, w2 = min((ll)lim, n / w3), d = n / p;
+        rep(i, 1, w1) f2[i] -= f2[i * p] - x;
+        rep(i, w1 + 1, w2) f2[i] -= f1[Div(d, i)] - x;
+        per(i, lim, w3) f1[i] -= f1[Div(i, p)] - x;
+    }
+    cout << f2[1];
 }
 ```
 
