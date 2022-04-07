@@ -4,6 +4,20 @@ tags: [动态规划，生成函数]
 categories: AGC
 ---
 
+> [题目链接](https://atcoder.jp/contests/agc021/tasks/agc021_f)
+> 
+> 对于 $n\times m$ 的 $01$ 矩阵 $mat$，定义序列 $A,B,C$：
+> 
+> - $A_i(1\le i \le n)$ 表示最小的 $j$ 满足 $mat_{i,j}=1$（如果没有则为 $m+1$​）。
+> 
+> - $B_i(1\le i \le m)$ 表示最小的 $j$ 满足 $mat_{j,i}=1$（如果没有则为 $n+1$​）。
+> ​
+> - $C_i(1\le i \le n)$ 表示最大的 $j$ 满足 $mat_{i,j}=1$（如果没有则为 $0$​）。
+> 
+> 有多少种不同的三元组 $(A,B,C)$？模 $998244353$。
+> 
+> $n \le 8000,m\le 200$
+
 设 $dp_{m,n}$ 表示 **强制** 每行至少有一个黑格时 $n\times m$ 矩阵的答案。
 
 那么答案就是 $\sum_{i=0}^N\binom Nidp_{M,i}$。
