@@ -943,6 +943,73 @@ xp&#39;&amp;(x\not|p&#39;)
 ]]></content>
   </entry>
   <entry>
+    <title>Trinity | AGC021F</title>
+    <url>/AGC021F/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://atcoder.jp/contests/agc021/tasks/agc021_f">题目链接</a></p>
+<p>对于 <span class="math inline">\(n\times m\)</span> 的 <span class="math inline">\(01\)</span> 矩阵 <span class="math inline">\(mat\)</span>，定义序列 <span class="math inline">\(A,B,C\)</span>：</p>
+<ul>
+<li><p><span class="math inline">\(A_i(1\le i \le n)\)</span> 表示最小的 <span class="math inline">\(j\)</span> 满足 <span class="math inline">\(mat_{i,j}=1\)</span>（如果没有则为 <span class="math inline">\(m+1\)</span>​）。</p></li>
+<li><p><span class="math inline">\(B_i(1\le i \le m)\)</span> 表示最小的 <span class="math inline">\(j\)</span> 满足 <span class="math inline">\(mat_{j,i}=1\)</span>（如果没有则为 <span class="math inline">\(n+1\)</span>​）。 ​</p></li>
+<li><p><span class="math inline">\(C_i(1\le i \le n)\)</span> 表示最大的 <span class="math inline">\(j\)</span> 满足 <span class="math inline">\(mat_{i,j}=1\)</span>（如果没有则为 <span class="math inline">\(0\)</span>​）。</p></li>
+</ul>
+<p>有多少种不同的三元组 <span class="math inline">\((A,B,C)\)</span>？模 <span class="math inline">\(998244353\)</span>。</p>
+<p><span class="math inline">\(n \le 8000,m\le 200\)</span></p>
+</blockquote>
+<p>设 <span class="math inline">\(dp_{m,n}\)</span> 表示 <strong>强制</strong> 每行至少有一个黑格时 <span class="math inline">\(n\times m\)</span> 矩阵的答案。</p>
+<p>那么答案就是 <span class="math inline">\(\sum_{i=0}^N\binom Nidp_{M,i}\)</span>。</p>
+<p>转移考虑哪些行的第一个黑格在最后一列，分两种情况：</p>
+<ul>
+<li><p>没有任何一行的第一个黑格在最后一列，那么最后一列可以没有黑格，可以恰好有一个，也可以多于一个，三种的方案对应的情况数分别是 <span class="math inline">\(1,n,\binom n2\)</span>，转移系数为 <span class="math inline">\(1+n+\binom n2\)</span>。</p></li>
+<li><p>有 <span class="math inline">\(k(k\ge 1)\)</span> 行的第一个黑格在最后一列，相当于最后一列已经事先填好了 <span class="math inline">\(k\)</span> 个黑格，设这些黑格中自上到下第一个在第 <span class="math inline">\(a\)</span> 行，最后一个在 <strong>倒数</strong> 第 <span class="math inline">\(b\)</span> 行，这种方案对应的情况数是 <span class="math inline">\(ab\)</span>，转移系数为</p></li>
+</ul>
+<p><span class="math display">\[
+\sum_{a,b}\binom a1\binom{n-a-b}{k-2}\binom b1=\binom{n+2}{k+2}=\binom{n+2}{n-k}
+\]</span></p>
+<p>综上，转移式为</p>
+<p><span class="math display">\[
+dp_{m,n}=dp_{m-1,n}(1+n+\binom n2)+\sum_{k=0}^{n-1}dp_{m-1,k}\binom{n+2}k
+\]</span></p>
+<p>转移可以使用 NTT 优化，复杂度 <span class="math inline">\(O(NM\log N)\)</span>，下面有复杂度更低的做法。</p>
+<p>转移时乘的是组合数，考虑写成 EGF：记 <span class="math inline">\(F_m(x)=\sum dp_{m,n}\frac{x^n}{n!}\)</span>。</p>
+<p><span class="math display">\[
+dp_{m,n}=\sum_{k=0}^ndp_{m-1,k}\binom{n+2}k-ndp_{m-1,n}
+\]</span></p>
+<p>设</p>
+<p><span class="math display">\[
+\begin{aligned}
+G(x)&amp;=\sum_n\frac{x^n}{n!}\sum_{k=0}^{n-2}dp_{m-1,k}\binom nk\\
+&amp;=F_{m-1}(x)(e^x-x-1)
+\end{aligned}
+\]</span></p>
+<p>那么把 <span class="math inline">\(G(x)\)</span> 中 <span class="math inline">\(\frac{x^n}{n!}\)</span> 的系数左移 <span class="math inline">\(2\)</span> 就可以得到转移式的第一部分，可以用求导实现左移 <span class="math inline">\(\frac{x^n}{n!}\)</span> 的系数。</p>
+<p>易得第二部分为 <span class="math inline">\(-xF_{m-1}&#39;(x)\)</span>。</p>
+<p>得到 <span class="math inline">\(F_m(x)\)</span> 的转移式：</p>
+<p><span class="math display">\[
+F_m(x)=(F_{m-1}(x)(e^x-1-x))&#39;&#39;-xF_{m-1}&#39;(x)
+\]</span></p>
+<p>由于这个转移式中 <span class="math inline">\(F_{m-1}(x)\)</span> 只乘了 <span class="math inline">\(e^x,x\)</span> 两个和 <span class="math inline">\(x\)</span> 有关的东西，考虑把 <span class="math inline">\(F_m(x)\)</span> 写成 <span class="math inline">\(\sum_{a,b}f_{a,b}e^{ax}x^b\)</span>，显然 <span class="math inline">\(F_m&#39;(x)\)</span> 也可以写成这个形式，并且 <span class="math inline">\(e^x\)</span> 和 <span class="math inline">\(x\)</span> 和最高次幂都不会比 <span class="math inline">\(F_m(x)\)</span> 大，所以 <span class="math inline">\(F_m(x)\)</span> 中 <span class="math inline">\(e^x\)</span> 和 <span class="math inline">\(x\)</span> 的最高次幂最多比 <span class="math inline">\(F_{m-1}(x)\)</span> 中 <span class="math inline">\(e^x\)</span> 和 <span class="math inline">\(x\)</span> 的最高次幂大 <span class="math inline">\(1\)</span>，即不超过 <span class="math inline">\(m\)</span>。</p>
+<p>在 <span class="math inline">\(\sum_{a,b}f_{a,b}e^{ax}x^b\)</span> 的形式下，乘 <span class="math inline">\(e^x,x\)</span> 以及求导都是简单的。至此，已经可以 <span class="math inline">\(O(m^2)\)</span> 地从 <span class="math inline">\(F_{m-1}(x)\)</span> 推出 <span class="math inline">\(F_m(x)\)</span> 的 <span class="math inline">\(\sum_{a,b}f_{a,b}e^{ax}x^b\)</span> 表示。</p>
+<p>最后考虑算答案，设 <span class="math inline">\(F_M(x)=\sum_{a,b}f_{a,b}e^{ax}x^b\)</span>。</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\sum_{i=0}^N\binom Nidp_{M,i}\\
+=&amp;\sum_{i=0}^N\binom Ni\left[\frac{x^i}{i!}\right]F_M(x)\\
+=&amp;\left[\frac{x^N}{N!}\right]e^xF_M(x)\\
+=&amp;N!\sum_{a=0}^M\sum_{b=0}^{\min(N,M)}f_{a,b}\frac{(a+1)^{N-b}}{(N-b)!}\\
+=&amp;\sum_{a=0}^M\sum_{b=0}^{\min(N,M)}f_{a,b}(a+1)^{N-b}N^{\underline b}
+\end{aligned}
+\]</span></p>
+<p>计算答案复杂度 <span class="math inline">\(O(M^2\log N)\)</span> 或 <span class="math inline">\(O(M^2+M\log N)\)</span>，总复杂度 <span class="math inline">\(O(M^3)\)</span>。</p>
+]]></content>
+      <categories>
+        <category>AGC</category>
+      </categories>
+      <tags>
+        <tag>动态规划，生成函数</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SMAWK 简介</title>
     <url>/SMAWK/</url>
     <content><![CDATA[<p>如果一个 <span class="math inline">\(N\times M\)</span> 的矩阵 <span class="math inline">\(A\)</span> 满足四边形不等式： <span class="math display">\[

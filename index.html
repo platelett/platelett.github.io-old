@@ -163,18 +163,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -348,7 +348,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-03-29 21:26:26" itemprop="dateModified" datetime="2022-03-29T21:26:26+08:00">2022-03-29</time>
+        <time title="修改时间：2022-04-07 10:55:51" itemprop="dateModified" datetime="2022-04-07T10:55:51+08:00">2022-04-07</time>
       </span>
 
   
@@ -419,6 +419,127 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/AGC021F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/AGC021F/" class="post-title-link" itemprop="url">Trinity | AGC021F</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-07 10:55:51" itemprop="dateCreated datePublished" datetime="2022-04-07T10:55:51+08:00">2022-04-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AGC/" itemprop="url" rel="index"><span itemprop="name">AGC</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/agc021/tasks/agc021_f">题目链接</a></p>
+<p>对于 <span class="math inline">\(n\times m\)</span> 的 <span class="math inline">\(01\)</span> 矩阵 <span class="math inline">\(mat\)</span>，定义序列 <span class="math inline">\(A,B,C\)</span>：</p>
+<ul>
+<li><p><span class="math inline">\(A_i(1\le i \le n)\)</span> 表示最小的 <span class="math inline">\(j\)</span> 满足 <span class="math inline">\(mat_{i,j}=1\)</span>（如果没有则为 <span class="math inline">\(m+1\)</span>​）。</p></li>
+<li><p><span class="math inline">\(B_i(1\le i \le m)\)</span> 表示最小的 <span class="math inline">\(j\)</span> 满足 <span class="math inline">\(mat_{j,i}=1\)</span>（如果没有则为 <span class="math inline">\(n+1\)</span>​）。 ​</p></li>
+<li><p><span class="math inline">\(C_i(1\le i \le n)\)</span> 表示最大的 <span class="math inline">\(j\)</span> 满足 <span class="math inline">\(mat_{i,j}=1\)</span>（如果没有则为 <span class="math inline">\(0\)</span>​）。</p></li>
+</ul>
+<p>有多少种不同的三元组 <span class="math inline">\((A,B,C)\)</span>？模 <span class="math inline">\(998244353\)</span>。</p>
+<p><span class="math inline">\(n \le 8000,m\le 200\)</span></p>
+</blockquote>
+<p>设 <span class="math inline">\(dp_{m,n}\)</span> 表示 <strong>强制</strong> 每行至少有一个黑格时 <span class="math inline">\(n\times m\)</span> 矩阵的答案。</p>
+<p>那么答案就是 <span class="math inline">\(\sum_{i=0}^N\binom Nidp_{M,i}\)</span>。</p>
+<p>转移考虑哪些行的第一个黑格在最后一列，分两种情况：</p>
+<ul>
+<li><p>没有任何一行的第一个黑格在最后一列，那么最后一列可以没有黑格，可以恰好有一个，也可以多于一个，三种的方案对应的情况数分别是 <span class="math inline">\(1,n,\binom n2\)</span>，转移系数为 <span class="math inline">\(1+n+\binom n2\)</span>。</p></li>
+<li><p>有 <span class="math inline">\(k(k\ge 1)\)</span> 行的第一个黑格在最后一列，相当于最后一列已经事先填好了 <span class="math inline">\(k\)</span> 个黑格，设这些黑格中自上到下第一个在第 <span class="math inline">\(a\)</span> 行，最后一个在 <strong>倒数</strong> 第 <span class="math inline">\(b\)</span> 行，这种方案对应的情况数是 <span class="math inline">\(ab\)</span>，转移系数为</p></li>
+</ul>
+<p><span class="math display">\[
+\sum_{a,b}\binom a1\binom{n-a-b}{k-2}\binom b1=\binom{n+2}{k+2}=\binom{n+2}{n-k}
+\]</span></p>
+<p>综上，转移式为</p>
+<p><span class="math display">\[
+dp_{m,n}=dp_{m-1,n}(1+n+\binom n2)+\sum_{k=0}^{n-1}dp_{m-1,k}\binom{n+2}k
+\]</span></p>
+<p>转移可以使用 NTT 优化，复杂度 <span class="math inline">\(O(NM\log N)\)</span>，下面有复杂度更低的做法。</p>
+<p>转移时乘的是组合数，考虑写成 EGF：记 <span class="math inline">\(F_m(x)=\sum dp_{m,n}\frac{x^n}{n!}\)</span>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/AGC021F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/SMAWK/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -450,7 +571,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-03-29 21:26:26" itemprop="dateModified" datetime="2022-03-29T21:26:26+08:00">2022-03-29</time>
+        <time title="修改时间：2022-04-07 10:55:51" itemprop="dateModified" datetime="2022-04-07T10:55:51+08:00">2022-04-07</time>
       </span>
 
   
@@ -555,7 +676,7 @@ A_{i,j}+A_{i+1,j+1}\le A_{i,j+1}+A_{i+1,j}\Rightarrow A_{i,j+1}-A_{i,j}\ge A_{i+
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-03-29 21:26:26" itemprop="dateModified" datetime="2022-03-29T21:26:26+08:00">2022-03-29</time>
+        <time title="修改时间：2022-04-07 10:55:51" itemprop="dateModified" datetime="2022-04-07T10:55:51+08:00">2022-04-07</time>
       </span>
 
   
@@ -675,7 +796,7 @@ B_i=
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-03-29 21:26:26" itemprop="dateModified" datetime="2022-03-29T21:26:26+08:00">2022-03-29</time>
+        <time title="修改时间：2022-04-07 10:55:51" itemprop="dateModified" datetime="2022-04-07T10:55:51+08:00">2022-04-07</time>
       </span>
 
   
@@ -1189,122 +1310,6 @@ A_{n,1}&amp;A_{n,2}&amp;\cdots &amp;A_{n,n}&amp;v_n\\
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/misc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="platelet">
-      <meta itemprop="description" content="天地不仁<br>platelet.top">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="platelet's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/misc/" class="post-title-link" itemprop="url">杂项</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-08-23 23:35:20" itemprop="dateCreated datePublished" datetime="2021-08-23T23:35:20+08:00">2021-08-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>7.3k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="barrett-reduction-取模优化">Barrett reduction 取模优化</h3>
-<blockquote>
-<p>计算 <span class="math inline">\(ab\bmod m(0\le a,b&lt;m&lt;2^{31})\)</span>。</p>
-</blockquote>
-<p>如果 <span class="math inline">\(m\)</span> 在编译时已知，那么编译器就会帮你完成这个优化（准确地说是下面的变种），否则你可以自己实现。</p>
-<h4 id="原生算法">原生算法</h4>
-<p>首先，设 <span class="math inline">\(m^{-1}\)</span> 表示浮点数形式的 <span class="math inline">\(\frac 1m\)</span>。 <span class="math display">\[
-ab\bmod m=ab-\lfloor ab\cdot m^{-1}\rfloor m
-\]</span> 即使预处理了 <span class="math inline">\(m^{-1}\)</span>，由于浮点数乘法比整数除法快不了多少，考虑进一步优化，取 <span class="math inline">\(\frac {m&#39;}{2^k}\approx m^{-1}\)</span>，然后 <span class="math display">\[
-\lfloor ab\cdot m^{-1}\rfloor \approx \lfloor \frac{abm&#39;}{2^k}\rfloor
-\]</span> 计算右边就快多了，因为只有整数乘法和右移，如何合理选取 <span class="math inline">\(m&#39;\)</span> 和 <span class="math inline">\(k\)</span>？</p>
-<p>令 <span class="math inline">\(k=2\lceil \log_2 m\rceil,m&#39;=\lceil \frac{2^k}m\rceil\)</span>，下面分析误差：</p>
-<ul>
-<li>设 <span class="math inline">\(m&#39;m=2^k+r(0\le r&lt;m)\)</span></li>
-<li>设 <span class="math inline">\(ab=cm+d(0\le c,d&lt;m)\)</span></li>
-<li><span class="math inline">\(abm&#39;=(cm+d)m&#39;=cm&#39;m+dm&#39;=c2^k+cr+dm&#39;\)</span></li>
-<li><span class="math inline">\(cr+dm&#39;&lt;(m-1)^2+m&#39;m&lt;(m-1)^2+2^k+(m-1)=2^k+m(m-1)&lt;2^k\cdot 2\)</span></li>
-<li><span class="math inline">\(\lfloor \frac{abm&#39;}{2^k}\rfloor=c\ \text{or}\ c+1\)</span></li>
-</ul>
-<p>设真实答案为 <span class="math inline">\(ans\)</span>，那么 <span class="math inline">\(ab-\lfloor \frac{abm&#39;}{2^k}\rfloor m=ans\ \text{or}\ ans-m\)</span>。</p>
-<p>更一般的结论是只要 <span class="math inline">\(c \ge \max(a, b^2)\)</span>，<span class="math inline">\(\lfloor \frac{a\lfloor \frac cb\rfloor}c\rfloor=\lfloor \frac ab\rfloor\ \text{or}\ \lfloor \frac ab\rfloor+1\)</span> 成立。</p>
-<p>实践中可以令 <span class="math inline">\(k=64\)</span>，可以用 <code>~0ull / m + 1</code> 来计算 <span class="math inline">\(m&#39;\)</span>。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/misc/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -1330,14 +1335,14 @@ ab\bmod m=ab-\lfloor ab\cdot m^{-1}\rfloor m
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">200k</span>
+    <span title="站点总字数">202k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:02</span>
+    <span title="站点阅读时长">3:04</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
