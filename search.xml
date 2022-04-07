@@ -951,7 +951,7 @@ xp&#39;&amp;(x\not|p&#39;)
 <ul>
 <li><p><span class="math inline">\(A_i(1\le i \le n)\)</span> 表示最小的 <span class="math inline">\(j\)</span> 满足 <span class="math inline">\(mat_{i,j}=1\)</span>（如果没有则为 <span class="math inline">\(m+1\)</span>​）。</p></li>
 <li><p><span class="math inline">\(B_i(1\le i \le m)\)</span> 表示最小的 <span class="math inline">\(j\)</span> 满足 <span class="math inline">\(mat_{j,i}=1\)</span>（如果没有则为 <span class="math inline">\(n+1\)</span>​）。 ​</p></li>
-<li><p><span class="math inline">\(C_i(1\le i \le n)\)</span> 表示最大的 <span class="math inline">\(j\)</span> 满足 <span class="math inline">\(mat_{i,j}=1\)</span>（如果没有则为 <span class="math inline">\(0\)</span>​）。</p></li>
+<li><p><span class="math inline">\(C_i(1\le i \le n)\)</span> 表示最大的 <span class="math inline">\(j\)</span> 满足 <span class="math inline">\(mat_{j,i}=1\)</span>（如果没有则为 <span class="math inline">\(0\)</span>​）。</p></li>
 </ul>
 <p>有多少种不同的三元组 <span class="math inline">\((A,B,C)\)</span>？模 <span class="math inline">\(998244353\)</span>。</p>
 <p><span class="math inline">\(n \le 8000,m\le 200\)</span></p>
