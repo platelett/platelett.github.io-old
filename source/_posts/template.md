@@ -2021,3 +2021,223 @@ int dfs(int u, int s) {
     vis[u] = s;
     for(int v : G[u]) if(!mat[v] || dfs(mat[v], s)) return mat[v] = u;
     return 0;
+}
+```
+
+### 使用
+
+```cpp
+int as = 0;
+rep(i, 1, n) if(dfs(i, i)) as++;
+```
+
+## 2-SAT 问题
+
+**已弃用。（复杂度不对）**
+
+### 定义
+
+```cpp
+int n, m, co[N * 2], stk[N * 2], tp;
+vector<int> G[N * 2];
+```
+
+### 函数
+
+```cpp
+void add(int u, int a, int v, int b) {
+    G[u * 2 + !a].pb(v * 2 + b);
+    G[v * 2 + !b].pb(u * 2 + a);
+}
+int dfs(int u) {
+    if(co[u] | co[u ^ 1]) return co[u];
+    co[u] = 1, stk[++tp] = u;
+    for(int v : G[u]) if(!dfs(v)) return 0;
+    return 1;
+}
+int twoSat() {
+    rep(i, 1, n) {
+        if(!co[i * 2] && !co[i * 2 + 1] && !dfs(i * 2)) {
+            while(tp) co[stk[tp--]] = 0;
+            if(!dfs(i * 2 + 1)) return 0;
+        }
+        tp = 0;
+    }
+    return 1;
+}
+```
+
+# 字符串
+
+## manacher 求偶回文串
+
+```cpp
+rep(i, 1, n) {
+    int& j = ma > i ? min(R[p * 2 - i], ma - i) : 0;
+    while(s[i - j] == s[i + j + 1]) j++;
+    if(i + j > ma) ma = i + j, p = i;
+}
+```
+
+## 回文自动机 PAM
+
+### 普通版
+
+#### 定义
+
+```cpp
+char s[N];
+int n, sz = 1, nw, len[N], f[N], ch[N][26];
+```
+
+#### 函数
+```cpp
+void ins(int i) {
+    auto jmp = [&](int o) {
+        while(s[i - len[o] - 1] != s[i]) o = f[o];
+        return o;
+    };
+    int o = jmp(nw), c = s[i] - 97;
+    if(!ch[o][c]]) {
+        f[++sz] = ch[jmp(f[o])][c];
+        len[ch[o][c] = sz] = len[o] + 2;
+    }
+    nw = ch[o][c];
+}
+```
+
+#### 预处理
+
+```cpp
+len[1] = -1, f[0] = 1;
+```
+
+### 偶回文版
+
+#### 函数
+
+```cpp
+void ins(int i) {
+    auto jmp = [&](int o) {
+        while(o && s[i - len[o] - 1] != s[i]) o = f[o];
+        return o;
+    };
+    int o = jmp(nw), c = s[i] - 97;
+    if(!ch[o][c]]) {
+        f[++sz] = ch[jmp(f[o])][c];
+        len[ch[o][c] = sz] = len[o] + 2;
+    }
+    nw = ch[o][c];
+}
+```
+
+#### 预处理
+
+```cpp
+rep(i, 0, 25) ch[0][i] = 1;
+```
+
+## 后缀数组 / SA
+
+### 定义
+
+```cpp
+int n, sa[N], rk[N], tp[N], buc[N];
+int h[20][N];
+char s[N];
+```
+
+### 函数
+
+```cpp
+void SA() {
+    int m = 128;
+    rep(i, 1, n) buc[rk[i] = s[i]]++;
+    rep(i, 1, m) buc[i] += buc[i - 1];
+    per(i, n, 1) sa[buc[rk[i]]--] = i;
+    for(int k = 1, p; memset(buc, p = 0, m * 4 + 4); k <<= 1) {
+        rep(i, n - k + 1, n) tp[++p] = i;
+        rep(i, 1, n) if(sa[i] > k) tp[++p] = sa[i] - k;
+        rep(i, 1, n) buc[rk[i]]++;
+        rep(i, 1, m) buc[i] += buc[i - 1];
+        per(i, n, 1) sa[buc[rk[tp[i]]]--] = tp[i];
+        memcpy(tp, rk, n * 4 + 4), p = 0;
+        rep(i, 1, n) rk[sa[i]] = p += tp[sa[i]] != tp[sa[i - 1]] || tp[sa[i] + k] != tp[sa[i - 1] + k];
+        if((m = p) >= n) break;
+    }
+}
+void height() {
+    int k = 0;
+    rep(i, 1, n) {
+        for(k ? k-- : 0; s[i + k] == s[sa[rk[i] - 1] + k]; k++);
+        h[0][rk[i]] = k;
+    }
+    rep(i, 1, 19) rep(j, 1 << i, n)
+        h[i][j] = min(h[i - 1][j], h[i - 1][j - (1 << i - 1)]);
+}
+```
+
+## 后缀自动机 / SAM
+
+### 定义
+
+```cpp
+char s[N];
+int n, sz = 1, nw = 1, f[N * 2], len[N * 2], ch[N * 2][26];
+```
+
+### 函数
+
+```cpp
+void ins(int c) {
+    int u = ++sz;
+    len[u] = len[nw] + 1;
+    while(nw && !ch[nw][c]) ch[nw][c] = u, nw = f[nw];
+    if(!nw) f[u] = 1;
+    else {
+        int v = ch[nw][c];
+        if(len[v] > len[nw] + 1) {
+            f[++sz] = f[v], memcpy(ch[sz], ch[v], sizeof ch[v]);
+            f[v] = f[u] = sz, len[sz] = len[nw] + 1;
+            while(ch[nw][c] == v) ch[nw][c] = sz, nw = f[nw];
+        } else f[u] = v;
+    }
+    nw = u;
+}
+```
+
+## 最小表示法 / smallest cyclic shift
+
+### 函数
+
+```cpp
+int calc(char s[]) {
+    int i = 0, j = 1, k = 0;
+    while(max({i, j, k}) < n)
+    if(s[(i + k) % n] == s[(j + k) % n]) k++;
+    else {
+        if(s[(i + k) % n] > s[(j + k) % n]) swap(i, j);
+        j += k + 1, k = 0;
+        if(i == j) j++;
+    }
+    return min(i, j);
+}
+```
+
+## 最小后缀 / smallest suffix
+
+### 函数
+
+```cpp
+int calc(char s[]) {
+    int i = 0, j = 1;
+    while(s[j]) {
+        int k = 0;
+        while(s[i + k] == s[j + k]) k++;
+        if(!s[j + k]) i = max(i + k, j + 1), swap(i, j);
+        else if(s[i + k] > s[j + k]) i = max(i + k, j) + 1, swap(i, j);
+        else j += k + 1;
+    }
+    return i;
+}
+```
