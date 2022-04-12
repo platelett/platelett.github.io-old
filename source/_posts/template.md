@@ -672,22 +672,22 @@ ll Pow(ll a, int n, ll r = 1) {
     if(n & 1) r = r * a % P;
     return r;
 }
-void NTT(ll a[], bool t) {
+void NTT(int a[], bool t) {
     For(i, 0, lim) if(rev[i] < i) swap(a[i], a[rev[i]]);
     for(int i = 1; i < lim; i <<= 1) {
         ll wn = Pow(3, P / 2 / i);
         for(int j = 0; j < lim; j += i << 1) {
             ll w = 1;
             For(k, j, j + i) {
-                ll &x = a[k], y = a[k + i] * w % P;
-                a[k + i] = (x - y) % P, (x += y) %= P, w = w * wn % P;
+                int x = a[k], y = a[k + i] * w % P;
+                a[k] = (x + y) % P, a[k + i] = (x - y + P) % P, w = w * wn % P;
             }
         }
     }
     if(t) return;
     reverse(a + 1, a + lim);
     ll inv = Pow(lim, P - 2);
-    For(i, 0, lim) (a[i] *= inv) %= P;
+    For(i, 0, lim) a[i] = a[i] * inv % P;
 }
 ```
 
@@ -701,8 +701,8 @@ void NTT(mint a[], bool t) {
         for(int j = 0; j < lim; j += i << 1) {
             mint w = 1;
             For(k, j, j + i) {
-                mint &x = a[k], y = a[k + i] * w;
-                a[k + i] = x - y, x += y, w *= wn;
+                mint x = a[k], y = a[k + i] * w;
+                a[k] = x + y, a[k + i] = x - y, w *= wn;
             }
         }
     }
@@ -725,38 +725,37 @@ For(i, 0, lim) rev[i] = rev[i >> 1] >> 1 | (i & 1 ? lim >> 1 : 1);
 #### 定义
 
 ```cpp
-ll w[N];
-int lim = 1, rev[N]; 
+int lim = 1, rev[N], w[N];
 ```
 
 `modint` 版
 
 ```cpp
 mint w[N];
-int lim = 1, rev[N]; 
+int lim = 1, rev[N];
 ```
 
 #### 函数
 
 ```cpp
-int add(int a, int b) { return a += b, a < P ? a : a - P; }
-int sub(int a, int b) { return a -= b, a < 0 ? a + P : a; }
+int add(int a, int b) { return (a += b) < P ? a : a - P; }
+int sub(int a, int b) { return (a -= b) < 0 ? a + P : a; }
 ll Pow(ll a, int n, ll r = 1) {
     for(; n; n >>= 1, a = a * a % P)
     if(n & 1) r = r * a % P;
     return r;
 }
-void NTT(ll a[], bool t) {
+void NTT(int a[], bool t) {
     For(i, 0, lim) if(rev[i] < i) swap(a[i], a[rev[i]]);
     for(int i = 1; i < lim; i <<= 1)
     for(int j = 0; j < lim; j += i << 1) For(k, j, j + i) {
-        ll &x = a[k], y = a[k + i] * w[i + k - j] % P;
-        a[k + i] = sub(x, y), x = add(x, y);
+        int x = a[k], y = (ll)a[k + i] * w[i + k - j] % P;
+        a[k] = add(x, y), a[k + i] = sub(x, y);
     }
     if(t) return;
     reverse(a + 1, a + lim);
     ll inv = Pow(lim, P - 2);
-    For(i, 0, lim) (a[i] *= inv) %= P;
+    For(i, 0, lim) a[i] = a[i] * inv % P;
 }
 ```
 
@@ -767,8 +766,8 @@ void NTT(mint a[], bool t) {
     For(i, 0, lim) if(rev[i] < i) swap(a[i], a[rev[i]]);
     for(int i = 1; i < lim; i <<= 1)
     for(int j = 0; j < lim; j += i << 1) For(k, j, j + i) {
-        mint &x = a[k], y = a[k + i] * w[i + k - j];
-        a[k + i] = x - y, x += y;
+        mint x = a[k], y = a[k + i] * w[i + k - j];
+        a[k] = x + y, a[k + i] = x - y;
     }
     if(t) return;
     reverse(a + 1, a + lim);
@@ -831,8 +830,8 @@ void FFT(cmp a[], bool t) {
     For(i, 0, lim) if(i < rev[i]) swap(a[i], a[rev[i]]);
     for(int i = 1; i < lim; i <<= 1)
     for(int j = 0; j < lim; j += i << 1) For(k, j, j + i) {
-        cmp &x = a[k], y = a[k + i] * w[i + k - j];
-        a[k + i] = x - y, x += y;
+        cmp x = a[k], y = a[k + i] * w[i + k - j];
+        a[k] = x + y, a[k + i] = x - y;
     }
     if(t) return;
     reverse(a + 1, a + lim);
@@ -845,7 +844,7 @@ void FFT2(cmp a[], cmp b[]) {
     For(i, 0, lim) b[i] = conj(a[i ? lim - i : 0]);
     For(i, 0, lim) {
         cmp x = a[i], y = b[i];
-        a[i] = (y + x) * 0.5, b[i] = (y - x) * 0.5 * I;
+        a[i] = (y + x) * 0.5, b[i] = (y - x) * 0.5i;
     }
 }
 ll num(cmp x) { return M * ll(real(x) + 0.5) % P + ll(imag(x) + 0.5); }
@@ -935,53 +934,53 @@ void IFWT(ll a[]) {
 
 ## 多项式求逆 / inv
 
-**已弃用。**
-
 ### 定义
 
 ```cpp
+int n, lim, rev[N], w[N];
+```
+
+`modint` 版
+
+```
 int n, lim, rev[N];
+mint w[N];
 ```
 
 ### 函数
 
 ```cpp
+int add(int a, int b) { return (a += b) >= P ? a - P : a; }
+int sub(int a, int b) { return (a -= b) < 0 ? a + P : a; }
 ll Pow(ll a, int n, ll r = 1) {
     for(; n; n >>= 1, a = a * a % P)
     if(n & 1) r = r * a % P;
     return r;
 }
-void bld(int n) {
-    lim = 1 << n--;
-    For(i, 0, lim) rev[i] = rev[i >> 1] >> 1 | (i & 1) << n;
-}
-void NTT(ll a[], bool t) {
-    For(i, 0, lim) if(rev[i] < i) swap(a[i], a[rev[i]]);
-    for(int i = 1; i < lim; i <<= 1) {
-        ll wn = Pow(3, P / 2 / i);
-        for(int j = 0; j < lim; j += i << 1) {
-            ll w = 1;
-            For(k, j, j + i) {
-                ll &x = a[k], y = a[k + i] * w % P;
-                a[k + i] = (x - y) % P, (x += y) %= P, w = w * wn % P;
-            }
+void NTT(int a[], bool t) {
+    For(i, 0, lim) if(i < rev[i]) swap(a[i], a[rev[i]]);
+    for(int i = 1; i < lim; i <<= 1)
+        for(int j = 0; j < lim; j += i << 1) For(k, j, j + i) {
+            int x = a[k], y = (ll)a[k + i] * w[i + k - j] % P;
+            a[k] = add(x, y), a[k + i] = sub(x, y);
         }
-    }
     if(t) return;
     reverse(a + 1, a + lim);
     ll inv = Pow(lim, P - 2);
-    For(i, 0, lim) (a[i] *= inv) %= P;
+    For(i, 0, lim) a[i] = a[i] * inv % P;
 }
-void Inv(ll a[], ll b[], int n) {
-    static ll c[N];
-    For(i, 0, 2 << n) b[i] = c[i] = 0;
-    b[0] = Pow(a[0], P - 2);
-    rep(i, 1, n) {
-        For(j, 0, 1 << i) c[j] = a[j];
-        bld(i + 1), NTT(c, 0), NTT(b, 0);
-        For(j, 0, lim) b[j] = (b[j] * 2 - b[j] * b[j] % P * c[j]) % P;
-        NTT(b, 1);
-        For(j, 1 << i, lim) b[j] = 0;
+void Inv(int n, int a[], int b[]) {
+    for(int k = 1; k <= n; k <<= 1) {
+        lim = k << 2;
+        memcpy(c, a, lim << 1);
+        For(i, 0, lim) rev[i] = rev[i >> 1] >> 1 | (i & 1 ? lim >> 1 : 0);
+        for(int i = 1; i < lim; i <<= 1) {
+            ll wn = Pow(3, P / i / 2), p = 1;
+            For(j, i, i << 1) w[j] = p, p = p * wn % P;
+        }
+        NTT(b, 1), NTT(c, 1);
+        For(i, 0, lim) b[i] = (ll)b[i] * sub(2, (ll)c[i] * b[i] % P) % P;
+        NTT(b, 0), memset(b + lim / 2, 0, lim << 1);
     }
 }
 ```
@@ -989,37 +988,30 @@ void Inv(ll a[], ll b[], int n) {
 `modint` 版
 
 ```cpp
-void bld(int n) {
-    lim = 1 << n--;
-    For(i, 0, lim) rev[i] = rev[i >> 1] >> 1 | (i & 1) << n;
-}
 void NTT(mint a[], bool t) {
     For(i, 0, lim) if(rev[i] < i) swap(a[i], a[rev[i]]);
-    for(int i = 1; i < lim; i <<= 1) {
-        mint wn = mint(3).pow(P / 2 / i);
-        for(int j = 0; j < lim; j += i << 1) {
-            mint w = 1;
-            For(k, j, j + i) {
-                mint &x = a[k], y = a[k + i] * w;
-                a[k + i] = x - y, x += y, w *= wn;
-            }
-        }
+    for(int i = 1; i < lim; i <<= 1)
+    for(int j = 0; j < lim; j += i << 1) For(k, j, j + i) {
+        mint x = a[k], y = a[k + i] * w[i + k - j];
+        a[k] = x + y, a[k + i] = x - y;
     }
     if(t) return;
     reverse(a + 1, a + lim);
     mint inv = mint(lim).inv();
     For(i, 0, lim) a[i] *= inv;
 }
-void Inv(mint a[], mint b[], int n) {
-    static mint c[N];
-    For(i, 0, 2 << n) b[i] = c[i] = 0;
-    b[0] = a[0].inv();
-    rep(i, 1, n) {
-        For(j, 0, 1 << i) c[j] = a[j];
-        bld(i + 1), NTT(c, 0), NTT(b, 0);
-        For(j, 0, lim) b[j] = b[j] * 2 - b[j] * b[j] * c[j];
-        NTT(b, 1);
-        For(j, 1 << i, lim) b[j] = 0;
+void Inv(int n, mint a[], mint b[]) {
+    for(int k = 1; k <= n; k <<= 1) {
+        lim = k << 2;
+        memcpy(c, a, lim << 1);
+        For(i, 0, lim) rev[i] = rev[i >> 1] >> 1 | (i & 1 ? lim >> 1 : 0);
+        for(int i = 1; i < lim; i <<= 1) {
+            mint wn = mint(3).pow(P / i / 2), p = 1;
+            For(j, i, i << 1) w[j] = p, p = p * wn;
+        }
+        NTT(b, 1), NTT(c, 1);
+        For(i, 0, lim) b[i] *= 2 - c[i] * b[i];
+        NTT(b, 0), memset(b + lim / 2, 0, lim << 1);
     }
 }
 ```
@@ -2029,14 +2021,3 @@ int dfs(int u, int s) {
     vis[u] = s;
     for(int v : G[u]) if(!mat[v] || dfs(mat[v], s)) return mat[v] = u;
     return 0;
-}
-```
-
-### 使用
-
-```cpp
-int as = 0;
-rep(i, 1, n) if(dfs(i, i)) as++;
-```
-
-## 2-SAT 问题
