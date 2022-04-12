@@ -556,20 +556,20 @@ namespace Pollard_Rho {
             }
         }
     }
-    ll ans[100]; int ct;
+    ll ans[100]; int cnt;
     void solve(ll n) {
-        if(chk(n)) return void(ans[++ct] = n);
+        if(chk(n)) return void(ans[++cnt] = n);
         ll d; do d = PR(n); while(d == n);
         solve(d), solve(n / d);
     }
     void work() {
         ll n;
         while(cin >> n) {
-            ct = 0;
+            cnt = 0;
             if(chk(n)) { puts("Prime"); continue; }
-            solve(n), sort(ans + 1, ans + ct + 1);
+            solve(n), sort(ans + 1, ans + cnt + 1);
             int t = 0;
-            rep(i, 1, ct) {
+            rep(i, 1, cnt) {
                 if(ans[i] != ans[i - 1]) cout << ans[i];
                 t++; if(ans[i] != ans[i + 1]) {
                     if(t > 1) cout << '^' << t;
@@ -1082,7 +1082,7 @@ map<int, int> mp;
 ### 函数
 
 ```cpp
-int BSGS(ll pls, ll a, ll b, ll p) {
+int BSGS(ll pls, ll a, ll b, int p) {
     pls %= p, a %= p, b %= p; mp.clear();
     ll m = ceil(sqrt(p)), ls = 1, rs = 1;
     For(i, 0, m) mp[ls * b % p] = i, ls = ls * a % p;
@@ -1092,16 +1092,16 @@ int BSGS(ll pls, ll a, ll b, ll p) {
     }
     return -1;
 }
-int exBSGS(ll a, ll b, ll p) {
+int exBSGS(int a, int b, int p) {
     a %= p, b %= p;
-    int pls = 1, ct = 0, g;
+    int pls = 1, cnt = 0, g;
     while((g = __gcd(a, p)) > 1) {
-        if(b == 1) return ct;
-        p /= g, pls = pls * a / g % p, ct++;
-        if(b % g) return -1; b /= g;
+        if(b == pls) return cnt;
+        if(b % g) return -1;
+        p /= g, b /= g, pls = pls * ll(a / g) % p, cnt++;
     }
     int ret = BSGS(pls, a, b, p);
-    return ~ret ? ret + ct : -1;
+    return ~ret ? ret + cnt : -1;
 }
 ```
 
@@ -2207,7 +2207,7 @@ void ins(int c) {
         if(len[v] > len[nw] + 1) {
             f[++sz] = f[v], memcpy(ch[sz], ch[v], sizeof ch[v]);
             f[v] = f[u] = sz, len[sz] = len[nw] + 1;
-            for(int x = nw; ch[x][c] == v; x = f[x]) ch[x][c] = sz;
+            while(ch[nw][c] == v) ch[nw][c] = sz, nw = f[nw];
         } else f[u] = v;
     }
     nw = u;
@@ -2249,3 +2249,4 @@ int calc(char s[]) {
     return i;
 }
 ```
+
