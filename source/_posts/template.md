@@ -2142,7 +2142,7 @@ rep(i, 0, 25) ch[0][i] = 1;
 ### 定义
 
 ```cpp
-int n, sa[N], rk[N], tp[N], buc[N];
+int n, sa[N], rk[N], tp[N], px[N], buc[N];
 int h[20][N];
 char s[N];
 ```
@@ -2155,22 +2155,25 @@ void SA() {
     rep(i, 1, n) buc[rk[i] = s[i]]++;
     rep(i, 1, m) buc[i] += buc[i - 1];
     per(i, n, 1) sa[buc[rk[i]]--] = i;
-    for(int k = 1, p; memset(buc, p = 0, m * 4 + 4); k <<= 1) {
-        rep(i, n - k + 1, n) tp[++p] = i;
-        rep(i, 1, n) if(sa[i] > k) tp[++p] = sa[i] - k;
+    for(int k = 1, p; memset(buc, p = 0, m + 1 << 2); k <<= 1) {
+        rep(i, n - k + 1, n) tp[++p] = i, px[p] = rk[i];
+        rep(i, 1, n) if(sa[i] > k) tp[++p] = sa[i] - k, px[p] = rk[sa[i] - k];
         rep(i, 1, n) buc[rk[i]]++;
         rep(i, 1, m) buc[i] += buc[i - 1];
-        per(i, n, 1) sa[buc[rk[tp[i]]]--] = tp[i];
-        memcpy(tp, rk, n * 4 + 4), p = 0;
-        rep(i, 1, n) rk[sa[i]] = p += tp[sa[i]] != tp[sa[i - 1]] || tp[sa[i] + k] != tp[sa[i - 1] + k];
+        per(i, n, 1) sa[buc[px[i]]--] = tp[i];
+        memcpy(tp, rk, n + 1 << 2), p = 0;
+        rep(i, 1, n) {
+            int a = sa[i], b = sa[i - 1];
+            rk[a] = p += tp[a] != tp[b] || tp[a + k] != tp[b + k];
+        }
         if((m = p) >= n) break;
     }
 }
 void height() {
-    int k = 0;
+    int p = 0;
     rep(i, 1, n) {
-        for(k ? k-- : 0; s[i + k] == s[sa[rk[i] - 1] + k]; k++);
-        h[0][rk[i]] = k;
+        for(p ? p-- : 0; s[i + p] == s[sa[rk[i] - 1] + p]; p++);
+        h[0][rk[i]] = p;
     }
     rep(i, 1, 19) rep(j, 1 << i, n)
         h[i][j] = min(h[i - 1][j], h[i - 1][j - (1 << i - 1)]);
@@ -2237,7 +2240,3 @@ int calc(char s[]) {
         if(!s[j + k]) i = max(i + k, j + 1), swap(i, j);
         else if(s[i + k] > s[j + k]) i = max(i + k, j) + 1, swap(i, j);
         else j += k + 1;
-    }
-    return i;
-}
-```
