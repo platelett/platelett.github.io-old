@@ -484,7 +484,7 @@ ull gen(ull x) {
 int rnd() {
     static ull s = 2;
     return (s += gen(s)) & INT_MAX;
-}
+} n
 ```
 
 ##  大模数取模
@@ -500,7 +500,6 @@ ll mul(ll a, ll b, ll p) {
 ## `bash` 对拍
 
 ```bash
-#!/bin/bash
 while true; do
     ./gen > in
     ./a < in > 1
@@ -2098,7 +2097,7 @@ void ins(int i) {
         return o;
     };
     int o = jmp(nw), c = s[i] - 97;
-    if(!ch[o][c]]) {
+    if(!ch[o][c]) {
         f[++sz] = ch[jmp(f[o])][c];
         len[ch[o][c] = sz] = len[o] + 2;
     }
@@ -2123,7 +2122,7 @@ void ins(int i) {
         return o;
     };
     int o = jmp(nw), c = s[i] - 97;
-    if(!ch[o][c]]) {
+    if(!ch[o][c]) {
         f[++sz] = ch[jmp(f[o])][c];
         len[ch[o][c] = sz] = len[o] + 2;
     }
@@ -2156,8 +2155,8 @@ void SA() {
     rep(i, 1, m) buc[i] += buc[i - 1];
     per(i, n, 1) sa[buc[rk[i]]--] = i;
     for(int k = 1, p; memset(buc, p = 0, m + 1 << 2); k <<= 1) {
-        rep(i, n - k + 1, n) tp[++p] = i, px[p] = rk[i];
-        rep(i, 1, n) if(sa[i] > k) tp[++p] = sa[i] - k, px[p] = rk[sa[i] - k];
+        rep(i, n - k + 1, n) p++, px[p] = rk[tp[p] = i];
+        rep(i, 1, n) if(sa[i] > k) p++, px[p] = rk[tp[p] = sa[i] - k];
         rep(i, 1, n) buc[rk[i]]++;
         rep(i, 1, m) buc[i] += buc[i - 1];
         per(i, n, 1) sa[buc[px[i]]--] = tp[i];
@@ -2172,7 +2171,7 @@ void SA() {
 void height() {
     int p = 0;
     rep(i, 1, n) {
-        for(p ? p-- : 0; s[i + p] == s[sa[rk[i] - 1] + p]; p++);
+        for(p && p--; s[i + p] == s[sa[rk[i] - 1] + p]; p++);
         h[0][rk[i]] = p;
     }
     rep(i, 1, 19) rep(j, 1 << i, n)
@@ -2240,3 +2239,7 @@ int calc(char s[]) {
         if(!s[j + k]) i = max(i + k, j + 1), swap(i, j);
         else if(s[i + k] > s[j + k]) i = max(i + k, j) + 1, swap(i, j);
         else j += k + 1;
+    }
+    return i;
+}
+```
