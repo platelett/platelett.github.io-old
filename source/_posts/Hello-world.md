@@ -19,7 +19,7 @@ top: 255
 
 - QQ: 2465478971
 - E-Mail: 2465478971qq@gmail.com
-- Codeforces ID：songjiaxing platelets
+- Codeforces ID：platelet platelets
 - Atcoder ID：songjiaxing platelets
 - 洛谷 ID：plate_let
 
