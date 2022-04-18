@@ -1584,11 +1584,11 @@ ab\bmod m=ab-\lfloor ab\cdot m^{-1}\rfloor m
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> uint = <span class="type">unsigned</span> <span class="type">int</span>;</span><br><span class="line"><span class="keyword">using</span> ull = <span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span>;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">barrett</span> &#123;</span><br><span class="line">    uint m; ull im;</span><br><span class="line">    <span class="built_in">barrett</span>(uint m) :<span class="built_in">m</span>(m), <span class="built_in">im</span>(~<span class="number">0ull</span> / m + <span class="number">1</span>) &#123;&#125;</span><br><span class="line">    <span class="function">uint <span class="title">mul</span><span class="params">(uint a, uint b)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        ull z = (ull)a * b;</span><br><span class="line">        uint v = z - <span class="built_in">uint</span>((<span class="type">__uint128_t</span>)z * im &gt;&gt; <span class="number">64</span>) * m;</span><br><span class="line">        <span class="keyword">return</span> m &lt;= v ? v + m : v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 </details>
 <p>速度比较：先在 <span class="math inline">\([0, m)\)</span> 中随机生成 <span class="math inline">\(10^5\)</span> 个数，然后计算两两乘积模 <span class="math inline">\(m\)</span> 的异或和。</p>
-<p>每个格子前者为直接取模的时间，后者为 <code>Barrett reduction</code> 取模的时间。</p>
+<p>测试系统 <code>ubuntu-21.04</code>（因为 <code>Linux</code> 比较稳定），每个格子前者为直接取模的时间，后者为 <code>Barrett reduction</code> 取模的时间。</p>
 <table>
 <thead>
 <tr class="header">
-<th style="text-align: center;">模数</th>
+<th style="text-align: center;">编译选项</th>
 <th style="text-align: center;">998244353</th>
 <th style="text-align: center;">1000000007</th>
 <th style="text-align: center;">1000000009</th>
@@ -1597,6 +1597,13 @@ ab\bmod m=ab-\lfloor ab\cdot m^{-1}\rfloor m
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">47.1s/29.6s</td>
+<td style="text-align: center;">45.7s/30.2s</td>
+<td style="text-align: center;">46.6s/30.4s</td>
+<td style="text-align: center;">45.8s/29.2s</td>
+</tr>
+<tr class="even">
 <td style="text-align: center;">-O2</td>
 <td style="text-align: center;">35.8s/6.4s</td>
 <td style="text-align: center;">35.2s/6.1s</td>
@@ -1606,29 +1613,14 @@ ab\bmod m=ab-\lfloor ab\cdot m^{-1}\rfloor m
 </tbody>
 </table>
 <h4 id="无误差除法的变种">无误差除法的变种</h4>
-<p><span class="math inline">\(k\)</span> 取得越大，<span class="math inline">\(\frac {m&#39;}{2^k}\)</span> 和 <span class="math inline">\(m^{-1}\)</span> 就越接近，事实上，当 <span class="math inline">\(k\)</span> 足够大时，在一定范围内的 <span class="math inline">\(a/m\)</span> 都可以准确地计算。</p>
-<p><span class="math inline">\(m&#39;\)</span> 有两种选择，<span class="math inline">\(\lceil \frac{2^k}m\rceil\)</span> 和 <span class="math inline">\(\lfloor \frac{2^k}m\rfloor\)</span>，其中后者是不起作用的，因为无论 <span class="math inline">\(k\)</span> 取多大，<span class="math inline">\(6/3\)</span> 总是会算错。</p>
-<p>假设 <span class="math inline">\(a \in [0, A]\)</span>，分析 <span class="math inline">\(k\)</span> 需要多大 <span class="math inline">\(a/m\)</span> 才能准确计算。</p>
-<p><span class="math display">\[
-\begin{aligned}
-2^k/m \le m&#39; &lt; 2^k/m+1\\
-a/m-1&lt;\lfloor\frac{am&#39;}{2^k}\rfloor&lt;a/m+a/2^k\\
-a/m-1&lt;\lfloor\frac{am&#39;}{2^k}\rfloor&lt;a/m+A/2^k
-\end{aligned}
-\]</span></p>
-<p>如果在 <span class="math inline">\((a/m-1,a/m+A/2^k)\)</span> 中只有一个整数，那么结果就是准确的。最坏情况是什么？该如何挑选 <span class="math inline">\(a\)</span>，使区间中包含两个整数？</p>
-<p>首先可以发现 <span class="math inline">\(a\)</span> 取 <span class="math inline">\(m\)</span> 的倍数是不起作用的，因为这个区间是开区间，因此 <span class="math inline">\(a/m\)</span> 应当小于一个整数并尽可能接近这个整数，即 <span class="math inline">\(a\bmod m=m-1\)</span>，这时它已经包含了 <span class="math inline">\(\lceil a/m-1\rceil\)</span>，因此它不能包含 <span class="math inline">\(\lceil a/m\rceil\)</span>，即</p>
-<p><span class="math display">\[\lceil a/m\rceil &lt; a/m+A/2^k\]</span></p>
-<p>因为我们有 <span class="math inline">\(a\bmod m=m-1\)</span>，所以 <span class="math inline">\(\lceil a/m\rceil=a/m+1/m\)</span>，然后</p>
-<p><span class="math display">\[1/m &lt; A/2^k \Rightarrow 2^k&gt;Am\]</span></p>
-<p>在乘法取模的时候，<span class="math inline">\(A=(m-1)^2\)</span>，所以 <span class="math inline">\(2^k\)</span> 会达到 <span class="math inline">\(m^3\)</span> 级别，比如 <span class="math inline">\(m=998244353\)</span> 时，应当取 <span class="math inline">\(k=90\)</span>。</p>
+<p><del>很快就会写。</del></p>
 <h4 id="速度更快的-lemire-reduction">速度更快的 Lemire reduction</h4>
 <p><del>很快就会写。</del></p>
-<p>另外，笔者想到个可以应用的地方。</p>
+<p>另外，笔者想到了两个可以应用的地方。</p>
 <ul>
 <li><p>高精度计算 <span class="math inline">\(ab\bmod m\)</span>，高精度乘法是可以用 <code>FFT</code> 优化到 <span class="math inline">\(O(\log m\log\log m)\)</span> 的（严格来讲，如果 <span class="math inline">\(m\)</span> 位数过于巨大，以致于直接求卷积会溢出时，需要用到 <code>Schönhage-Strassen</code> 算法，复杂度 <span class="math inline">\(O(\log m\log\log m\log \log \log m)\)</span>，这里粗略地分析为 <span class="math inline">\(O(\log m\log\log m)\)</span>，后面的复杂度分析也是如此），而取模只能 <span class="math inline">\(O(\log^2 m)\)</span>。当 <span class="math inline">\(m\)</span> 固定时，可以事先 <span class="math inline">\(O(\log^2 m)\)</span> 计算出 <span class="math inline">\(m&#39;\)</span>，然后就可以 <span class="math inline">\(O(\log m\log\log m)\)</span> 地取模了。将此应用于 <code>Miller Rabin</code> 素性检验可以将复杂度优化到 <span class="math inline">\(O(k\log^2n\log\log n)\)</span>。</p></li>
-<li><p>加速计算 <span class="math inline">\(\gcd(a,b)\)</span>。比如 <span class="math inline">\(a,b\)</span> 都比较小，但求 <span class="math inline">\(\gcd\)</span> 的次数很多。</p></li>
-<li><p>优化一些瓶颈为除法的算法，比如 min25 筛。</p></li>
+<li><p>加速计算 <span class="math inline">\(\gcd(a,b)\)</span>。如果 <span class="math inline">\(a,b\)</span> 都比较小，而次数很多，比如 <span class="math inline">\(a,b\le 10^7\)</span>，要求 <span class="math inline">\(5\cdot 10^7\)</span> 次 <span class="math inline">\(\gcd\)</span>。</p>
+<p>对于 <span class="math inline">\(m\)</span>，令 <span class="math inline">\(k=\max(24,2\lceil \log_2m\rceil)\)</span>，当 <span class="math inline">\(m=b\)</span> 时，<span class="math inline">\(am&#39;\)</span> 在 <code>long long</code> 范围内，可以很有效地优化。</p></li>
 </ul>
 <h3 id="卡特兰数的两个扩展">卡特兰数的两个扩展</h3>
 <p>本节所有的路径都是指每一步向上或向右走一个单位长度的路径。</p>
@@ -1657,9 +1649,9 @@ G(k,b,a)=\binom{l(a)+a}a-k\binom{l(a)+a}{a-1}
 F(k,b,x,y)=\sum_{i+j=x}\binom{l(i)+i}i\binom{y-l(i)+j}j
 \]</span> 进一步 <span class="math display">\[
 \begin{aligned}
-&amp;F(k,b,x,y)-kF(k,b,x-1,y+1)\\
-&amp;=\sum_{i+j=x}\binom{l(i)+i}i\binom{y-l(i)+j}j-k\binom{l(i)+i}i\binom{y-l(i)+j}{j-1}\\
-&amp;=\sum_{i+j=x}\binom{l(i)+i}i\left(\binom{y-l(i)+j}j-k\binom{y-l(i)+j}{j-1}\right)\\
+&amp;F(k,b,x,y)-kF(k,b,x-1,y+1)\\\\
+&amp;=\sum_{i+j=x}\binom{l(i)+i}i\binom{y-l(i)+j}j-k\binom{l(i)+i}i\binom{y-l(i)+j}{j-1}\\\\
+&amp;=\sum_{i+j=x}\binom{l(i)+i}i\left(\binom{y-l(i)+j}j-k\binom{y-l(i)+j}{j-1}\right)\\\\
 &amp;=\sum_{i+j=x}\binom{l(i)+i}iG(k,y-l(x),j)
 \end{aligned}
 \]</span> 注意到 <span class="math inline">\(\binom{l(i)+i}i\)</span> 是从 <span class="math inline">\((0,0)\)</span> 走到 <span class="math inline">\((i,l(i))\)</span> 的路径条数，而 <span class="math inline">\(G(k,y-l(x),j)\)</span> 是从 <span class="math inline">\((x,y+1)\)</span> <strong>倒着</strong>走到 <span class="math inline">\((i,l(i)+1)\)</span> 且不越过 <span class="math inline">\(l\)</span> 的路径条数，整体求和就是从 <span class="math inline">\((0,0)\)</span> 走到 <span class="math inline">\((x,y+1)\)</span> 的路径条数，因为 <span class="math inline">\(i\)</span> 就是在枚举最后一次越过 <span class="math inline">\(l\)</span> 时的横坐标。</p>
@@ -1676,7 +1668,7 @@ F(k,b,x,y)=\sum_{i+j=x}\binom{x+y+1}ik^j
 <p>后面有证明。</p>
 <p>算法：令 <span class="math inline">\(s_n=(2+\sqrt 3)^{2^n}+(2-\sqrt 3)^{2^n}\bmod M_p\)</span>，那么 <span class="math display">\[
 s_n=\begin{cases}
-4&amp;(i=0)\\
+4&amp;(i=0)\\\\
 s_{n-1}^2-2\bmod M_p&amp;(i&gt;1)
 \end{cases}
 \]</span> 计算平方可以用 <code>FFT</code> 做到 <span class="math inline">\(O(p\log p)\)</span>，由于模数很特殊，取模可以做到线性：</p>
@@ -1687,8 +1679,8 @@ s_{n-1}^2-2\bmod M_p&amp;(i&gt;1)
 (a+b\sqrt 3)(c+d\sqrt 3)=(ac+3bd)\bmod q+(bc+ad)\bmod q\sqrt3
 \]</span> <span class="math inline">\(X\)</span> 中任何两个元素的乘积一定也在 <span class="math inline">\(X\)</span> 内，但它不是群，因为不是所有元素都可逆，只保留有逆的元素，就得到了群 <span class="math inline">\(X^*\)</span>。因为 <span class="math inline">\((2+\sqrt 3)(2+(q-1)\sqrt 3)\equiv 1\pmod q\)</span>，所以 <span class="math inline">\(2+\sqrt 3\in X^{*}\)</span>。</p>
 <p>考虑 <span class="math display">\[
-(2+\sqrt 3)^{2^{p-2}}+(2-\sqrt 3)^{2^{p-2}} \equiv 0\pmod {M_p}\\
-(2+\sqrt 3)^{2^{p-1}}+[(2+\sqrt 3)(2-\sqrt 3)]^{2^{p-2}} \equiv 0\pmod {M_p}\\
+(2+\sqrt 3)^{2^{p-2}}+(2-\sqrt 3)^{2^{p-2}} \equiv 0\pmod {M_p}\\\\
+(2+\sqrt 3)^{2^{p-1}}+[(2+\sqrt 3)(2-\sqrt 3)]^{2^{p-2}} \equiv 0\pmod {M_p}\\\\
 (2+\sqrt 3)^{2^{p-1}}\equiv -1\pmod {M_p}
 \]</span> 这说明了 <span class="math inline">\(2 + \sqrt 3\)</span> 的阶为 <span class="math inline">\(2^p\)</span>，即 <span class="math inline">\((2 + \sqrt 3)^0,(2 + \sqrt 3)^1,(2 + \sqrt 3)^2,\cdots,(2+\sqrt 3)^{2^p-1}\)</span> 两两不同。</p>
 <p>于是有 <span class="math inline">\(2^p \le |X*| \le q^2 \le M_p\)</span>，得出矛盾 <span class="math inline">\(2^p \le M_p\)</span>，故 <span class="math inline">\(M_p\)</span> 为质数。</p>
@@ -1708,20 +1700,20 @@ s_{n-1}^2-2\bmod M_p&amp;(i&gt;1)
 <p>根据 <span class="math inline">\(M_p|\binom{M_p}i\)</span>。</p>
 <p>那么，我们有： <span class="math display">\[
 \begin{aligned}
-(6+2\sqrt 3)^{M_p}&amp;=6^{M_p}+2^{M_p}(\sqrt 3)^{M_p}\\
-&amp;=6+2\sqrt 3\cdot 3^{\frac{M_p-1}2}\\
+(6+2\sqrt 3)^{M_p}&amp;=6^{M_p}+2^{M_p}(\sqrt 3)^{M_p}\\\\
+&amp;=6+2\sqrt 3\cdot 3^{\frac{M_p-1}2}\\\\
 &amp;=6-2\sqrt 3
 \end{aligned}
 \]</span> 由于 <span class="math inline">\(2+\sqrt 3=\frac{(6+2\sqrt 3)^2}{24}\)</span>，进一步 <span class="math display">\[
 \begin{aligned}
-(2+\sqrt 3)^{\frac{M_p+1}2}&amp;=\frac{(6+2\sqrt 3)^{M_p+1}}{24^{\frac{M_p+1}2}}\\
-&amp;=\frac{(6+2\sqrt 3)(6-2\sqrt 3)}{24\cdot (2^{\frac{M_p-1}2})^3\cdot 3^{\frac{M_p-1}2}}\\
+(2+\sqrt 3)^{\frac{M_p+1}2}&amp;=\frac{(6+2\sqrt 3)^{M_p+1}}{24^{\frac{M_p+1}2}}\\\\
+&amp;=\frac{(6+2\sqrt 3)(6-2\sqrt 3)}{24\cdot (2^{\frac{M_p-1}2})^3\cdot 3^{\frac{M_p-1}2}}\\\\
 &amp;=-1
 \end{aligned}
 \]</span> 最后，在两边同乘 <span class="math inline">\((2-\sqrt 3)^{\frac{M_p+1}4}\)</span>，并利用 <span class="math inline">\((2+\sqrt 3)(2-\sqrt 3)=1\)</span> <span class="math display">\[
 \begin{aligned}
-(2+\sqrt 3)^{\frac{M_p+1}2}(2-\sqrt 3)^{\frac{M_p+1}4}&amp;=-(2-\sqrt 3)^{\frac{M_p+1}4}\\
-(2+\sqrt 3)^{\frac{M_p+1}4}+(2-\sqrt 3)^{\frac{M_p+1}4}&amp;=0\\
+(2+\sqrt 3)^{\frac{M_p+1}2}(2-\sqrt 3)^{\frac{M_p+1}4}&amp;=-(2-\sqrt 3)^{\frac{M_p+1}4}\\\\
+(2+\sqrt 3)^{\frac{M_p+1}4}+(2-\sqrt 3)^{\frac{M_p+1}4}&amp;=0\\\\
 (2+\sqrt 3)^{2^{p-2}}+(2-\sqrt 3)^{2^{p-2}}&amp;=0
 \end{aligned}
 \]</span></p>
@@ -1732,13 +1724,13 @@ s_{n-1}^2-2\bmod M_p&amp;(i&gt;1)
 </blockquote>
 <p>设 <span class="math inline">\(f_n=\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^n\)</span>，对于 <span class="math inline">\(n\ge 2\)</span>，有 <span class="math display">\[
 \begin{aligned}
-f_{n+1}&amp;=(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1})(\prod_{i=1}^{2^{n-1}}2i-1+2^n\bmod 2^{n+1})\bmod 2^{n+1}\\
-&amp;=(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1})^2\bmod 2^{n+1}\\
+f_{n+1}&amp;=(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1})(\prod_{i=1}^{2^{n-1}}2i-1+2^n\bmod 2^{n+1})\bmod 2^{n+1}\\\\
+&amp;=(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1})^2\bmod 2^{n+1}\\\\
 \end{aligned}
 \]</span> 设 <span class="math inline">\(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1}=f_n+k2^n(k\in\{0,1\})\)</span>，继续推。 <span class="math display">\[
 \begin{aligned}
-f_{n+1}&amp;=(f_n+k2^n)^2\bmod 2^{n+1}\\
-&amp;=f_n^2+k2^{n+1}+k^22^{2n}\bmod 2^{n+1}\\
+f_{n+1}&amp;=(f_n+k2^n)^2\bmod 2^{n+1}\\\\
+&amp;=f_n^2+k2^{n+1}+k^22^{2n}\bmod 2^{n+1}\\\\
 &amp;=f_n^2\bmod 2^{n+1}
 \end{aligned}
 \]</span> 计算平方可以用 <code>FFT</code> 做到 <span class="math inline">\(O(n\log n)\)</span>，总复杂度 <span class="math inline">\(O(n^2\log n)\)</span>。</p>
