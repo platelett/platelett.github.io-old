@@ -348,7 +348,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-04-23 17:29:15" itemprop="dateModified" datetime="2022-04-23T17:29:15+08:00">2022-04-23</time>
+        <time title="修改时间：2022-04-27 17:29:01" itemprop="dateModified" datetime="2022-04-27T17:29:01+08:00">2022-04-27</time>
       </span>
 
   
@@ -443,7 +443,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-04-23 17:29:15" itemprop="dateCreated datePublished" datetime="2022-04-23T17:29:15+08:00">2022-04-23</time>
+      <time title="创建时间：2022-04-27 17:29:01" itemprop="dateCreated datePublished" datetime="2022-04-27T17:29:01+08:00">2022-04-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -571,7 +571,7 @@ dp_{m,n}=dp_{m-1,n}(1+n+\binom n2)+\sum_{k=0}^{n-1}dp_{m-1,k}\binom{n+2}k
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-04-23 17:29:15" itemprop="dateModified" datetime="2022-04-23T17:29:15+08:00">2022-04-23</time>
+        <time title="修改时间：2022-04-27 17:29:01" itemprop="dateModified" datetime="2022-04-27T17:29:01+08:00">2022-04-27</time>
       </span>
 
   
@@ -676,7 +676,7 @@ A_{i,j}+A_{i+1,j+1}\le A_{i,j+1}+A_{i+1,j}\Rightarrow A_{i,j+1}-A_{i,j}\ge A_{i+
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-04-23 17:29:15" itemprop="dateModified" datetime="2022-04-23T17:29:15+08:00">2022-04-23</time>
+        <time title="修改时间：2022-04-27 17:29:01" itemprop="dateModified" datetime="2022-04-27T17:29:01+08:00">2022-04-27</time>
       </span>
 
   
@@ -796,7 +796,7 @@ B_i=
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-04-23 17:29:15" itemprop="dateModified" datetime="2022-04-23T17:29:15+08:00">2022-04-23</time>
+        <time title="修改时间：2022-04-27 17:29:01" itemprop="dateModified" datetime="2022-04-27T17:29:01+08:00">2022-04-27</time>
       </span>
 
   
@@ -1116,7 +1116,7 @@ FWT(A)_i = \sum_{2\ |\ pop(j \&amp; i)}A_j - \sum_{2\ \not|\ pop(j \&amp; i)}A_j
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/cerc2009/" class="post-title-link" itemprop="url">(False)faces | Cerc2009</a>
+          <a href="/cerc2009/" class="post-title-link" itemprop="url">(False)faces | Cerc2009 积和式模 4</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1146,14 +1146,14 @@ FWT(A)_i = \sum_{2\ |\ pop(j \&amp; i)}A_j - \sum_{2\ \not|\ pop(j \&amp; i)}A_j
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.5k</span>
+      <span>5.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -1171,16 +1171,16 @@ FWT(A)_i = \sum_{2\ |\ pop(j \&amp; i)}A_j - \sum_{2\ \not|\ pop(j \&amp; i)}A_j
 </blockquote>
 <p>完美匹配的个数即积和式。</p>
 <p>来自论文的算法：求积和式模 <span class="math inline">\(4\)</span> 的余数。</p>
-<p>积和式定义 <span class="math display">\[
-\text{perm }A = \sum_{p}A_{i,p_i}
+<p>积和式定义：考虑所有选 <span class="math inline">\(n\)</span> 个不同行、不同列的数的方案，对每个方案中 <span class="math inline">\(n\)</span> 个数的乘积求和。 <span class="math display">\[
+\text{perm} A = \sum_{p}A_{i,p_i}
 \]</span> 当 <span class="math inline">\(A\)</span> 是 <span class="math inline">\(01\)</span> 矩阵时，有 <span class="math display">\[
-\text{prem} A = (-1)^n\sum_{x_i \in \{0,1\}}(-1)^{x1+x2+\cdots+x_n}\prod_{i=1}^n(Ax)_i
-\]</span> 证明可以考虑容斥：强制一些列不能用。</p>
-<p>观察到式子中间有一个 <span class="math inline">\(\prod\)</span> ，由于我们要求这个东西模 <span class="math inline">\(4\)</span> 的余数，因此 <span class="math inline">\((Ax)_i\)</span> 至多只能有一个位置模 <span class="math inline">\(2\)</span> 为 <span class="math inline">\(0\)</span>。</p>
-<p>考虑 <span class="math inline">\((Ax)_i\)</span> 每一项模 <span class="math inline">\(2\)</span> 的余数，由于至多只能有一个 <span class="math inline">\(0\)</span>，因此可以枚举这个东西的取值，它只有 <span class="math inline">\(n+1\)</span> 种。</p>
+\text{prem} A = (-1)^n\sum_{x \in \{0,1\}^n}(-1)^{x1+x2+\cdots+x_n}\prod_{i=1}^n(Ax)_i
+\]</span> 证明可以考虑容斥：钦定某些列没有数被选。</p>
+<p>观察到式子中间有一个 <span class="math inline">\(\prod\)</span> ，由于我们要求这个东西模 <span class="math inline">\(4\)</span> 的余数，如果它要造成贡献的话，<span class="math inline">\(Ax\)</span> 就至多有一个位置模 <span class="math inline">\(2\)</span> 为 <span class="math inline">\(0\)</span>。</p>
+<p>考虑 <span class="math inline">\(Ax\)</span> 每一项模 <span class="math inline">\(2\)</span> 的余数，由于至多只能有一个 <span class="math inline">\(0\)</span>，因此可以枚举这个东西的取值，它只有 <span class="math inline">\(n+1\)</span> 种。</p>
 <p>对于每种取值，通过高斯消元解出满足条件的所有 <span class="math inline">\(x\)</span>，再将每一组 <span class="math inline">\(x\)</span> 代入刚刚的式子中求出答案。</p>
 <p>问题是，合法的 <span class="math inline">\(x\)</span> 的个数可能很大，因为需要枚举自由元的取值。</p>
-<p>对这个矩阵做一些变换。 <span class="math display">\[
+<p>对这个矩阵做一些变换，记为 <span class="math inline">\(A&#39;\)</span>。 <span class="math display">\[
 \begin{bmatrix}
 A_{1,1}&amp;A_{1,2}&amp;\cdots &amp;A_{1,n}&amp;v_1\\
 A_{2,1}&amp;A_{2,2}&amp;\cdots &amp;A_{2,n}&amp;v_2\\
@@ -1188,8 +1188,8 @@ A_{2,1}&amp;A_{2,2}&amp;\cdots &amp;A_{2,n}&amp;v_2\\
 A_{n,1}&amp;A_{n,2}&amp;\cdots &amp;A_{n,n}&amp;v_n\\
 0&amp;0&amp;\cdots&amp;0&amp;1
 \end{bmatrix}
-\]</span> 这个矩阵的积和式等于原矩阵的积和式。</p>
-<p>随机选取 <span class="math inline">\(v\)</span>，则期望 <span class="math inline">\(O(1)\)</span> 组解。</p>
+\]</span> 显然 <span class="math inline">\(\text{perm} A&#39; = \text{perm} A\)</span>。</p>
+<p>随机选取 <span class="math inline">\(v\)</span>，则期望 <span class="math inline">\(O(1)\)</span> 组解：一组 <span class="math inline">\(x\)</span> 要有贡献，<span class="math inline">\(x_{n+1}=1\)</span>（注意这一点，不能枚举 <span class="math inline">\(x_{n+1}=0\)</span>，否则复杂度会假），因此翻转 <span class="math inline">\(v\)</span> 中的任意一位，<span class="math inline">\(A&#39;x\)</span> 也会翻转对应的一位，所以对于一个确定的 <span class="math inline">\(A&#39;x\)</span>，每一组 <span class="math inline">\(x\)</span> 成为它的解的概率都是 <span class="math inline">\(\frac 1{2^n}\)</span>。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/cerc2009/#more" rel="contents">
@@ -1335,14 +1335,14 @@ A_{n,1}&amp;A_{n,2}&amp;\cdots &amp;A_{n,n}&amp;v_n\\
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">202k</span>
+    <span title="站点总字数">205k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:04</span>
+    <span title="站点阅读时长">3:06</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
