@@ -998,7 +998,7 @@ x_l+x_r \ge y_l + y_r + A_p \iff (x_l - y_l) + (x_r - y_r) \ge A_p
 <p>问当每个结点作为根时，谁必胜。</p>
 <p><span class="math inline">\(n \le 10^5, k \le 20,a_i \le 10^9\)</span></p>
 </blockquote>
-<p>当 <span class="math inline">\(k=1\)</span> 时，它几乎是一个<a target="_blank" rel="noopener" href="http://coding-pages-bucket-3532178-8430896-13917-522304-1305159063.cos-website.ap-hongkong.myqcloud.com/nim-you-xi-and-sg-ding-li/">阶梯 <code>NIM</code> 游戏</a>。</p>
+<p>当 <span class="math inline">\(k=1\)</span> 时，它几乎是一个<a target="_blank" rel="noopener" href="https://platelet.top/nim-you-xi-and-sg-ding-li/">阶梯 <code>NIM</code> 游戏</a>。</p>
 <p>设根结点深度为 <span class="math inline">\(0\)</span>，根据阶梯 <code>NIM</code> 游戏的结论，原问题等价于所有深度为奇数的结点做 <code>NIM</code> 游戏，即先手必胜当且仅当所有深度为奇数的结点的 <span class="math inline">\(a_i\)</span> 异或和不为 <span class="math inline">\(0\)</span>。</p>
 <p>对于一般的情况，先手必胜当且仅当 <span class="math display">\[
 \bigoplus_{\big\lfloor \frac {depth_u}k \big\rfloor 为奇数}a_u \ne 0

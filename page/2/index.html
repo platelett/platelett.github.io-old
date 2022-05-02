@@ -516,8 +516,8 @@ ab\bmod m=ab-\lfloor ab\cdot m^{-1}\rfloor m
 &amp;=\sum_{c=2}^n(\frac c{d_c})^k\sum_{i=1}^{\lfloor\frac nc\rfloor}\sum_{j=1}^{\lfloor\frac nc\rfloor}[gcd(i,j)=1]\\
 &amp;=\sum_{c=2}^n(\frac c{d_c})^k(2\sum_{i=1}^{\lfloor\frac nc\rfloor}\varphi(i)-1)
 \end{aligned}
-\]</span> 现在的问题是算 <span class="math inline">\((\frac x{d_x})^k\)</span> 和 <span class="math inline">\(\varphi(x)\)</span> 在 <span class="math inline">\(\lfloor \frac nc \rfloor\)</span> 处的前缀和，后者直接<a target="_blank" rel="noopener" href="http://coding-pages-bucket-3532178-8430896-13917-522304-1305159063.cos-website.ap-hongkong.myqcloud.com/du-jiao-shai-and-min-25-shai-and-powerful-number-shai/#%E6%9D%9C%E6%95%99%E7%AD%9B">杜教筛</a>即可。</p>
-<p>对于前者，由于涉及到 <span class="math inline">\(d_x\)</span> 考虑 <a target="_blank" rel="noopener" href="http://coding-pages-bucket-3532178-8430896-13917-522304-1305159063.cos-website.ap-hongkong.myqcloud.com/du-jiao-shai-and-min-25-shai-and-powerful-number-shai/#min-25-%E7%AD%9B">Min-25 筛</a>。</p>
+\]</span> 现在的问题是算 <span class="math inline">\((\frac x{d_x})^k\)</span> 和 <span class="math inline">\(\varphi(x)\)</span> 在 <span class="math inline">\(\lfloor \frac nc \rfloor\)</span> 处的前缀和，后者直接<a target="_blank" rel="noopener" href="https://platelet.top/du-jiao-shai-and-min-25-shai-and-powerful-number-shai/#%E6%9D%9C%E6%95%99%E7%AD%9B">杜教筛</a>即可。</p>
+<p>对于前者，由于涉及到 <span class="math inline">\(d_x\)</span> 考虑 <a target="_blank" rel="noopener" href="https://platelet.top/du-jiao-shai-and-min-25-shai-and-powerful-number-shai/#min-25-%E7%AD%9B">Min-25 筛</a>。</p>
 <p>设 <span class="math display">\[
 g(n,i) = \sum_{j=2}^n [j \in P \lor d_j &gt; p_i]j^k\\
 f(n,i) = \sum_{j=2}^n [j \not\in P \land d_j \le p_i](\frac j{d_j})^k\\
@@ -530,7 +530,7 @@ h(n,i)=h(n,i-1)-h(\lfloor\frac n {p_i} \rfloor, i - 1) + h(p_i-1,i)
 g(n,0)=\sum_{i=2}^ni^k\\
 f(n,0)=0\\
 h(n,0)=n-1
-\]</span> 这里需要求<a target="_blank" rel="noopener" href="http://coding-pages-bucket-3532178-8430896-13917-522304-1305159063.cos-website.ap-hongkong.myqcloud.com/zi-ran-shu-deng-mi-qiu-he/">自然数等幂和</a>。</p>
+\]</span> 这里需要求<a target="_blank" rel="noopener" href="https://platelet.top/zi-ran-shu-deng-mi-qiu-he/">自然数等幂和</a>。</p>
 <p>当 <span class="math inline">\(n &lt; p_i^2\)</span> 时都不需要转移，因此这是一个标准的 Min-25 筛。</p>
 <p>复杂度 <span class="math inline">\(O(\frac {n^{\frac 34}}{\log n}+n^{\frac 23})\)</span>。</p>
 <p>代码：</p>
