@@ -33,8 +33,8 @@ int read() {
     static streambuf* in = cin.rdbuf();
     #define gc (p1 == p2 && (p2 = (p1 = buf) + in -> sgetn(buf, M), p1 == p2) ? -1 : *p1++)
     static char buf[M], *p1, *p2;
-    int c = gc, r = 0;
-    while(c < 48) c = gc;
+    int c, r = 0;
+    while((c = gc) < 48);
     while(c > 47) r = r * 10 + (c & 15), c = gc;
     return r;
 }
@@ -62,8 +62,8 @@ int read() {
     static streambuf* in = cin.rdbuf();
     #define gc (p1 == p2 && (p2 = (p1 = buf) + in -> sgetn(buf, M), p1 == p2) ? -1 : *p1++)
     static char buf[M], *p1, *p2;
-    int c = gc, r = 0, f = 1;
-    for(; c < 48; c = gc) if(c == 45) f = -1;
+    int c, r = 0, f = 1;
+    while((c = gc) < 48) if(c == 45) f = -1;
     while(c > 47) r = r * 10 + (c & 15), c = gc;
     return r * f;
 }
@@ -484,7 +484,7 @@ ull gen(ull x) {
 int rnd() {
     static ull s = 2;
     return (s += gen(s)) & INT_MAX;
-} n
+}
 ```
 
 ##  大模数取模
@@ -781,8 +781,8 @@ void NTT(mint a[], bool t) {
 while(lim <= n + m) lim <<= 1;
 For(i, 0, lim) rev[i] = rev[i >> 1] >> 1 | (i & 1 ? lim >> 1 : 0);
 for(int i = 1; i < lim; i <<= 1) {
-    ll wn = Pow(3, P / 2 / i);
-    For(j, 0, i) w[i + j] = j ? w[i + j - 1] * wn % P : 1;
+    ll wn = Pow(3, P / 2 / i), p = 1;
+    For(j, 0, i) w[i + j] = p, p = p * wn % P;
 }
 ```
 
@@ -792,8 +792,8 @@ for(int i = 1; i < lim; i <<= 1) {
 while(lim <= n + m) lim <<= 1;
 For(i, 0, lim) rev[i] = rev[i >> 1] >> 1 | (i & 1 ? lim >> 1 : 0);
 for(int i = 1; i < lim; i <<= 1) {
-    mint wn = mint(3).pow(P / 2 / lim);
-    For(j, 0, i) w[i + j] = j ? w[i + j - 1] * wn : 1;
+    mint wn = mint(3).pow(P / 2 / i), p = 1;
+    For(j, 0, i) w[i + j] = p, p *= wn;
 }
 ```
 
@@ -1051,7 +1051,7 @@ ll f1[N], f2[N];
 ll min25(ll n) {
     int lim = sqrt(n);
     rep(i, 1, lim) f1[i] = i - 1, f2[i] = n / i - 1;
-    rep(p, 2, lim) if (f1[p] != f1[p - 1]) {
+    rep(p, 2, lim) if(f1[p] != f1[p - 1]) {
         int w1 = lim / p;
         ll x = f1[p - 1], w3 = (ll)p * p, w2 = min((ll)lim, n / w3), d = n / p;
         rep(i, 1, w1) f2[i] -= f2[i * p] - x;
@@ -1767,7 +1767,7 @@ int n, a[N], p, stk[N];
 int d[N], fa[N], sz[N], son[N], tp[N], idx, dfn[N];
 vector<int> G[N];
 int eid, he[N];
-struct edge { int v, nx; } e[N * 2];
+struct edge { int v, n; } e[N * 2];
 ```
 
 #### 函数
@@ -1837,7 +1837,7 @@ int lca(int u, int v) {
 ```cpp
 int n, m, s, t;
 int eid = 1, he[N], nw[N], d[N], q[N];
-struct edge { int v, nx, c; } e[M * 2];
+struct edge { int v, n, c; } e[M * 2];
 ```
 
 #### 函数
@@ -1852,14 +1852,14 @@ bool bfs() {
     q[1] = s, d[s] = 1;
     for(int l = 1, r = 1; l <= r; l++) {
         int u = q[l];
-        for(int i = he[u], v; v = e[i].v; i = e[i].nx)
+        for(int i = he[u], v; v = e[i].v; i = e[i].n)
         if(e[i].c && !d[v]) q[++r] = v, d[v] = d[u] + 1;
     }
     return d[t];
 }
 int dfs(int u, int lim, int re = 0) {
     if(u == t) return lim;
-    for(int& i = nw[u], v; v = e[i].v; i = e[i].nx)
+    for(int& i = nw[u], v; v = e[i].v; i = e[i].n)
     if(e[i].c && d[v] == d[u] + 1) {
         int t = dfs(v, min(e[i].c, lim));
         e[i].c -= t, e[i ^ 1].c += t, re += t, lim -= t;
@@ -1884,14 +1884,14 @@ bool bfs() {
     q[1] = s, d[s] = 1;
     for(int l = 1, r = 1; l <= r; l++) {
         int u = q[l];
-        for(int i = he[u], v; v = e[i].v; i = e[i].nx)
+        for(int i = he[u], v; v = e[i].v; i = e[i].n)
         if(e[i].c && !d[v]) q[++r] = v, d[v] = d[u] + 1;
     }
     return d[t];
 }
 ll dfs(int u, ll lim, ll re = 0) {
     if(u == t) return lim;
-    for(int& i = nw[u], v; v = e[i].v; i = e[i].nx)
+    for(int& i = nw[u], v; v = e[i].v; i = e[i].n)
     if(e[i].c && d[v] == d[u] + 1) {
         ll t = dfs(v, min((ll)e[i].c, lim));
         e[i].c -= t, e[i ^ 1].c += t, re += t, lim -= t;
@@ -1910,7 +1910,7 @@ ll dfs(int u, ll lim, ll re = 0) {
 ```cpp
 int n, m, s, t, flow, cost;
 int eid = 1, he[N], nw[N], q[N], d[N], vis[N];
-struct edge { int v, nx, c, w; } e[M * 2];
+struct edge { int v, n, c, w; } e[M * 2];
 ```
 
 #### 函数
@@ -1925,7 +1925,7 @@ bool spfa() {
     q[0] = s, d[s] = 0, vis[s] = 1;
     for(int l = 0, r = 0; l <= r; l++) {
         int u = q[l % N]; vis[u] = 0;
-        for(int i = he[u], v; v = e[i].v; i = e[i].nx)
+        for(int i = he[u], v; v = e[i].v; i = e[i].n)
         if(e[i].c && d[u] + e[i].w < d[v]) {
             d[v] = d[u] + e[i].w;
             if(!vis[v]) q[++r % N] = v, vis[v] = 1;
@@ -1936,7 +1936,7 @@ bool spfa() {
 int dfs(int u, int lim, int re = 0) {
     if(u == t) return lim;
     vis[u] = 1;
-    for(int& i = nw[u], v; v = e[i].v; i = e[i].nx)
+    for(int& i = nw[u], v; v = e[i].v; i = e[i].n)
     if(!vis[v] && e[i].c && d[v] == d[u] + e[i].w) {
         int t = dfs(v, min(lim, e[i].c));
         e[i].c -= t, e[i ^ 1].c += t, re += t, lim -= t, cost += t * e[i].w;
@@ -1960,7 +1960,7 @@ while(spfa()) flow += dfs(s, 1e9);
 ```cpp
 int n, m, s, t, flow, cost;
 int eid = 1, he[N], d[N], pre[N], h[N];
-struct edge { int v, nx, c, w; } e[M * 2];
+struct edge { int v, n, c, w; } e[M * 2];
 struct node {
     int d, u;
     bool operator <(const node& b)const {
@@ -1982,7 +1982,7 @@ bool dij() {
     while(q.size()) {
         auto [dis, u] = q.top(); q.pop();
         if(dis > d[u]) continue;
-        for(int i = he[u], v; v = e[i].v; i = e[i].nx) if(e[i].c) {
+        for(int i = he[u], v; v = e[i].v; i = e[i].n) if(e[i].c) {
             int w = d[u] + e[i].w - h[v] + h[u];
             if(w < d[v]) pre[v] = i ^ 1, q.push({d[v] = w, v});
         }
@@ -1996,10 +1996,10 @@ bool dij() {
 
 ```cpp
 while(dij()) {
-    int mi = inf;
-    for(int u = t, i; i = pre[u]; u = e[i].v) mi = min(mi, e[i ^ 1].c);
-    for(int u = t, i; i = pre[u]; u = e[i].v) e[i].c += mi, e[i ^ 1].c -= mi;
-    flow += mi, cost += mi * h[t];
+    int mn = d[0];
+    for(int u = t, i; i = pre[u]; u = e[i].v) mn = min(mn, e[i ^ 1].c);
+    for(int u = t, i; i = pre[u]; u = e[i].v) e[i].c += mn, e[i ^ 1].c -= mn;
+    flow += mn, cost += mn * h[t];
 }
 ```
 
@@ -2072,7 +2072,7 @@ int twoSat() {
 
 ```cpp
 rep(i, 1, n) {
-    int& j = ma > i ? min(R[p * 2 - i], ma - i) : 0;
+    int& j = R[i] = ma > i ? min(R[p * 2 - i], ma - i) : 0;
     while(s[i - j] == s[i + j + 1]) j++;
     if(i + j > ma) ma = i + j, p = i;
 }
