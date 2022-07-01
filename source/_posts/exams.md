@@ -1,6 +1,7 @@
 ---
 title: 考试题
 date: 2021-09-17 16:27:28
+hiden: true
 ---
 ### AUOJ1760
 
