@@ -1650,9 +1650,9 @@ a/m-1&lt;\lfloor\frac{am&#39;}{2^k}\rfloor&lt;a/m+A/2^k
 <p><del>很快就会写。</del> <del>其实已经咕了。</del></p>
 <p>另外，笔者想到个可以应用的地方。</p>
 <ul>
-<li><p>高精度计算 <span class="math inline">\(ab\bmod m\)</span>，高精度乘法是可以用 <code>FFT</code> 优化到 <span class="math inline">\(O(\log m\log\log m)\)</span> 的（严格来讲，如果 <span class="math inline">\(m\)</span> 位数过于巨大，以致于直接求卷积会溢出时，需要用到 <code>Schönhage-Strassen</code> 算法，复杂度 <span class="math inline">\(O(\log m\log\log m\log \log \log m)\)</span>，这里粗略地分析为 <span class="math inline">\(O(\log m\log\log m)\)</span>，后面的复杂度分析也是如此），而取模只能 <span class="math inline">\(O(\log^2 m)\)</span>。当 <span class="math inline">\(m\)</span> 固定时，可以事先 <span class="math inline">\(O(\log^2 m)\)</span> 计算出 <span class="math inline">\(m&#39;\)</span>，然后就可以 <span class="math inline">\(O(\log m\log\log m)\)</span> 地取模了。将此应用于 <code>Miller Rabin</code> 素性检验可以将复杂度优化到 <span class="math inline">\(O(k\log^2n\log\log n)\)</span>。</p></li>
-<li><p>加速计算 <span class="math inline">\(\gcd(a,b)\)</span>。比如 <span class="math inline">\(a,b\)</span> 都比较小，但求 <span class="math inline">\(\gcd\)</span> 的次数很多。</p></li>
-<li><p>优化一些瓶颈为除法的算法，比如 min25 筛。</p></li>
+<li><p>高精度计算 <span class="math inline">\(ab\bmod m\)</span>，高精度乘法是可以用 <code>FFT</code> 优化到 <span class="math inline">\(O(\log m\log\log m)\)</span> 的（粗略分析，不考虑位数相当大时用的 <code>Schönhage-Strassen</code> 算法)，而取模只能 <span class="math inline">\(O(\log^2 m)\)</span>。当 <span class="math inline">\(m\)</span> 固定时，可以事先 <span class="math inline">\(O(\log^2 m)\)</span> 计算出 <span class="math inline">\(m&#39;\)</span>，然后就可以 <span class="math inline">\(O(\log m\log\log m)\)</span> 地取模了。将此应用于 <code>Miller Rabin</code> 素性检验可以将复杂度优化到 <span class="math inline">\(O(k\log^2n\log\log n)\)</span>。事实上 <code>Miller Rabin</code> 在实践中一般用另一种取模算法 montgomery reducing 速度更快。</p></li>
+<li><p>加速计算 <span class="math inline">\(\gcd(a,b)\)</span>。比如 <span class="math inline">\(a,b\)</span> 都比较小，但求 <span class="math inline">\(\gcd\)</span> 的次数很多。事实上基于值域预处理的 <span class="math inline">\(O(1)\)</span> GCD 速度更快。</p></li>
+<li><p>优化一些瓶颈为除法的算法，比如 min25 筛和 Powerful Number 筛。</p></li>
 </ul>
 <h3 id="卡特兰数的两个扩展">卡特兰数的两个扩展</h3>
 <p>本节所有的路径都是指每一步向上或向右走一个单位长度的路径。</p>
