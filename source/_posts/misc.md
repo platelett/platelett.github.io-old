@@ -82,20 +82,19 @@ $$
 
 首先可以发现 $a$ 取 $m$ 的倍数是不起作用的，因为这个区间是开区间，因此 $a/m$ 应当小于一个整数并尽可能接近这个整数，即 $a\bmod m=m-1$，这时它已经包含了 $\lceil a/m-1\rceil$，因此它不能包含 $\lceil a/m\rceil$，即
 
-$$\lceil a/m\rceil < a/m+A/2^k$$
+$$a/m+A/2^k\le \lceil a/m\rceil$$
 
 因为我们有 $a\bmod m=m-1$，所以 $\lceil a/m\rceil=a/m+1/m$，然后
 
-$$1/m < A/2^k \Rightarrow 2^k>Am$$
+$$A/2^k \le 1/m\Rightarrow 2^k\ge Am$$
 
 在乘法取模的时候，$A=(m-1)^2$，所以 $2^k$ 会达到 $m^3$ 级别，比如 $m=998244353$ 时，应当取 $k=90$。
 
 #### 速度更快的 Lemire reduction
 
-~~很快就会写。~~
 ~~其实已经咕了。~~
 
-另外，笔者想到个可以应用的地方。
+另外，笔者想到几个可以应用的地方。
 
 - 高精度计算 $ab\bmod m$，高精度乘法是可以用 `FFT` 优化到 $O(\log m\log\log m)$ 的（粗略分析，不考虑位数相当大时用的 `Schönhage-Strassen` 算法)，而取模只能 $O(\log^2 m)$。当 $m$ 固定时，可以事先 $O(\log^2 m)$ 计算出 $m'$，然后就可以 $O(\log m\log\log m)$ 地取模了。将此应用于 `Miller Rabin` 素性检验可以将复杂度优化到 $O(k\log^2n\log\log n)$。事实上 `Miller Rabin` 在实践中一般用另一种取模算法 montgomery reducing 速度更快。
 
