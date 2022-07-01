@@ -37,6 +37,7 @@ $$
 
 实践中可以令 $k=64$，可以用 `~0ull / m + 1` 来计算 $m'$。
 
+
 <details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
 ```cpp
 using uint = unsigned int;
@@ -96,11 +97,11 @@ $$1/m < A/2^k \Rightarrow 2^k>Am$$
 
 另外，笔者想到个可以应用的地方。
 
-- 高精度计算 $ab\bmod m$，高精度乘法是可以用 `FFT` 优化到 $O(\log m\log\log m)$ 的（严格来讲，如果 $m$ 位数过于巨大，以致于直接求卷积会溢出时，需要用到 `Schönhage-Strassen` 算法，复杂度 $O(\log m\log\log m\log \log \log m)$，这里粗略地分析为 $O(\log m\log\log m)$，后面的复杂度分析也是如此），而取模只能 $O(\log^2 m)$。当 $m$ 固定时，可以事先 $O(\log^2 m)$ 计算出 $m'$，然后就可以 $O(\log m\log\log m)$ 地取模了。将此应用于 `Miller Rabin` 素性检验可以将复杂度优化到 $O(k\log^2n\log\log n)$。
+- 高精度计算 $ab\bmod m$，高精度乘法是可以用 `FFT` 优化到 $O(\log m\log\log m)$ 的（粗略分析，不考虑位数相当大时用的 `Schönhage-Strassen` 算法)，而取模只能 $O(\log^2 m)$。当 $m$ 固定时，可以事先 $O(\log^2 m)$ 计算出 $m'$，然后就可以 $O(\log m\log\log m)$ 地取模了。将此应用于 `Miller Rabin` 素性检验可以将复杂度优化到 $O(k\log^2n\log\log n)$。事实上 `Miller Rabin` 在实践中一般用另一种取模算法 montgomery reducing 速度更快。
 
-- 加速计算 $\gcd(a,b)$。比如 $a,b$ 都比较小，但求 $\gcd$ 的次数很多。
+- 加速计算 $\gcd(a,b)$。比如 $a,b$ 都比较小，但求 $\gcd$ 的次数很多。事实上基于值域预处理的 $O(1)$ GCD 速度更快。
 
-- 优化一些瓶颈为除法的算法，比如 min25 筛。
+- 优化一些瓶颈为除法的算法，比如 min25 筛和 Powerful Number 筛。
 
 ### 卡特兰数的两个扩展
 
