@@ -38,6 +38,8 @@ $$
 实践中可以令 $k=64$，可以用 `~0ull / m + 1` 来计算 $m'$。
 
 
+<details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
+
 ```cpp
 using uint = unsigned int;
 using ull = unsigned long long;
@@ -51,6 +53,7 @@ struct barrett {
     }
 };
 ```
+</details>
 
 速度比较：先在 $[0, m)$ 中随机生成 $10^5$ 个数，然后计算两两乘积模 $m$ 的异或和。
 
