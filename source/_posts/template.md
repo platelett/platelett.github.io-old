@@ -38,7 +38,7 @@ int read() {
     while(c > 47) r = r * 10 + (c & 15), c = gc;
     return r;
 }
-void wrt(int x) {
+void write(int x) {
     static streambuf* out = cout.rdbuf();
     #define pc out -> sputc
     static char c[11]; int sz = 0;
@@ -62,12 +62,13 @@ int read() {
     static streambuf* in = cin.rdbuf();
     #define gc (p1 == p2 && (p2 = (p1 = buf) + in -> sgetn(buf, M), p1 == p2) ? -1 : *p1++)
     static char buf[M], *p1, *p2;
-    int c, r = 0, f = 1;
-    while((c = gc) < 48) if(c == 45) f = -1;
+    int c, r = 0;
+    bool f = 0;
+    while((c = gc) < 48) f = c == 45;
     while(c > 47) r = r * 10 + (c & 15), c = gc;
-    return r * f;
+    return f ? -r : r;
 }
-void wrt(int x) {
+void write(int x) {
     static streambuf* out = cout.rdbuf();
     #define pc out -> sputc
     static char c[11]; int sz = 0;
@@ -78,7 +79,33 @@ void wrt(int x) {
 }
 ```
 
-**注：输出 ```long long``` 时 ```wrt``` 函数中的 ```c``` 数组大小要开到 $20$。**
+#### Fastest(Linux)
+
+```cpp
+#include <sys/mman.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+int fd = open(/*file name*/, 0);
+char *in = (char*)mmap(NULL, lseek(fd, 0, 2), 1, 2, fd, 0);
+char buf[/*output size*/], *out = buf;
+
+inline int read() {
+    int r = 0;
+    char c;
+    while((c = *in++) < 48);
+    while(r = r * 10 + c - 48, (c = *in++) >= 48);
+    return r;
+}
+inline void write(int x) {
+    char c[11]; int sz = 0;
+    do c[++sz] = x % 10, x /= 10; while(x);
+    while(sz) *out++ = c[sz--] + 48;
+    *out++ = 10;
+}
+```
+
+**注：输出 ```long long``` 时 ```write``` 函数中的 ```c``` 数组大小要开到 $20$。**
 
 ## AtCoder-modint
 
@@ -719,7 +746,7 @@ while(lim <= n + m) lim <<= 1;
 For(i, 0, lim) rev[i] = rev[i >> 1] >> 1 | (i & 1 ? lim >> 1 : 1);
 ```
 
-### 较快版
+### 较快版 / fast NTT
 
 #### 定义
 
@@ -737,8 +764,8 @@ int lim = 1, rev[N];
 #### 函数
 
 ```cpp
-int add(int a, int b) { return (a += b) < P ? a : a - P; }
-int sub(int a, int b) { return (a -= b) < 0 ? a + P : a; }
+inline int add(int a, int b) { return (a += b) < P ? a : a - P; }
+inline int sub(int a, int b) { return (a -= b) < 0 ? a + P : a; }
 ll Pow(ll a, int n, ll r = 1) {
     for(; n; n >>= 1, a = a * a % P)
     if(n & 1) r = r * a % P;
@@ -796,6 +823,61 @@ for(int i = 1; i < lim; i <<= 1) {
     For(j, 0, i) w[i + j] = p, p *= wn;
 }
 ```
+### DIF & IDIF
+
+#### 定义
+
+```cpp
+int lim = 1, w[22], iw[22];
+```
+
+```cpp
+inline int add(int a, int b) { return (a += b) < P ? a : a - P; }
+inline int sub(int a, int b) { return (a -= b) < 0 ? a + P : a; }
+ll Pow(ll a, int n, ll r = 1) {
+    for(; n; n >>= 1, a = a * a % P)
+    if(n & 1) r = r * a % P;
+    return r;
+}
+void prework() {
+    ll es[22], ies[22];
+    ll e = 15311432, ie = 469870224;
+    per(i, 21, 0) es[i] = e, ies[i] = ie, e = e * e % P, ie = ie * ie % P;
+    ll now = 1, inow = 1;
+    rep(i, 0, 21) {
+        w[i] = es[i] * now % P, iw[i] = ies[i] * inow % P;
+        (now *= ies[i]) %= P, (inow *= es[i]) %= P;
+    }
+}
+void DIF(int a[]) {
+    for(int i = lim >> 1, l = 1; i; i >>= 1, l <<= 1) {
+        ll now = 1;
+        For(j, 0, l) {
+            int pos = j * i * 2;
+            For(k, pos, pos + i) {
+                int x = a[k], y = a[k + i] * now % P;
+                a[k] = add(x, y), a[k + i] = sub(x, y);
+            }
+            (now *= w[__builtin_ctz(~j)]) %= P;
+        }
+    }
+}
+void IDIF(int a[]) {
+    for(int i = 1, l = lim >> 1; l; i <<= 1, l >>= 1) {
+        ll now = 1;
+        For(j, 0, l) {
+            int pos = j * i * 2;
+            For(k, pos, pos + i) {
+                int x = a[k], y = a[k + i];
+                a[k] = add(x, y), a[k + i] = (x - y + P) * now % P;
+            }
+            (now *= iw[__builtin_ctz(~j)]) %= P;
+        }
+    }
+    ll inv = Pow(lim, P - 2);
+    For(i, 0, lim) a[i] = a[i] * inv % P;
+}
+```
 
 ## 任意模数 NTT / MTT
 
@@ -839,7 +921,7 @@ void FFT(cmp a[], bool t) {
 }
 void FFT2(cmp a[], cmp b[]) {
     For(i, 0, lim) a[i] += b[i] * I;
-    FFT(a, 0);
+    FFT(a, 1);
     For(i, 0, lim) b[i] = conj(a[i ? lim - i : 0]);
     For(i, 0, lim) {
         cmp x = a[i], y = b[i];
@@ -866,7 +948,7 @@ void FFT(cmp a[], bool t) {
 }
 void FFT2(cmp a[], cmp b[]) {
     For(i, 0, lim) a[i] += b[i] * 1i;
-    FFT(a, 0);
+    FFT(a, 1);
     For(i, 0, lim) b[i] = conj(a[i ? lim - i : 0]);
     For(i, 0, lim) {
         cmp x = a[i], y = b[i];
@@ -896,7 +978,7 @@ For(i, 0, lim) {
     cmp t = a0[i] + I * a1[i];
     b0[i] *= t, b1[i] *= t;
 }
-FFT(b0, 1), FFT(b1, 1);
+FFT(b0, 0), FFT(b1, 0);
 rep(i, 0, n + m) C[i] = (M * num(b0[i]) + num(b1[i])) % P;
 ```
 
@@ -908,7 +990,7 @@ For(i, 0, lim) {
     cmp t = a0[i] + I * a1[i];
     b0[i] *= t, b1[i] *= t;
 }
-FFT(b0, 1), FFT(b1, 1);
+FFT(b0, 0), FFT(b1, 0);
 rep(i, 0, n + m) C[i] = M * num(b0[i]) + num(b1[i]);
 ```
 
@@ -931,7 +1013,7 @@ void IFWT(ll a[]) {
 }
 ```
 
-## 多项式求逆 / inv
+## 多项式求逆 / poly_inv
 
 ### 定义
 
@@ -949,8 +1031,8 @@ mint w[N];
 ### 函数
 
 ```cpp
-int add(int a, int b) { return (a += b) >= P ? a - P : a; }
-int sub(int a, int b) { return (a -= b) < 0 ? a + P : a; }
+inline int add(int a, int b) { return (a += b) >= P ? a - P : a; }
+inline int sub(int a, int b) { return (a -= b) < 0 ? a + P : a; }
 ll Pow(ll a, int n, ll r = 1) {
     for(; n; n >>= 1, a = a * a % P)
     if(n & 1) r = r * a % P;
@@ -968,17 +1050,20 @@ void NTT(int a[], bool t) {
     ll inv = Pow(lim, P - 2);
     For(i, 0, lim) a[i] = a[i] * inv % P;
 }
+
 void Inv(int n, int a[], int b[]) {
-    for(int k = 1; k <= n; k <<= 1) {
+    static int c[N];
+    b[0] = Pow(a[0], P - 2), b[1] = 0;
+    for(int k = 1; k < n; k <<= 1) {
         lim = k << 2;
-        memcpy(c, a, lim << 1);
-        For(i, 0, lim) rev[i] = rev[i >> 1] >> 1 | (i & 1 ? lim >> 1 : 0);
+        memcpy(c, a, lim << 1), memset(c + k * 2, 0, lim << 1);
+        memset(b + k * 2, 0, lim << 1);
         for(int i = 1; i < lim; i <<= 1) {
             ll wn = Pow(3, P / i / 2), p = 1;
             For(j, i, i << 1) w[j] = p, p = p * wn % P;
         }
         NTT(b, 1), NTT(c, 1);
-        For(i, 0, lim) b[i] = (ll)b[i] * sub(2, (ll)c[i] * b[i] % P) % P;
+        For(i, 0, lim) b[i] = (ll)b[i] * (2 + P - (ll)c[i] * b[i] % P) % P;
         NTT(b, 0), memset(b + lim / 2, 0, lim << 1);
     }
 }
@@ -1000,6 +1085,7 @@ void NTT(mint a[], bool t) {
     For(i, 0, lim) a[i] *= inv;
 }
 void Inv(int n, mint a[], mint b[]) {
+    static mint c[N];
     for(int k = 1; k <= n; k <<= 1) {
         lim = k << 2;
         memcpy(c, a, lim << 1);
@@ -1175,22 +1261,26 @@ vector<ll> as;
 
 ```cpp
 ll mul(ll a, ll b, ll p) {
-    return (a * b - ll((long double)a / p * b + 0.5) * p + p) % p;
+    ll c = a * b - (ll)((long double)a * b / p + 0.5) * a;
+    return c < 0 ? c + p : c;
 }
 ll Pow(ll a, ll n, ll p, ll r = 1) {
     for(; n; n >>= 1, a = mul(a, a, p))
     if(n & 1) r = mul(r, a, p);
     return r;
 }
-int chk(ll n) {
-    for(ll a : {2, 3, 7, 61, 24251}) {
+bool chk(ll n) {
+    ll base[] = {2, 3, 5, 7, 11, 13, 17, 19, 23};
+    for(ll a : base) if(a == n) return 1;
+    if(!(n & 1)) return 0;
+    ll d = n - 1;
+    d >>= __builtin_ctzll(d);
+    for(ll a : base) {
         if(n == a) return 1;
-        if(Pow(a, n - 1, n) != 1) return 0;
-        ll k = n - 1, t;
-        while(~k & 1) k >>= 1;
-        if((t = Pow(a, k, n)) == 1) continue;
-        while(t != 1 && t != n - 1) t = mul(t, t, n);
-        if(t != n - 1) return 0;
+        ll t = d, y = Pow(a, d, n);
+        if(y == 1) continue;
+        while(t != n - 1 && y != 1 && y != n - 1) y = mul(y, y, n), t <<= 1;
+        if(y != n - 1) return 0;
     }
     return 1;
 }
@@ -1223,42 +1313,45 @@ void solve(ll n) {
 #### 定义
 
 ```cpp
-int c[N][2], f[N], r[N];
+struct { int c[2], f; bool r; } c[N];
 ```
 
 #### 函数
 
 ```cpp
-bool id(int o) { return c[f[o]][1] == o; }
-bool nrt(int o) { return c[f[o]][0] == o || c[f[o]][1] == o; }
-void pu(int o) {
-    
+inline bool id(int o) { return c[c[o].f].c[1] == o; }
+inline bool nrt(int o) { return c[c[o].f].c[0] == o || c[c[o].f].c[1] == o; }
+inline void pu(int o) {
+
 }
-void rev(int o) {
-    swap(c[o][0], c[o][1]), r[o] ^= 1;
+inline void rev(int o) {
+    swap(c[o].c[0], c[o].c[1]), c[o].r ^= 1;
 }
-void pd(int o) { if(r[o]) rev(c[o][0]), rev(c[o][1]), r[o] = 0; }
+inline void pd(int o) {
+    if(c[o].r) rev(c[o].c[0]), rev(c[o].c[1]), c[o].r = 0;
+}
 void rot(int o, int d) {
-    int k = c[o][!d], &x = c[k][d];
-    if(nrt(o)) c[f[o]][id(o)] = k;
-    pu(x = f[c[o][!d] = x] = o), f[k] = f[o], pu(f[o] = k);
+    int k = c[o].c[!d], &x = c[k].c[d];
+    if(nrt(o)) c[c[o].f].c[id(o)] = k;
+    pu(x = c[c[o].c[!d] = x].f = o);
+    c[k].f = c[o].f, pu(c[o].f = k);
 }
 void dfs(int o) { if(nrt(o)) dfs(f[o]); pd(o); }
 void splay(int o) {
     dfs(o);
-    for(int fa; nrt(o); rot(f[o], !id(o)))
-    if(nrt(fa = f[o])) rot(id(o) == id(fa) ? f[fa] : fa, !id(o));
+    for(int f; nrt(o); rot(c[o].f, !id(o)))
+    if(nrt(f = c[o].f)) rot(id(o) == id(f) ? c[f].f : f, !id(o));
 }
-void acc(int o) {
-    for(int x = 0; o; o = f[x = o])
-        splay(o), c[o][1] = x, pu(o);
+int acc(int o) {
+    int x = 0;
+    for(; o; o = c[x = o].f) splay(o), c[o].c[1] = x, pu(o);
+    return x;
 }
-void mkrt(int o) { acc(o), splay(o), rev(o); }
 void link(int u, int v) {
-    mkrt(u), acc(v), splay(v), pu(f[u] = v);
+    rev(acc(u)), c[u].f = v;
 }
 void cut(int u, int v) {
-    mkrt(u), acc(v), splay(v), c[v][0] = f[u] = 0, pu(v);
+    rev(acc(u)), acc(v), splay(v), c[v].c[0] = c[u].f = 0, pu(v);
 }
 ```
 
@@ -1267,42 +1360,49 @@ void cut(int u, int v) {
 #### 定义
 
 ```cpp
-int c[N][2], f[N], r[N], s[N], si[N];
+struct { int c[2], f, s, si; bool r; } c[N];
 ```
 
 #### 函数
 
 ```cpp
-bool id(int o) { return c[f[o]][1] == o; }
-bool nrt(int o) { return c[f[o]][0] == o || c[f[o]][1] == o; }
-void pu(int o) {
-    s[o] = s[c[o][0]] + s[c[o][1]] + si[o] + 1;
+inline bool id(int o) { return c[c[o].f].c[1] == o; }
+inline bool nrt(int o) { return c[c[o].f].c[0] == o || c[c[o].f].c[1] == o; }
+inline void pu(int o) {
+    c[o].s = c[c[o].c[0]].s + c[c[o].c[1]].s + c[o].si + 1;
 }
-void rev(int o) {
-    swap(c[o][0], c[o][1]), r[o] ^= 1;
+inline void rev(int o) {
+    swap(c[o].c[0], c[o].c[1]), c[o].r ^= 1;
 }
-void pd(int o) { if(r[o]) rev(c[o][0]), rev(c[o][1]), r[o] = 0; }
+inline void pd(int o) {
+    if(c[o].r) rev(c[o].c[0]), rev(c[o].c[1]), c[o].r = 0;
+}
 void rot(int o, int d) {
-    int k = c[o][!d], &x = c[k][d];
-    if(nrt(o)) c[f[o]][id(o)] = k;
-    pu(x = f[c[o][!d] = x] = o), f[k] = f[o], pu(f[o] = k);
+    int k = c[o].c[!d], &x = c[k].c[d];
+    if(nrt(o)) c[c[o].f].c[id(o)] = k;
+    pu(x = c[c[o].c[!d] = x].f = o);
+    c[k].f = c[o].f, pu(c[o].f = k);
 }
 void dfs(int o) { if(nrt(o)) dfs(f[o]); pd(o); }
 void splay(int o) {
     dfs(o);
-    for(int fa; nrt(o); rot(f[o], !id(o)))
-    if(nrt(fa = f[o])) rot(id(o) == id(fa) ? f[fa] : fa, !id(o));
+    for(int f; nrt(o); rot(c[o].f, !id(o)))
+    if(nrt(f = c[o].f)) rot(id(o) == id(f) ? c[f].f : f, !id(o));
 }
-void acc(int o) {
-    for(int x = 0; o; o = f[x = o])
-        splay(o), si[o] += s[c[o][1]] - s[x], c[o][1] = x, pu(o);
+int acc(int o) {
+    int x = 0;
+    for(; o; o = c[x = o].f) {
+        splay(o);
+        c[o].si += c[c[o].c[1]].s - c[x].s;
+        c[o].c[1] = x, pu(o);
+    }
+    return x;
 }
-void mkrt(int o) { acc(o), splay(o), rev(o); }
 void link(int u, int v) {
-    mkrt(u), acc(v), splay(v), si[v] += s[u], pu(f[u] = v);
+    rev(acc(u)), c[u].f = v, c[v].s += c[u].s, c[v].si += c[u].s;
 }
 void cut(int u, int v) {
-    mkrt(u), acc(v), splay(v), c[v][0] = f[u] = 0, pu(v);
+    rev(acc(u)), acc(v), splay(v), c[v][0] = f[u] = 0, pu(v);
 }
 ```
 
@@ -1767,7 +1867,7 @@ int n, a[N], p, stk[N];
 int d[N], fa[N], sz[N], son[N], tp[N], idx, dfn[N];
 vector<int> G[N];
 int eid, he[N];
-struct edge { int v, n; } e[N * 2];
+struct edge { int v, n; } e[N << 1];
 ```
 
 #### 函数
@@ -1789,7 +1889,7 @@ int lca(int u, int v) {
     for(; tp[u] != tp[v]; d[tp[u]] > d[tp[v]] ? u = fa[tp[u]] : v = fa[tp[v]]);
     return d[u] < d[v] ? u : v;
 }
-void add(int u, int v, int t = 1) {
+inline void add(int u, int v, int t = 1) {
     e[++eid] = {v, h1[u]}, h1[u] = eid;
 }
 void bld(int k) {
@@ -1836,36 +1936,50 @@ int lca(int u, int v) {
 
 ```cpp
 int n, m, s, t;
-int eid = 1, he[N], nw[N], d[N], q[N];
-struct edge { int v, n, c; } e[M * 2];
+int cur[N], d[N];
+struct edge { int v, r, c; };
+vector<edge> G[N];
 ```
 
 #### 函数
 
 ```cpp
-void add(int u, int v, int c) {
-    e[++eid] = {v, he[u], c}, he[u] = eid;
-    e[++eid] = {u, he[v], 0}, he[v] = eid;
+inline void add(int u, int v, int c) {
+    if(u == v) return;
+    int uid = G[u].size(), vid = G[v].size();
+    G[u].pb({v, vid, c}), G[v].pb({u, uid, 0});
 }
 bool bfs() {
-    mem(d, 0), memcpy(nw, he, sizeof he);
-    q[1] = s, d[s] = 1;
-    for(int l = 1, r = 1; l <= r; l++) {
-        int u = q[l];
-        for(int i = he[u], v; v = e[i].v; i = e[i].n)
-        if(e[i].c && !d[v]) q[++r] = v, d[v] = d[u] + 1;
+    static int q[N];
+    rep(i, 1, /*Number of nodes*/) cur[i] = (int)G[i].size() - 1;
+    mem(d, 63), d[t] = 0, q[0] = t;
+    for(int L = 0, R = 0; L <= R; L++) {
+        int u = q[L];
+        for(int i = cur[u]; i >= 0; i--) {
+            auto&& e = G[u][i];
+            int v = e.v;
+            if(d[v] < 0x3f3f3f3f || !G[v][e.r].c) continue;
+            d[v] = d[u] + 1;
+            if(v == s) return 1;
+            q[++R] = v;
+        }
     }
-    return d[t];
+    return 0;
 }
-int dfs(int u, int lim, int re = 0) {
+int dfs(int u, int lim, int res = 0) {
     if(u == t) return lim;
-    for(int& i = nw[u], v; v = e[i].v; i = e[i].n)
-    if(e[i].c && d[v] == d[u] + 1) {
-        int t = dfs(v, min(e[i].c, lim));
-        e[i].c -= t, e[i ^ 1].c += t, re += t, lim -= t;
-        if(!lim) break;
+    int dis = d[u];
+    for(int& i = cur[u]; i >= 0; i--) {
+        auto& e = G[u][i];
+        int v = e.v, c = e.c;
+        if(!c || d[v] >= dis) continue;
+        int t = dfs(v, min(lim, c));
+        e.c -= t, G[v][e.r].c += t;
+        res += t, lim -= t;
+        if(!lim) return res;
     }
-    return re;
+    d[u] = 0x3f3f3f3f;
+    return res;
 }
 ```
 
@@ -1880,24 +1994,34 @@ while(bfs()) flow += dfs(s, inf);
 
 ```cpp
 bool bfs() {
-    mem(d, 0), memcpy(nw, he, sizeof he);
-    q[1] = s, d[s] = 1;
-    for(int l = 1, r = 1; l <= r; l++) {
-        int u = q[l];
-        for(int i = he[u], v; v = e[i].v; i = e[i].n)
-        if(e[i].c && !d[v]) q[++r] = v, d[v] = d[u] + 1;
+    static int q[N];
+    mem(d, 0), d[t] = 1, q[0] = t;
+    for(int L = 0, R = 0; L <= R; L++) {
+        int u = q[L];
+        for(auto e : G[u]) {
+            int v = e.v;
+            if(d[v] || !G[v][e.r].c) continue;
+            d[v] = d[u] + 1;
+            if(v == s) return 1;
+            q[++R] = v;
+        }
     }
-    return d[t];
+    return 0;
 }
-ll dfs(int u, ll lim, ll re = 0) {
+ll dfs(int u, ll lim, ll res = 0) {
     if(u == t) return lim;
-    for(int& i = nw[u], v; v = e[i].v; i = e[i].n)
-    if(e[i].c && d[v] == d[u] + 1) {
-        ll t = dfs(v, min((ll)e[i].c, lim));
-        e[i].c -= t, e[i ^ 1].c += t, re += t, lim -= t;
+    int dis = d[u];
+    for(int& i = cur[u]; i >= 0; i--) {
+        auto& e = G[u][i];
+        int v = e.v, c = e.c;
+        if(!c || d[v] >= dis) continue;
+        int t = dfs(v, min(lim, (ll)c));
+        e.c -= t, G[v][e.r].c += t;
+        res += t, lim -= t;
         if(!lim) break;
     }
-    return re;
+    if(lim) d[u] = 0x3f3f3f3f;
+    return res;
 }
 ```
 
@@ -1909,19 +2033,19 @@ ll dfs(int u, ll lim, ll re = 0) {
 
 ```cpp
 int n, m, s, t, flow, cost;
-int eid = 1, he[N], nw[N], q[N], d[N], vis[N];
+int eid = 1, he[N], cur[N], q[N], d[N], vis[N];
 struct edge { int v, n, c, w; } e[M * 2];
 ```
 
 #### 函数
 
 ```cpp
-void add(int u, int v, int c, int w) {
+inline void add(int u, int v, int c, int w) {
     e[++eid] = {v, he[u], c, w}, he[u] = eid;
     e[++eid] = {u, he[v], 0, -w}, he[v] = eid;
 }
 bool spfa() {
-    mem(d, 63), memcpy(nw, he, sizeof he);
+    mem(d, 63), memcpy(cur, he, sizeof he);
     q[0] = s, d[s] = 0, vis[s] = 1;
     for(int l = 0, r = 0; l <= r; l++) {
         int u = q[l % N]; vis[u] = 0;
@@ -1936,7 +2060,7 @@ bool spfa() {
 int dfs(int u, int lim, int re = 0) {
     if(u == t) return lim;
     vis[u] = 1;
-    for(int& i = nw[u], v; v = e[i].v; i = e[i].n)
+    for(int& i = cur[u], v; v = e[i].v; i = e[i].n)
     if(!vis[v] && e[i].c && d[v] == d[u] + e[i].w) {
         int t = dfs(v, min(lim, e[i].c));
         e[i].c -= t, e[i ^ 1].c += t, re += t, lim -= t, cost += t * e[i].w;
@@ -1972,7 +2096,7 @@ struct node {
 #### 函数
 
 ```cpp
-void add(int u, int v, int c, int w) {
+inline void add(int u, int v, int c, int w) {
     e[++eid] = {v, he[u], c, w}, he[u] = eid;
     e[++eid] = {u, he[v], 0, -w}, he[v] = eid;
 }
@@ -2037,14 +2161,14 @@ rep(i, 1, n) if(dfs(i, i)) as++;
 ### 定义
 
 ```cpp
-int n, m, co[N * 2], stk[N * 2], tp;
-vector<int> G[N * 2];
+int n, m, co[N << 1], stk[N << 1], tp;
+vector<int> G[N << 1];
 ```
 
 ### 函数
 
 ```cpp
-void add(int u, int a, int v, int b) {
+inline void add(int u, int a, int v, int b) {
     G[u * 2 + !a].pb(v * 2 + b);
     G[v * 2 + !b].pb(u * 2 + a);
 }
@@ -2185,7 +2309,7 @@ void height() {
 
 ```cpp
 char s[N];
-int n, sz = 1, nw = 1, f[N * 2], len[N * 2], ch[N * 2][26];
+int n, sz = 1, nw = 1, f[N << 1], len[N << 1], ch[N << 1][26];
 ```
 
 ### 函数
