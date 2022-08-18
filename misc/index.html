@@ -260,7 +260,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>7.3k</span>
+      <span>7.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -401,6 +401,7 @@ s_{n-1}^2-2\bmod M_p&amp;(i&gt;1)
 <p><span class="math inline">\(a \bmod M_p=(a_0\cdot 2^p+a_1)\bmod M_p=(a_0+a_1)\bmod M_p\)</span></p>
 <p><span class="math inline">\(s_{n-1}^2-2\)</span> 最多展开两遍就行了，复杂度 <span class="math inline">\(O(p^2\log p)\)</span>。</p>
 <h4 id="充分性">充分性</h4>
+<p>原文：J. W. Bruce. A Really Trivial Proof of the Lucas-Lehmer Test. The American Mathematical Monthly, Vol.100, No.4, pp.370–371. April 1993.</p>
 <p>反证法：假设 <span class="math inline">\(M_p\)</span> 是合数，它的最小质因子为 <span class="math inline">\(q\)</span>，定义一个 <span class="math inline">\(q^2\)</span> 个元素的集合 <span class="math inline">\(X=\{a+b\sqrt 3|a,b\in\mathbb Z_q\}\)</span>，其中 <span class="math inline">\(\mathbb Z_q\)</span> 表示 <span class="math inline">\(0,1,2\cdots,q-2,q-1\)</span>，定义 <span class="math inline">\(X\)</span> 中的乘法运算为 <span class="math display">\[
 (a+b\sqrt 3)(c+d\sqrt 3)=(ac+3bd)\bmod q+(bc+ad)\bmod q\sqrt3
 \]</span> <span class="math inline">\(X\)</span> 中任何两个元素的乘积一定也在 <span class="math inline">\(X\)</span> 内，但它不是群，因为不是所有元素都可逆，只保留有逆的元素，就得到了群 <span class="math inline">\(X^*\)</span>。因为 <span class="math inline">\((2+\sqrt 3)(2+(q-1)\sqrt 3)\equiv 1\pmod q\)</span>，所以 <span class="math inline">\(2+\sqrt 3\in X^{*}\)</span>。</p>
@@ -411,6 +412,7 @@ s_{n-1}^2-2\bmod M_p&amp;(i&gt;1)
 \]</span> 这说明了 <span class="math inline">\(2 + \sqrt 3\)</span> 的阶为 <span class="math inline">\(2^p\)</span>，即 <span class="math inline">\((2 + \sqrt 3)^0,(2 + \sqrt 3)^1,(2 + \sqrt 3)^2,\cdots,(2+\sqrt 3)^{2^p-1}\)</span> 两两不同。</p>
 <p>于是有 <span class="math inline">\(2^p \le |X*| \le q^2 \le M_p\)</span>，得出矛盾 <span class="math inline">\(2^p \le M_p\)</span>，故 <span class="math inline">\(M_p\)</span> 为质数。</p>
 <h4 id="必要性">必要性</h4>
+<p>原文：Öystein J. R. Ödseth. A note on primality tests for N = h · 2n − 1. Department of Mathematics, University of Bergen.</p>
 <p>现在已知 <span class="math inline">\(M_p\)</span> 是质数，要说明 <span class="math inline">\(M_p|(2+\sqrt 3)^{2^{p-2}}+(2-\sqrt 3)^{2^{p-2}}\)</span>。</p>
 <p>可以归纳证明，对于奇数 <span class="math inline">\(p\ge 3\)</span>，有 <span class="math inline">\(2^p-1\equiv 7\pmod 8\)</span> 和 <span class="math inline">\(2^p-1\equiv 7\pmod {12}\)</span>。</p>
 <p>对于奇质数 <span class="math inline">\(p\)</span>：</p>
@@ -525,7 +527,7 @@ f_{n+1}&amp;=(f_n+k2^n)^2\bmod 2^{n+1}\\
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">205k</span>
+    <span title="站点总字数">206k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
