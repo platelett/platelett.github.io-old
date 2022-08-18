@@ -187,6 +187,8 @@ $s_{n-1}^2-2$ 最多展开两遍就行了，复杂度 $O(p^2\log p)$。
 
 #### 充分性
 
+原文：J. W. Bruce. A Really Trivial Proof of the Lucas-Lehmer Test. The American Mathematical Monthly, Vol.100, No.4, pp.370–371. April 1993.
+
 反证法：假设 $M_p$ 是合数，它的最小质因子为 $q$，定义一个 $q^2$ 个元素的集合 $X=\{a+b\sqrt 3|a,b\in\mathbb Z_q\}$，其中 $\mathbb Z_q$ 表示 $0,1,2\cdots,q-2,q-1$，定义 $X$ 中的乘法运算为
 $$
 (a+b\sqrt 3)(c+d\sqrt 3)=(ac+3bd)\bmod q+(bc+ad)\bmod q\sqrt3
@@ -204,6 +206,8 @@ $$
 于是有 $2^p \le |X*| \le q^2 \le M_p$，得出矛盾 $2^p \le M_p$，故 $M_p$ 为质数。
 
 #### 必要性
+
+原文：Öystein J. R. Ödseth. A note on primality tests for N = h · 2n − 1. Department of Mathematics, University of Bergen.
 
 现在已知 $M_p$ 是质数，要说明 $M_p|(2+\sqrt 3)^{2^{p-2}}+(2-\sqrt 3)^{2^{p-2}}$。
 
