@@ -1601,7 +1601,12 @@ ab\bmod m=ab-\lfloor ab\cdot m^{-1}\rfloor m
 <p>设真实答案为 <span class="math inline">\(ans\)</span>，那么 <span class="math inline">\(ab-\lfloor \frac{abm&#39;}{2^k}\rfloor m=ans\ \text{or}\ ans-m\)</span>。</p>
 <p>更一般的结论是只要 <span class="math inline">\(c \ge \max(a, b^2)\)</span>，<span class="math inline">\(\lfloor \frac{a\lfloor \frac cb\rfloor}c\rfloor=\lfloor \frac ab\rfloor\ \text{or}\ \lfloor \frac ab\rfloor+1\)</span> 成立。</p>
 <p>实践中可以令 <span class="math inline">\(k=64\)</span>，可以用 <code>~0ull / m + 1</code> 来计算 <span class="math inline">\(m&#39;\)</span>。</p>
+<details>
+<summary>
+<span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span>
+</summary>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> uint = <span class="type">unsigned</span> <span class="type">int</span>;</span><br><span class="line"><span class="keyword">using</span> ull = <span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span>;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">barrett</span> &#123;</span><br><span class="line">    uint m; ull im;</span><br><span class="line">    <span class="built_in">barrett</span>(uint m) :<span class="built_in">m</span>(m), <span class="built_in">im</span>(~<span class="number">0ull</span> / m + <span class="number">1</span>) &#123;&#125;</span><br><span class="line">    <span class="function">uint <span class="title">mul</span><span class="params">(uint a, uint b)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        ull z = (ull)a * b;</span><br><span class="line">        uint v = z - <span class="built_in">uint</span>((<span class="type">__uint128_t</span>)z * im &gt;&gt; <span class="number">64</span>) * m;</span><br><span class="line">        <span class="keyword">return</span> m &lt;= v ? v + m : v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</details>
 <p>速度比较：先在 <span class="math inline">\([0, m)\)</span> 中随机生成 <span class="math inline">\(10^5\)</span> 个数，然后计算两两乘积模 <span class="math inline">\(m\)</span> 的异或和。</p>
 <p>每个格子前者为直接取模的时间，后者为 <code>Barrett reduction</code> 取模的时间。</p>
 <table>
