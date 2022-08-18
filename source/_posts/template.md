@@ -79,6 +79,8 @@ void write(int x) {
 }
 ```
 
+**注：输出 ```long long``` 时 ```wrt``` 函数中的 ```c``` 数组大小要开到 $20$。**
+
 #### Fastest(Linux)
 
 ```cpp
