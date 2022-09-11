@@ -23,91 +23,148 @@ using lf = double;
 
 ## Fast IO
 
-#### 非负整数版
-
-##### 函数
+#### 无符号 32 位整数版
 
 ```cpp
-int read() {
-    const int M = 1e6;
-    static streambuf* in = cin.rdbuf();
-    #define gc (p1 == p2 && (p2 = (p1 = buf) + in -> sgetn(buf, M), p1 == p2) ? -1 : *p1++)
-    static char buf[M], *p1, *p2;
-    int c, r = 0;
-    while((c = gc) < 48);
-    while(c > 47) r = r * 10 + (c & 15), c = gc;
-    return r;
-}
-void write(int x) {
-    static streambuf* out = cout.rdbuf();
-    #define pc out -> sputc
-    static char c[11]; int sz = 0;
-    do c[++sz] = x % 10, x /= 10; while(x);
-    while(sz) pc(c[sz--] + 48);
-    pc(10);
-}
+struct IO {
+    static const int bufSize = 1 << 17;
+    char inBuf[bufSize], outBuf[bufSize], *in1, *in2, *out;
+    inline __attribute((always_inline))
+    int read() {
+        if(in1 > inBuf + bufSize - 32) [[unlikely]] {
+            auto len = in2 - in1;
+            memcpy(inBuf, in1, len);
+            in1 = inBuf, in2 = inBuf + len;
+            in2 += fread(in2, 1, bufSize - len, stdin);
+            if(in2 != inBuf + bufSize) *in2 = 0;
+        }
+        int res = 0;
+        char c;
+        while((c = *in1++) < 48);
+        while(res = res * 10 + c - 48, (c = *in1++) >= 48);
+        return res;
+    }
+    inline __attribute((always_inline))
+    void write(int x) {
+        if(out > outBuf + bufSize - 32) [[unlikely]]
+            fwrite(outBuf, 1, out - outBuf, stdout), out = outBuf;
+        if(!x) return *out++ = 48, void();
+        alignas(2) const char* digits =
+        "0001020304050607080910111213141516171819"
+        "2021222324252627282930313233343536373839"
+        "4041424344454647484950515253545556575859"
+        "6061626364656667686970717273747576777879"
+        "8081828384858687888990919293949596979899";
+        alignas(2) static char buf[20];
+        char* p = buf + 20;
+        while(x >= 10) memcpy(p -= 2, digits + x % 100 * 2, 2), x /= 100;
+        if(x) *--p = 48 + x;
+        auto len = buf + 20 - p;
+        memcpy(out, p, len), out += len;
+    }
+    IO() {
+        in1 = inBuf, out = outBuf;
+        in2 = in1 + fread(in1, 1, bufSize, stdin);
+    }
+    ~IO() { fwrite(outBuf, 1, out - outBuf, stdout); }
+} IO;
 ```
 
-##### 预处理
+#### 有符号整数版
 
 ```cpp
-cin.tie()->sync_with_stdio(0);
+struct IO {
+    static const int bufSize = 1 << 17;
+    char inBuf[bufSize], outBuf[bufSize], *in1, *in2, *out;
+    inline __attribute((always_inline))
+    int read() {
+        if(in1 > inBuf + bufSize - 32) [[unlikely]] {
+            auto len = in2 - in1;
+            memcpy(inBuf, in1, len);
+            in1 = inBuf, in2 = inBuf + len;
+            in2 += fread(in2, 1, bufSize - len, stdin);
+            if(in2 != inBuf + bufSize) *in2 = 0;
+        }
+        int res = 0;
+        char c;
+        bool neg = 0;
+        while((c = *in1++) < 48) neg = c == 45;
+        while(res = res * 10 + c - 48, (c = *in1++) >= 48);
+        return neg ? -res : res;
+    }
+    inline __attribute((always_inline))
+    void write(int x) {
+        if(out > outBuf + bufSize - 32) [[unlikely]]
+            fwrite(outBuf, 1, out - outBuf, stdout), out = outBuf;
+        if(!x) return *out++ = 48, void();
+        if(x < 0) *out++ = 45, x = -x;
+        alignas(2) const char* digits =
+        "0001020304050607080910111213141516171819"
+        "2021222324252627282930313233343536373839"
+        "4041424344454647484950515253545556575859"
+        "6061626364656667686970717273747576777879"
+        "8081828384858687888990919293949596979899";
+        alignas(2) static char buf[20];
+        char* p = buf + 20;
+        while(x >= 10) memcpy(p -= 2, digits + x % 100 * 2, 2), x /= 100;
+        if(x) *--p = 48 + x;
+        auto len = buf + 20 - p;
+        memcpy(out, p, len), out += len;
+    }
+    IO() {
+        in1 = inBuf, out = outBuf;
+        in2 = in1 + fread(in1, 1, bufSize, stdin);
+    }
+    ~IO() { fwrite(outBuf, 1, out - outBuf, stdout); }
+} IO;
 ```
 
-#### 整数版
+POSIX 系
 
 ```cpp
-int read() {
-    const int M = 1e6;
-    static streambuf* in = cin.rdbuf();
-    #define gc (p1 == p2 && (p2 = (p1 = buf) + in -> sgetn(buf, M), p1 == p2) ? -1 : *p1++)
-    static char buf[M], *p1, *p2;
-    int c, r = 0;
-    bool f = 0;
-    while((c = gc) < 48) f = c == 45;
-    while(c > 47) r = r * 10 + (c & 15), c = gc;
-    return f ? -r : r;
-}
-void write(int x) {
-    static streambuf* out = cout.rdbuf();
-    #define pc out -> sputc
-    static char c[11]; int sz = 0;
-    if(x < 0) pc(45), x = -x;
-    do c[++sz] = x % 10, x /= 10; while(x);
-    while(sz) pc(c[sz--] + 48);
-    pc(10);
-}
+struct IO {
+    static const int bufSize = 1 << 17;
+    char inBuf[bufSize], outBuf[bufSize], *in1, *in2, *out;
+    inline __attribute((always_inline))
+    int read() {
+        if(in1 > inBuf + bufSize - 32) [[unlikely]] {
+            auto len = in2 - in1;
+            memcpy(inBuf, in1, len);
+            in1 = inBuf, in2 = inBuf + len;
+            in2 += ::read(0, in2, bufSize - len);
+            if(in2 != inBuf + bufSize) *in2 = 0;
+        }
+        int res = 0;
+        char c;
+        while((c = *in1++) < 48);
+        while(res = res * 10 + c - 48, (c = *in1++) >= 48);
+        return res;
+    }
+    inline __attribute((always_inline))
+    void write(int x) {
+        if(out > outBuf + bufSize - 32) [[unlikely]]
+            ::write(1, outBuf, out - outBuf), out = outBuf;
+        if(!x) return *out++ = 48, void();
+        alignas(2) const char* digits =
+        "0001020304050607080910111213141516171819"
+        "2021222324252627282930313233343536373839"
+        "4041424344454647484950515253545556575859"
+        "6061626364656667686970717273747576777879"
+        "8081828384858687888990919293949596979899";
+        alignas(2) static char buf[20];
+        char* p = buf + 20;
+        while(x >= 10) memcpy(p -= 2, digits + x % 100 * 2, 2), x /= 100;
+        if(x) *--p = 48 + x;
+        auto len = buf + 20 - p;
+        memcpy(out, p, len), out += len;
+    }
+    IO() {
+        in1 = inBuf, out = outBuf;
+        in2 = in1 + ::read(0, in1, bufSize);
+    }
+    ~IO() { ::write(1, outBuf, out - outBuf); }
+} IO;
 ```
-
-**注：输出 ```long long``` 时 ```wrt``` 函数中的 ```c``` 数组大小要开到 $20$。**
-
-#### Fastest(Linux)
-
-```cpp
-#include <sys/mman.h>
-#include <unistd.h>
-#include <fcntl.h>
-
-int fd = open(/*file name*/, 0);
-char *in = (char*)mmap(NULL, lseek(fd, 0, 2), 1, 2, fd, 0);
-char buf[/*output size*/], *out = buf;
-
-inline int read() {
-    int r = 0;
-    char c;
-    while((c = *in++) < 48);
-    while(r = r * 10 + c - 48, (c = *in++) >= 48);
-    return r;
-}
-inline void write(int x) {
-    char c[11]; int sz = 0;
-    do c[++sz] = x % 10, x /= 10; while(x);
-    while(sz) *out++ = c[sz--] + 48;
-    *out++ = 10;
-}
-```
-
-**注：输出 ```long long``` 时 ```write``` 函数中的 ```c``` 数组大小要开到 $20$。**
 
 ## AtCoder-modint
 
@@ -354,7 +411,7 @@ template<int id> struct dynamic_modint {
 template<int id> barrett dynamic_modint<id>::bt = 998244353;
 ```
 
-## 打比赛专用模板
+## 重型模板
 
 ```cpp
 #include <bits/stdc++.h>
@@ -431,7 +488,7 @@ template<int m> struct static_modint {
     uint _v;
     static constexpr bool prime = is_prime_constexpr(m);
 };
-struct dynamic_modint {
+template<int id> struct dynamic_modint {
     using mint = dynamic_modint;
   public:
     static void set_mod(int m) { assert(1 <= m), bt = barrett(m); }
@@ -461,7 +518,7 @@ struct dynamic_modint {
     uint _v;
     static barrett bt;
 };
-barrett dynamic_modint::bt = 998244353;
+template<int id> barrett dynamic_modint<id>::bt = 998244353;
 #define rep(i, l, r) for(int i = (l); i <= (r); i++)
 #define per(i, r, l) for(int i = (r); i >= (l); i--)
 #define mem(a, b) memset(a, b, sizeof a)
@@ -521,8 +578,9 @@ int rnd() {
 ### 函数
 
 ```cpp
-ll mul(ll a, ll b, ll p) {
-    return (a * b - ll((long double)a / p * b + 0.5) * p + p) % p;
+ll mul(ll A, ll B, ll P) {
+    ll C = A * B - (ll)((long double)A * B / P + 0.5) * P;
+    return C < 0 ? C + P : C;
 }
 ```
 
@@ -830,7 +888,7 @@ for(int i = 1; i < lim; i <<= 1) {
 #### 定义
 
 ```cpp
-int lim = 1, w[22], iw[22];
+int lim = 1, w[23], iw[23];
 ```
 
 ```cpp
@@ -1110,8 +1168,9 @@ void Inv(int n, mint a[], mint b[]) {
 ## 扩展中国剩余定理 / exCRT
 
 ```cpp
-ll mul(ll a, ll b, ll p) {
-    return (a * b - (ll)((long double)a / p * b + 0.5) * p + p) % p;
+ll mul(ll A, ll B, ll P) {
+    ll C = A * B - (ll)((long double)A * B / P + 0.5) * P;
+    return C < 0 ? C + P : C;
 }
 void exgcd(ll a, ll b, ll& d, ll& x, ll& y) {
     if(!b) { d = a, x = 1, y = 0; return; }
@@ -1814,7 +1873,7 @@ int chk2(int x[], int r, int o) {
 }
 ```
 
-# 图论
+# 图论和树
 
 ## 虚树 / vtree
 
@@ -1905,28 +1964,6 @@ void bld(int k) {
         stk[++p] = a[i];
     }
     while(--p) add(stk[p], stk[p + 1]);
-}
-```
-
-## 超快版倍增求 ```LCA```
-
-### 定义
-
-```cpp
-int dl[N], dr[N], fa[20][N];
-```
-
-### 函数
-
-```cpp
-int lca(int u, int v) {
-    if(dl[u] < dl[v]) swap(u, v);
-    if(dl[v] <= dl[u] && dl[u] <= dr[v]) return v;
-    per(i, 19, 0) {
-        int x = fa[i][u];
-        if(x && dl[x] > dl[v]) u = x;
-    }
-    return fa[0][u];
 }
 ```
 
