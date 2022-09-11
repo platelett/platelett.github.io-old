@@ -1,7 +1,7 @@
 ---
 title: 考试题
 date: 2021-09-17 16:27:28
-hiden: true
+hidden: true
 ---
 ### AUOJ1760
 
@@ -80,6 +80,7 @@ $$
 效率还行，但不稳定，对于少数 $n$ 速度极慢，$n\le 10^4$ 是完全没有问题的。
 
 <details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
+
 ```cpp
 #include <bits/stdc++.h>
 #define rep(i, l, r) for(int i = (l); i <= (r); i++)
@@ -172,6 +173,7 @@ int main() {
 结合思路一可以构造出 $10^6$ 内的所有 $n$。
 
 <details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
+
 ```cpp
 #include <bits/stdc++.h>
 #define rep(i, l, r) for(int i = (l); i <= (r); i++)
@@ -250,6 +252,7 @@ int main() {
 实测能构造出 $10^6$ 内的所有 $n$。
 
 <details><summary><span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span></summary>
+
 ```cpp
 #include <bits/stdc++.h>
 #define rep(i, l, r) for(int i = (l); i <= (r); i++)
