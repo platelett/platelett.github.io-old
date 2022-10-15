@@ -296,7 +296,7 @@
 <p>令标记 <span class="math inline">\(\text{tag}(u, k)\)</span> 表示从 <span class="math inline">\(u\)</span> 到其 <span class="math inline">\(2^k\)</span> 级祖先的链上被更新的延时标记。易知整个算法就是要回答 <span class="math inline">\(\text{tag}(u, 0)\)</span>。</p>
 <p>考虑倍增求 LCA 的过程，同样的，我们不断从 <span class="math inline">\(u&#39;, v&#39;\)</span> 向上跳，直到相遇，同时打上标记即可。</p>
 <p>最后将标记下传，即</p>
-<p><span class="math display">\[\text{tag}(u, i - 1) \leftarrow \min(\text{tag}(u, i - 1), \text{tag(u, i)})\\ \]</span> <span class="math display">\[\text{tag}(\text{fa}(u, i - 1), i - 1) \leftarrow \min(\text{tag}(\text{fa}(u, i - 1), i - 1), \text{tag}(u, i))\]</span></p>
+<p><span class="math display">\[\text{tag}(u, i - 1) \leftarrow \min(\text{tag}(u, i - 1), \text{tag(u, i)})\\\\ \]</span> <span class="math display">\[\text{tag}(\text{fa}(u, i - 1), i - 1) \leftarrow \min(\text{tag}(\text{fa}(u, i - 1), i - 1), \text{tag}(u, i))\]</span></p>
 <p>感性理解起来就是将 <span class="math inline">\(u\)</span> 到 <span class="math inline">\(\text{fa}(u, i)\)</span> 的标记下传给上下两半。</p>
 <p>至此，对于删除树边 <span class="math inline">\(e(u, v, w)\)</span>，其答案为:</p>
 <p><span class="math display">\[
@@ -370,7 +370,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:58</span>
+    <span title="站点阅读时长">2:59</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动

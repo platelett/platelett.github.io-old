@@ -292,8 +292,8 @@
 <p>对于第一种操作，就是区间加上一个正数；对于第二种操作，就是区间减去一个正数，再和 <span class="math inline">\(0\)</span> 取 <code>max</code>。</p>
 <p>简化一下就是：区间加上一个整数，再和 <span class="math inline">\(0\)</span> 取 <code>max</code>。</p>
 <p>对于一个位置，假设它依次进行操作的数分别为 <span class="math inline">\(a_1,a_2,\cdots,a_k\)</span>，那么此时它的值为 <span class="math display">\[
-\max\{0,\max\{0,\max\{0,\cdots\max\{0,a_1\}\cdots+a_{k-1}\}+a_k\}\\
-=\max\{0,a_k,a_{k-1}+a_k,a_{k-2}+a_{k-1}+a_k,\cdots,a_1+a_2+\cdots+a_k\}\\
+\max\{0,\max\{0,\max\{0,\cdots\max\{0,a_1\}\cdots+a_{k-1}\}+a_k\}\\\\
+=\max\{0,a_k,a_{k-1}+a_k,a_{k-2}+a_{k-1}+a_k,\cdots,a_1+a_2+\cdots+a_k\}\\\\
 =\sum_{i=1}^ka_i-\min\{0,a_1,a_1+a_2,\cdots,a_1+a_2+\cdots+a_k\}
 \]</span> 即在不考虑再和 <span class="math inline">\(0\)</span> 取 <code>max</code> 的情况下，当前值减<strong>历史</strong>最小值。</p>
 <p>做法是建立线段树，对每个结点维护加的懒标记 <span class="math inline">\(tag_i\)</span> 和<strong>仅考虑包含此区间的操作</strong>时的历史最小值 <span class="math inline">\(minTag_i\)</span>。</p>
@@ -371,7 +371,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:58</span>
+    <span title="站点阅读时长">2:59</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动

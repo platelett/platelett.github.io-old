@@ -287,11 +287,11 @@
 <h4 id="证明一">证明一：</h4>
 <p><span class="math display">\[
 \begin{aligned}
-&amp;\sum_{a=0}^n f(a,b)x^a\\
-&amp;=\sum_{a=0}^n\sum\limits_{i=0}^b\binom bi\binom {n-i}ax^a\\
-&amp;=\sum_{i=0}^b\binom bi\sum_{a=0}^n\binom {n-i}ax^a\\
-&amp;=\sum_{i=0}^b\binom bi(x+1)^{n-i}\\
-&amp;=\sum_{i=0}^b\binom bi(x+1)^{b-i}(x+1)^{n-b}\\
+&amp;\sum_{a=0}^n f(a,b)x^a\\\\
+&amp;=\sum_{a=0}^n\sum\limits_{i=0}^b\binom bi\binom {n-i}ax^a\\\\
+&amp;=\sum_{i=0}^b\binom bi\sum_{a=0}^n\binom {n-i}ax^a\\\\
+&amp;=\sum_{i=0}^b\binom bi(x+1)^{n-i}\\\\
+&amp;=\sum_{i=0}^b\binom bi(x+1)^{b-i}(x+1)^{n-b}\\\\
 &amp;=(x+2)^b(x+1)^{n-b}
 \end{aligned}
 \]</span></p>
@@ -408,9 +408,9 @@
 <p>对于一个包含 <span class="math inline">\(p\)</span> 的区间 <span class="math inline">\([l,r]\)</span>，有 <span class="math display">\[
 f(l,r)=\max\{f(l,p-1)+f(p+1,r),f(l,p-2)+f(p+2,r)+A_p\}
 \]</span> 设 <span class="math display">\[
-x_i=\begin{cases}f(i,p-1)&amp;(i &lt; p)\\f(p+1,i)&amp;(i&gt;p)\\0&amp;(i=p)\end{cases},y_i=\begin{cases}f(i,p-2)&amp;(i&lt;p-1)\\f(p+2,i)&amp;(i&gt;p+1)\\0&amp;(p-1 \le i \le p+1)\end{cases}
+x_i=\begin{cases}f(i,p-1)&amp;(i &lt; p)\\\\f(p+1,i)&amp;(i&gt;p)\\\\0&amp;(i=p)\end{cases},y_i=\begin{cases}f(i,p-2)&amp;(i&lt;p-1)\\\\f(p+2,i)&amp;(i&gt;p+1)\\\\0&amp;(p-1 \le i \le p+1)\end{cases}
 \]</span> <span class="math inline">\(x,y\)</span> 数组可以通过 <code>DP</code> 在 <span class="math inline">\(O(n)\)</span> 的时间内求出。 <span class="math display">\[
-f(l,r)=\max\{x_l+x_r,y_l+y_r+A_p\}\\
+f(l,r)=\max\{x_l+x_r,y_l+y_r+A_p\}\\\\
 x_l+x_r \ge y_l + y_r + A_p \iff (x_l - y_l) + (x_r - y_r) \ge A_p
 \]</span> 把所有除 <span class="math inline">\(p\)</span> 以外的位置按 <span class="math inline">\(x_i-y_i\)</span> 为关键字升序排序，再用双指针扫描一遍即可求出所有包含 <span class="math inline">\(p\)</span> （<span class="math inline">\(p\)</span> 是端点不算）的 <span class="math inline">\(f\)</span> 值之和，单次的复杂度为 <span class="math inline">\(O(n\log n)\)</span>。</p>
 <p>接下来就是套路了，考虑分治，定义函数 <span class="math inline">\(solve(L,R)\)</span> 表示 <span class="math inline">\(\sum\limits_{l=L}^R\sum\limits_{r=l}^Rf(l,r)\)</span>。</p>
@@ -1217,7 +1217,7 @@ SG(u)=\text{mex}\{SG(v_1),SG(v_2),\cdots,SG(v_k)\}
 <p>对于 <span class="math inline">\(t_i=1\)</span>，有 <span class="math inline">\(0 &lt; x_i \le m\)</span>，对于 <span class="math inline">\(t_i=2\)</span>，有 <span class="math inline">\(1 &lt; x_i \le m\)</span>。</p>
 </blockquote>
 <p>对于每个时刻 <span class="math inline">\(i\)</span>，维护数组 <span class="math inline">\(ok_j\)</span> 表示经过前 <span class="math inline">\(i\)</span> 个时刻能否使 <span class="math inline">\(k=j\)</span>。</p>
-<p>设 <span class="math inline">\(next_j=\begin{cases}\lceil j + x_i \rceil&amp;(t_i=1)\\\lceil j \cdot x_i \rceil&amp;(t_i=2)\end{cases}\)</span>。</p>
+<p>设 <span class="math inline">\(next_j=\begin{cases}\lceil j + x_i \rceil&amp;(t_i=1)\\\\\lceil j \cdot x_i \rceil&amp;(t_i=2)\end{cases}\)</span>。</p>
 <p>因为 <span class="math inline">\(\forall j \ne k,next_j \ne next_k\)</span>，所以 <span class="math inline">\(j \rightarrow next_j\)</span> 连边后形成若干条链。</p>
 <p>假设一条链上的结点分别为 <span class="math inline">\(v_1,v_2,v_3,\cdots,v_s\)</span></p>
 <p>对于 <span class="math inline">\(v_j\)</span>，如果 <span class="math inline">\(\exist k \in [j-y_i,j)\)</span>，满足 <span class="math inline">\(ok_k=1\)</span>，那么在第 <span class="math inline">\(i\)</span> 时刻 <span class="math inline">\(k\)</span> 可以等于 <span class="math inline">\(v_j\)</span>。</p>
@@ -1383,7 +1383,7 @@ SG(u)=\text{mex}\{SG(v_1),SG(v_2),\cdots,SG(v_k)\}
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:58</span>
+    <span title="站点阅读时长">2:59</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动

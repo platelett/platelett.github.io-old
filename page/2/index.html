@@ -396,23 +396,23 @@
 <p>有 <span class="math inline">\(\text{sgcd}(i,j)=\dfrac{\gcd(i,j)}{d_{\gcd(i,j)}}\)</span>。</p>
 <p>考虑枚举 <span class="math inline">\(\gcd\)</span>。 <span class="math display">\[
 \begin{aligned}
-&amp;\sum_{i=1}^n\sum_{j=1}^n\text{sgcd}(i,j)^k\\
-&amp;=\sum_{c=2}^n(\frac c{d_c})^k\sum_{i=1}^{\lfloor\frac nc\rfloor}\sum_{j=1}^{\lfloor\frac nc\rfloor}[gcd(i,j)=1]\\
+&amp;\sum_{i=1}^n\sum_{j=1}^n\text{sgcd}(i,j)^k\\\\
+&amp;=\sum_{c=2}^n(\frac c{d_c})^k\sum_{i=1}^{\lfloor\frac nc\rfloor}\sum_{j=1}^{\lfloor\frac nc\rfloor}[gcd(i,j)=1]\\\\
 &amp;=\sum_{c=2}^n(\frac c{d_c})^k(2\sum_{i=1}^{\lfloor\frac nc\rfloor}\varphi(i)-1)
 \end{aligned}
 \]</span> 现在的问题是算 <span class="math inline">\((\frac x{d_x})^k\)</span> 和 <span class="math inline">\(\varphi(x)\)</span> 在 <span class="math inline">\(\lfloor \frac nc \rfloor\)</span> 处的前缀和，后者直接<a target="_blank" rel="noopener" href="https://platelet.top/du-jiao-shai-and-min-25-shai-and-powerful-number-shai/#%E6%9D%9C%E6%95%99%E7%AD%9B">杜教筛</a>即可。</p>
 <p>对于前者，由于涉及到 <span class="math inline">\(d_x\)</span> 考虑 <a target="_blank" rel="noopener" href="https://platelet.top/du-jiao-shai-and-min-25-shai-and-powerful-number-shai/#min-25-%E7%AD%9B">Min-25 筛</a>。</p>
 <p>设 <span class="math display">\[
-g(n,i) = \sum_{j=2}^n [j \in P \lor d_j &gt; p_i]j^k\\
-f(n,i) = \sum_{j=2}^n [j \not\in P \land d_j \le p_i](\frac j{d_j})^k\\
+g(n,i) = \sum_{j=2}^n [j \in P \lor d_j &gt; p_i]j^k\\\\
+f(n,i) = \sum_{j=2}^n [j \not\in P \land d_j \le p_i](\frac j{d_j})^k\\\\
 h(h,i) = \sum_{j=2}^n [j \in P \lor d_j &gt; p_i]
 \]</span> 有递推 <span class="math display">\[
-g(n, i) = g(n, i - 1) - p_i^k(g(\lfloor\frac n {p_i} \rfloor, i - 1) - g(p_i-1,i))\\
-f(n,i) = f(n,i-1)+g(\lfloor\frac n {p_i} \rfloor,i-1) - g(p_i-1,i)\\
+g(n, i) = g(n, i - 1) - p_i^k(g(\lfloor\frac n {p_i} \rfloor, i - 1) - g(p_i-1,i))\\\\
+f(n,i) = f(n,i-1)+g(\lfloor\frac n {p_i} \rfloor,i-1) - g(p_i-1,i)\\\\
 h(n,i)=h(n,i-1)-h(\lfloor\frac n {p_i} \rfloor, i - 1) + h(p_i-1,i)
 \]</span> 初始化 <span class="math display">\[
-g(n,0)=\sum_{i=2}^ni^k\\
-f(n,0)=0\\
+g(n,0)=\sum_{i=2}^ni^k\\\\
+f(n,0)=0\\\\
 h(n,0)=n-1
 \]</span> 这里需要求<a target="_blank" rel="noopener" href="https://platelet.top/zi-ran-shu-deng-mi-qiu-he/">自然数等幂和</a>。</p>
 <p>当 <span class="math inline">\(n &lt; p_i^2\)</span> 时都不需要转移，因此这是一个标准的 Min-25 筛。</p>
@@ -627,7 +627,7 @@ h(n,0)=n-1
 <p>有转移方程 <span class="math inline">\(f_i = \max\limits_{T_j &lt; T_i}f_j-cost(j,i)\)</span>。</p>
 <p>其中 <span class="math display">\[
 cost(i,j)=\begin{cases}
-D(L_j-L_i) &amp;(L_i&lt;L_j)\\
+D(L_j-L_i) &amp;(L_i&lt;L_j)\\\\
 U(L_i-L_j) &amp;(L_i&gt;L_j)
 \end{cases}
 \]</span> 两种情况分别用树状数组维护前缀（后缀）最大值即可实现 <span class="math inline">\(O(\log n)\)</span> 转移。</p>
@@ -1306,21 +1306,21 @@ f_i = \dfrac {\max\{f_{i+1},\frac in\} + (i-1)f_{i+1}}i
 <p>注意到 <span class="math inline">\(f_i\)</span> 是单调不增的，而 <span class="math inline">\(\frac in\)</span> 是单调递增的，并且 <span class="math inline">\(f_1 &gt; \frac 1n,f_{n+1} &lt; \frac nn\)</span>。</p>
 <p>不难证明存在一个 <span class="math inline">\(d\)</span>，满足 <span class="math display">\[
 \begin{cases}
-f_i \ge \frac in &amp;(i \le d)\\
+f_i \ge \frac in &amp;(i \le d)\\\\
 f_i &lt; \frac in &amp;(i &gt; d)
 \end{cases}
 \]</span> 故 <span class="math display">\[
 f_i = \begin{cases}
-f_{i+1} &amp;(i &lt; d)\\
+f_{i+1} &amp;(i &lt; d)\\\\
 \dfrac {\frac in+(i-1)f_{i+1}}i &amp;(i \ge d)
 \end{cases}
 \]</span> 考虑当 <span class="math inline">\(i \ge d\)</span> 时 <span class="math display">\[
-f_i=\frac {i-1}if_{i+1}+\frac 1n\\
+f_i=\frac {i-1}if_{i+1}+\frac 1n\\\\
 \frac 1{i-1}f_i=\frac 1if_{i+1}+\frac 1{n(i-1)}
 \]</span> 设 <span class="math inline">\(g_i = \frac 1{i-1}f_i\)</span>，则 <span class="math display">\[
 \begin{aligned}
-&amp;g_i=g_{i+1}+\frac 1{n(i-1)}\\
-&amp;=\sum_{j=i-1}^n\frac 1{nj}\\
+&amp;g_i=g_{i+1}+\frac 1{n(i-1)}\\\\
+&amp;=\sum_{j=i-1}^n\frac 1{nj}\\\\
 &amp;=\frac 1n\sum_{j=i-1}^n\frac 1j
 \end{aligned}
 \Rightarrow
@@ -1386,7 +1386,7 @@ f_i=\frac {i-1}n\sum_{j=i-1}^n\frac 1j
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:58</span>
+    <span title="站点阅读时长">2:59</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动

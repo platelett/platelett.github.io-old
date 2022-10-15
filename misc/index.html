@@ -334,8 +334,8 @@ ab\bmod m=ab-\lfloor ab\cdot m^{-1}\rfloor m
 <p>假设 <span class="math inline">\(a \in [0, A]\)</span>，分析 <span class="math inline">\(k\)</span> 需要多大 <span class="math inline">\(a/m\)</span> 才能准确计算。</p>
 <p><span class="math display">\[
 \begin{aligned}
-2^k/m \le m&#39; &lt; 2^k/m+1\\
-a/m-1&lt;\lfloor\frac{am&#39;}{2^k}\rfloor&lt;a/m+a/2^k\\
+2^k/m \le m&#39; &lt; 2^k/m+1\\\\
+a/m-1&lt;\lfloor\frac{am&#39;}{2^k}\rfloor&lt;a/m+a/2^k\\\\
 a/m-1&lt;\lfloor\frac{am&#39;}{2^k}\rfloor&lt;a/m+A/2^k
 \end{aligned}
 \]</span></p>
@@ -380,9 +380,9 @@ G(k,b,a)=\binom{l(a)+a}a-k\binom{l(a)+a}{a-1}
 F(k,b,x,y)=\sum_{i+j=x}\binom{l(i)+i}i\binom{y-l(i)+j}j
 \]</span> 进一步 <span class="math display">\[
 \begin{aligned}
-&amp;F(k,b,x,y)-kF(k,b,x-1,y+1)\\
-&amp;=\sum_{i+j=x}\binom{l(i)+i}i\binom{y-l(i)+j}j-k\binom{l(i)+i}i\binom{y-l(i)+j}{j-1}\\
-&amp;=\sum_{i+j=x}\binom{l(i)+i}i\left(\binom{y-l(i)+j}j-k\binom{y-l(i)+j}{j-1}\right)\\
+&amp;F(k,b,x,y)-kF(k,b,x-1,y+1)\\\\
+&amp;=\sum_{i+j=x}\binom{l(i)+i}i\binom{y-l(i)+j}j-k\binom{l(i)+i}i\binom{y-l(i)+j}{j-1}\\\\
+&amp;=\sum_{i+j=x}\binom{l(i)+i}i\left(\binom{y-l(i)+j}j-k\binom{y-l(i)+j}{j-1}\right)\\\\
 &amp;=\sum_{i+j=x}\binom{l(i)+i}iG(k,y-l(x),j)
 \end{aligned}
 \]</span> 注意到 <span class="math inline">\(\binom{l(i)+i}i\)</span> 是从 <span class="math inline">\((0,0)\)</span> 走到 <span class="math inline">\((i,l(i))\)</span> 的路径条数，而 <span class="math inline">\(G(k,y-l(x),j)\)</span> 是从 <span class="math inline">\((x,y+1)\)</span> <strong>倒着</strong>走到 <span class="math inline">\((i,l(i)+1)\)</span> 且不越过 <span class="math inline">\(l\)</span> 的路径条数，整体求和就是从 <span class="math inline">\((0,0)\)</span> 走到 <span class="math inline">\((x,y+1)\)</span> 的路径条数，因为 <span class="math inline">\(i\)</span> 就是在枚举最后一次越过 <span class="math inline">\(l\)</span> 时的横坐标。</p>
@@ -399,7 +399,7 @@ F(k,b,x,y)=\sum_{i+j=x}\binom{x+y+1}ik^j
 <p>后面有证明。</p>
 <p>算法：令 <span class="math inline">\(s_n=(2+\sqrt 3)^{2^n}+(2-\sqrt 3)^{2^n}\bmod M_p\)</span>，那么 <span class="math display">\[
 s_n=\begin{cases}
-4&amp;(i=0)\\
+4&amp;(i=0)\\\\
 s_{n-1}^2-2\bmod M_p&amp;(i&gt;1)
 \end{cases}
 \]</span> 计算平方可以用 <code>FFT</code> 做到 <span class="math inline">\(O(p\log p)\)</span>，由于模数很特殊，取模可以做到线性：</p>
@@ -411,8 +411,8 @@ s_{n-1}^2-2\bmod M_p&amp;(i&gt;1)
 (a+b\sqrt 3)(c+d\sqrt 3)=(ac+3bd)\bmod q+(bc+ad)\bmod q\sqrt3
 \]</span> <span class="math inline">\(X\)</span> 中任何两个元素的乘积一定也在 <span class="math inline">\(X\)</span> 内，但它不是群，因为不是所有元素都可逆，只保留有逆的元素，就得到了群 <span class="math inline">\(X^*\)</span>。因为 <span class="math inline">\((2+\sqrt 3)(2+(q-1)\sqrt 3)\equiv 1\pmod q\)</span>，所以 <span class="math inline">\(2+\sqrt 3\in X^{*}\)</span>。</p>
 <p>考虑 <span class="math display">\[
-(2+\sqrt 3)^{2^{p-2}}+(2-\sqrt 3)^{2^{p-2}} \equiv 0\pmod {M_p}\\
-(2+\sqrt 3)^{2^{p-1}}+[(2+\sqrt 3)(2-\sqrt 3)]^{2^{p-2}} \equiv 0\pmod {M_p}\\
+(2+\sqrt 3)^{2^{p-2}}+(2-\sqrt 3)^{2^{p-2}} \equiv 0\pmod {M_p}\\\\
+(2+\sqrt 3)^{2^{p-1}}+[(2+\sqrt 3)(2-\sqrt 3)]^{2^{p-2}} \equiv 0\pmod {M_p}\\\\
 (2+\sqrt 3)^{2^{p-1}}\equiv -1\pmod {M_p}
 \]</span> 这说明了 <span class="math inline">\(2 + \sqrt 3\)</span> 的阶为 <span class="math inline">\(2^p\)</span>，即 <span class="math inline">\((2 + \sqrt 3)^0,(2 + \sqrt 3)^1,(2 + \sqrt 3)^2,\cdots,(2+\sqrt 3)^{2^p-1}\)</span> 两两不同。</p>
 <p>于是有 <span class="math inline">\(2^p \le |X*| \le q^2 \le M_p\)</span>，得出矛盾 <span class="math inline">\(2^p \le M_p\)</span>，故 <span class="math inline">\(M_p\)</span> 为质数。</p>
@@ -433,20 +433,20 @@ s_{n-1}^2-2\bmod M_p&amp;(i&gt;1)
 <p>根据 <span class="math inline">\(M_p|\binom{M_p}i\)</span>。</p>
 <p>那么，我们有： <span class="math display">\[
 \begin{aligned}
-(6+2\sqrt 3)^{M_p}&amp;=6^{M_p}+2^{M_p}(\sqrt 3)^{M_p}\\
-&amp;=6+2\sqrt 3\cdot 3^{\frac{M_p-1}2}\\
+(6+2\sqrt 3)^{M_p}&amp;=6^{M_p}+2^{M_p}(\sqrt 3)^{M_p}\\\\
+&amp;=6+2\sqrt 3\cdot 3^{\frac{M_p-1}2}\\\\
 &amp;=6-2\sqrt 3
 \end{aligned}
 \]</span> 由于 <span class="math inline">\(2+\sqrt 3=\frac{(6+2\sqrt 3)^2}{24}\)</span>，进一步 <span class="math display">\[
 \begin{aligned}
-(2+\sqrt 3)^{\frac{M_p+1}2}&amp;=\frac{(6+2\sqrt 3)^{M_p+1}}{24^{\frac{M_p+1}2}}\\
-&amp;=\frac{(6+2\sqrt 3)(6-2\sqrt 3)}{24\cdot (2^{\frac{M_p-1}2})^3\cdot 3^{\frac{M_p-1}2}}\\
+(2+\sqrt 3)^{\frac{M_p+1}2}&amp;=\frac{(6+2\sqrt 3)^{M_p+1}}{24^{\frac{M_p+1}2}}\\\\
+&amp;=\frac{(6+2\sqrt 3)(6-2\sqrt 3)}{24\cdot (2^{\frac{M_p-1}2})^3\cdot 3^{\frac{M_p-1}2}}\\\\
 &amp;=-1
 \end{aligned}
 \]</span> 最后，在两边同乘 <span class="math inline">\((2-\sqrt 3)^{\frac{M_p+1}4}\)</span>，并利用 <span class="math inline">\((2+\sqrt 3)(2-\sqrt 3)=1\)</span> <span class="math display">\[
 \begin{aligned}
-(2+\sqrt 3)^{\frac{M_p+1}2}(2-\sqrt 3)^{\frac{M_p+1}4}&amp;=-(2-\sqrt 3)^{\frac{M_p+1}4}\\
-(2+\sqrt 3)^{\frac{M_p+1}4}+(2-\sqrt 3)^{\frac{M_p+1}4}&amp;=0\\
+(2+\sqrt 3)^{\frac{M_p+1}2}(2-\sqrt 3)^{\frac{M_p+1}4}&amp;=-(2-\sqrt 3)^{\frac{M_p+1}4}\\\\
+(2+\sqrt 3)^{\frac{M_p+1}4}+(2-\sqrt 3)^{\frac{M_p+1}4}&amp;=0\\\\
 (2+\sqrt 3)^{2^{p-2}}+(2-\sqrt 3)^{2^{p-2}}&amp;=0
 \end{aligned}
 \]</span></p>
@@ -457,13 +457,13 @@ s_{n-1}^2-2\bmod M_p&amp;(i&gt;1)
 </blockquote>
 <p>设 <span class="math inline">\(f_n=\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^n\)</span>，对于 <span class="math inline">\(n\ge 2\)</span>，有 <span class="math display">\[
 \begin{aligned}
-f_{n+1}&amp;=(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1})(\prod_{i=1}^{2^{n-1}}2i-1+2^n\bmod 2^{n+1})\bmod 2^{n+1}\\
-&amp;=(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1})^2\bmod 2^{n+1}\\
+f_{n+1}&amp;=(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1})(\prod_{i=1}^{2^{n-1}}2i-1+2^n\bmod 2^{n+1})\bmod 2^{n+1}\\\\
+&amp;=(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1})^2\bmod 2^{n+1}\\\\
 \end{aligned}
 \]</span> 设 <span class="math inline">\(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1}=f_n+k2^n(k\in\{0,1\})\)</span>，继续推。 <span class="math display">\[
 \begin{aligned}
-f_{n+1}&amp;=(f_n+k2^n)^2\bmod 2^{n+1}\\
-&amp;=f_n^2+k2^{n+1}+k^22^{2n}\bmod 2^{n+1}\\
+f_{n+1}&amp;=(f_n+k2^n)^2\bmod 2^{n+1}\\\\
+&amp;=f_n^2+k2^{n+1}+k^22^{2n}\bmod 2^{n+1}\\\\
 &amp;=f_n^2\bmod 2^{n+1}
 \end{aligned}
 \]</span> 计算平方可以用 <code>FFT</code> 做到 <span class="math inline">\(O(n\log n)\)</span>，总复杂度 <span class="math inline">\(O(n^2\log n)\)</span>。</p>
@@ -539,7 +539,7 @@ f_{n+1}&amp;=(f_n+k2^n)^2\bmod 2^{n+1}\\
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:58</span>
+    <span title="站点阅读时长">2:59</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动

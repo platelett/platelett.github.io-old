@@ -293,11 +293,11 @@
 <h4 id="证明一">证明一：</h4>
 <p><span class="math display">\[
 \begin{aligned}
-&amp;\sum_{a=0}^n f(a,b)x^a\\
-&amp;=\sum_{a=0}^n\sum\limits_{i=0}^b\binom bi\binom {n-i}ax^a\\
-&amp;=\sum_{i=0}^b\binom bi\sum_{a=0}^n\binom {n-i}ax^a\\
-&amp;=\sum_{i=0}^b\binom bi(x+1)^{n-i}\\
-&amp;=\sum_{i=0}^b\binom bi(x+1)^{b-i}(x+1)^{n-b}\\
+&amp;\sum_{a=0}^n f(a,b)x^a\\\\
+&amp;=\sum_{a=0}^n\sum\limits_{i=0}^b\binom bi\binom {n-i}ax^a\\\\
+&amp;=\sum_{i=0}^b\binom bi\sum_{a=0}^n\binom {n-i}ax^a\\\\
+&amp;=\sum_{i=0}^b\binom bi(x+1)^{n-i}\\\\
+&amp;=\sum_{i=0}^b\binom bi(x+1)^{b-i}(x+1)^{n-b}\\\\
 &amp;=(x+2)^b(x+1)^{n-b}
 \end{aligned}
 \]</span></p>
@@ -325,16 +325,16 @@
 <h4 id="递推">递推</h4>
 <p>考虑 <span class="math display">\[
 \begin{aligned}
-&amp;[(x+2)^b(x+1)^{n-b}]&#39;\\
-&amp;=b(x+2)^{b-1}(x+1)^{n-b}+(x+2)^b(n-b)(x+1)^{n-b-1}\\
-&amp;=\dfrac{b(x+1)+(n-b)(x+2)}{(x+2)(x+1)}(x+2)^b(x+1)^{n-b}\\
-&amp;=\dfrac{nx+2n-b}{(x+2)(x+1)}(x+2)^b(x+1)^{n-b}\\
+&amp;[(x+2)^b(x+1)^{n-b}]&#39;\\\\
+&amp;=b(x+2)^{b-1}(x+1)^{n-b}+(x+2)^b(n-b)(x+1)^{n-b-1}\\\\
+&amp;=\dfrac{b(x+1)+(n-b)(x+2)}{(x+2)(x+1)}(x+2)^b(x+1)^{n-b}\\\\
+&amp;=\dfrac{nx+2n-b}{(x+2)(x+1)}(x+2)^b(x+1)^{n-b}\\\\
 \end{aligned}
 \]</span> 两边同乘 <span class="math inline">\((x+2)(x+1)\)</span> 得： <span class="math display">\[
 (x+2)(x+1)[(x+2)^b(x+1)^{n-b}]&#39;=(nx+2n-b)(x+2)^b(x+1)^{n-b}
 \]</span> 提取 <span class="math inline">\(x^a\)</span> 系数： <span class="math display">\[
 \begin{aligned}
-&amp;(a-1)f(a-1,b)+3af(a,b)+2(a+1)f(a+1,b)\\
+&amp;(a-1)f(a-1,b)+3af(a,b)+2(a+1)f(a+1,b)\\\\
 &amp;=nf(a-1,b)+(2n-b)f(a,b)
 \end{aligned}
 \]</span> 整理得： <span class="math display">\[
@@ -412,7 +412,7 @@ f(a,b)=\frac {(2n-b-3a+3)f(a-1,b)+(n-a+2)f(a-2,b)}{2a}
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:58</span>
+    <span title="站点阅读时长">2:59</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动

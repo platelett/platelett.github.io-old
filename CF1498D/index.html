@@ -291,7 +291,7 @@
 <p>对于 <span class="math inline">\(t_i=1\)</span>，有 <span class="math inline">\(0 &lt; x_i \le m\)</span>，对于 <span class="math inline">\(t_i=2\)</span>，有 <span class="math inline">\(1 &lt; x_i \le m\)</span>。</p>
 </blockquote>
 <p>对于每个时刻 <span class="math inline">\(i\)</span>，维护数组 <span class="math inline">\(ok_j\)</span> 表示经过前 <span class="math inline">\(i\)</span> 个时刻能否使 <span class="math inline">\(k=j\)</span>。</p>
-<p>设 <span class="math inline">\(next_j=\begin{cases}\lceil j + x_i \rceil&amp;(t_i=1)\\\lceil j \cdot x_i \rceil&amp;(t_i=2)\end{cases}\)</span>。</p>
+<p>设 <span class="math inline">\(next_j=\begin{cases}\lceil j + x_i \rceil&amp;(t_i=1)\\\\\lceil j \cdot x_i \rceil&amp;(t_i=2)\end{cases}\)</span>。</p>
 <p>因为 <span class="math inline">\(\forall j \ne k,next_j \ne next_k\)</span>，所以 <span class="math inline">\(j \rightarrow next_j\)</span> 连边后形成若干条链。</p>
 <p>假设一条链上的结点分别为 <span class="math inline">\(v_1,v_2,v_3,\cdots,v_s\)</span></p>
 <p>对于 <span class="math inline">\(v_j\)</span>，如果 <span class="math inline">\(\exist k \in [j-y_i,j)\)</span>，满足 <span class="math inline">\(ok_k=1\)</span>，那么在第 <span class="math inline">\(i\)</span> 时刻 <span class="math inline">\(k\)</span> 可以等于 <span class="math inline">\(v_j\)</span>。</p>
@@ -362,7 +362,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:58</span>
+    <span title="站点阅读时长">2:59</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
