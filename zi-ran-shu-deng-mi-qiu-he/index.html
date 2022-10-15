@@ -262,7 +262,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>947</span>
+      <span>1.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -295,11 +295,11 @@ pre_i=\prod_{j=1}^in-j,suf_i=\prod_{j=i}^{m+2}n-j
 \]</span></p>
 <p>复杂度 <span class="math inline">\(O(m^2)\)</span>。</p>
 <h3 id="第二类斯特林数">&lt;3&gt; 第二类斯特林数</h3>
-<p>预处理 <span class="math display">\[
-{0 \brace 0} = 1 \\
+<p><span class="math display">\[
+\sum_{i=0}^ni^m=\sum_{i=1}^m{m \brace i}\frac 1{i+1}(n+1)^{\underline{i+1}}
+\]</span> 预处理 <span class="math display">\[
+{0 \brace 0} = 1 \\\\
 {n \brace m} = {n - 1 \brace m - 1} + m{n - 1 \brace m}
-\]</span> 结论 <span class="math display">\[
-\sum_{i=1}^mi^m=\sum_{i=1}^n{m \brace i}\frac 1{i+1}(n+1)^{\underline{i+1}}
 \]</span> 复杂度 <span class="math inline">\(O(m^2)\)</span> （无需求逆）或 <span class="math inline">\(O(m\log m)\)</span> （需要求第二类斯特林数-行）。</p>
 <h3 id="递推">&lt;4&gt; 递推</h3>
 <p><span class="math display">\[
@@ -308,15 +308,16 @@ f_i=\frac 1{i+1}\left((n+1)^{i+1}-\sum_{j=0}^{i-1}\binom{i+1}jf_j\right)
 \]</span></p>
 <p>复杂度 <span class="math inline">\(O(m^2)\)</span>。</p>
 <h3 id="伯努利数">&lt;5&gt; 伯努利数</h3>
+<p><span class="math display">\[
+\sum_{i=1}^ni^m=\frac 1{m+1}\sum_{i=0}^m\binom{m+1}iB^{+}_in^{m+1-i}
+\]</span></p>
+<p>其中 <span class="math inline">\(B^{+}_n\)</span> 表示 <strong>第二伯努利数</strong>，它和 <strong>第一伯努利数</strong> <span class="math inline">\(B^{-}_n\)</span> 的唯一区别是 <span class="math inline">\(B^{+}_1=\frac 12,B^{-}_1=-\frac 12\)</span>。</p>
 <p>预处理 <span class="math display">\[
-B_0=1\\
-\sum_{i=0}^m\binom{m+1}iB_i=0
-\]</span> 结论 <span class="math display">\[
-\sum_{i=1}^ni^m=\frac 1{m+1}\sum_{i=0}^m\binom{m+1}iB_in^{m+1-i}
-\]</span> 另外伯努利数的指数型生成函数 <span class="math display">\[
-B(x)=\frac x{e^x-1}
-\]</span> 通过多项式求逆</p>
-<p>可以优化到 <span class="math inline">\(O(m\log m)\)</span>。</p>
+B^{-}_0=1\\
+\sum_{i=0}^m\binom{m+1}iB^{-}_i=0
+\]</span> 另外第一伯努利数的指数型生成函数 <span class="math display">\[
+\sum_{k=0}^{\infin}B^{-}_k\frac{x^k}{k!}=\frac x{e^x-1}
+\]</span> 通过多项式求逆可以优化到 <span class="math inline">\(O(m\log m)\)</span>。</p>
 
     </div>
 
