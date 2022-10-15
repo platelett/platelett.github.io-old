@@ -15,7 +15,7 @@ categories: 考试
 $$
 A_i =
 \begin{cases}
-1 &(i \le m \land i \in \text{Prime})\\
+1 &(i \le m \land i \in \text{Prime})\\\\
 0 &(otherwise)
 \end{cases}
 $$

@@ -23,11 +23,11 @@ $$
 
 $$
 \begin{aligned}
-&\sum_{a=0}^n f(a,b)x^a\\
-&=\sum_{a=0}^n\sum\limits_{i=0}^b\binom bi\binom {n-i}ax^a\\
-&=\sum_{i=0}^b\binom bi\sum_{a=0}^n\binom {n-i}ax^a\\
-&=\sum_{i=0}^b\binom bi(x+1)^{n-i}\\
-&=\sum_{i=0}^b\binom bi(x+1)^{b-i}(x+1)^{n-b}\\
+&\sum_{a=0}^n f(a,b)x^a\\\\
+&=\sum_{a=0}^n\sum\limits_{i=0}^b\binom bi\binom {n-i}ax^a\\\\
+&=\sum_{i=0}^b\binom bi\sum_{a=0}^n\binom {n-i}ax^a\\\\
+&=\sum_{i=0}^b\binom bi(x+1)^{n-i}\\\\
+&=\sum_{i=0}^b\binom bi(x+1)^{b-i}(x+1)^{n-b}\\\\
 &=(x+2)^b(x+1)^{n-b}
 \end{aligned}
 $$
@@ -70,10 +70,10 @@ $$
  考虑
 $$
 \begin{aligned}
-&[(x+2)^b(x+1)^{n-b}]'\\
-&=b(x+2)^{b-1}(x+1)^{n-b}+(x+2)^b(n-b)(x+1)^{n-b-1}\\
-&=\dfrac{b(x+1)+(n-b)(x+2)}{(x+2)(x+1)}(x+2)^b(x+1)^{n-b}\\
-&=\dfrac{nx+2n-b}{(x+2)(x+1)}(x+2)^b(x+1)^{n-b}\\
+&[(x+2)^b(x+1)^{n-b}]'\\\\
+&=b(x+2)^{b-1}(x+1)^{n-b}+(x+2)^b(n-b)(x+1)^{n-b-1}\\\\
+&=\dfrac{b(x+1)+(n-b)(x+2)}{(x+2)(x+1)}(x+2)^b(x+1)^{n-b}\\\\
+&=\dfrac{nx+2n-b}{(x+2)(x+1)}(x+2)^b(x+1)^{n-b}\\\\
 \end{aligned}
 $$
 两边同乘 $(x+2)(x+1)$ 得：
@@ -83,7 +83,7 @@ $$
 提取 $x^a$ 系数：
 $$
 \begin{aligned}
-&(a-1)f(a-1,b)+3af(a,b)+2(a+1)f(a+1,b)\\
+&(a-1)f(a-1,b)+3af(a,b)+2(a+1)f(a+1,b)\\\\
 &=nf(a-1,b)+(2n-b)f(a,b)
 \end{aligned}
 $$

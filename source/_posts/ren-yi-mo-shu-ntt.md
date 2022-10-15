@@ -23,11 +23,11 @@ categories: 算法
 
 设
 $$
-A0_i=\lfloor \frac {A_i}M \rfloor,A1_i=A_i \bmod M\\B0_i=\lfloor \frac {B_i}M \rfloor,B1_i=B_i \bmod M
+A0_i=\lfloor \frac {A_i}M \rfloor,A1_i=A_i \bmod M\\\\B0_i=\lfloor \frac {B_i}M \rfloor,B1_i=B_i \bmod M
 $$
 于是
 $$
-A = M \cdot A0 + A1\\B = M \cdot B0  + B1
+A = M \cdot A0 + A1\\\\B = M \cdot B0  + B1
 $$
 进一步
 $$
@@ -45,7 +45,7 @@ $$
 
   我们定义
   $$
-  P = A + iB\\
+  P = A + iB\\\\
   Q = A - iB
   $$
   推导可以得到一个很优美的结论：

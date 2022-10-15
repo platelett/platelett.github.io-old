@@ -73,8 +73,8 @@ $m'$ 有两种选择，$\lceil \frac{2^k}m\rceil$ 和 $\lfloor \frac{2^k}m\rfloo
 
 $$
 \begin{aligned}
-2^k/m \le m' < 2^k/m+1\\
-a/m-1<\lfloor\frac{am'}{2^k}\rfloor<a/m+a/2^k\\
+2^k/m \le m' < 2^k/m+1\\\\
+a/m-1<\lfloor\frac{am'}{2^k}\rfloor<a/m+a/2^k\\\\
 a/m-1<\lfloor\frac{am'}{2^k}\rfloor<a/m+A/2^k
 \end{aligned}
 $$
@@ -145,9 +145,9 @@ $$
 进一步
 $$
 \begin{aligned}
-&F(k,b,x,y)-kF(k,b,x-1,y+1)\\
-&=\sum_{i+j=x}\binom{l(i)+i}i\binom{y-l(i)+j}j-k\binom{l(i)+i}i\binom{y-l(i)+j}{j-1}\\
-&=\sum_{i+j=x}\binom{l(i)+i}i\left(\binom{y-l(i)+j}j-k\binom{y-l(i)+j}{j-1}\right)\\
+&F(k,b,x,y)-kF(k,b,x-1,y+1)\\\\
+&=\sum_{i+j=x}\binom{l(i)+i}i\binom{y-l(i)+j}j-k\binom{l(i)+i}i\binom{y-l(i)+j}{j-1}\\\\
+&=\sum_{i+j=x}\binom{l(i)+i}i\left(\binom{y-l(i)+j}j-k\binom{y-l(i)+j}{j-1}\right)\\\\
 &=\sum_{i+j=x}\binom{l(i)+i}iG(k,y-l(x),j)
 \end{aligned}
 $$
@@ -176,7 +176,7 @@ $$
 算法：令 $s_n=(2+\sqrt 3)^{2^n}+(2-\sqrt 3)^{2^n}\bmod M_p$，那么
 $$
 s_n=\begin{cases}
-4&(i=0)\\
+4&(i=0)\\\\
 s_{n-1}^2-2\bmod M_p&(i>1)
 \end{cases}
 $$
@@ -198,8 +198,8 @@ $X$ 中任何两个元素的乘积一定也在 $X$ 内，但它不是群，因�
 
 考虑
 $$
-(2+\sqrt 3)^{2^{p-2}}+(2-\sqrt 3)^{2^{p-2}} \equiv 0\pmod {M_p}\\
-(2+\sqrt 3)^{2^{p-1}}+[(2+\sqrt 3)(2-\sqrt 3)]^{2^{p-2}} \equiv 0\pmod {M_p}\\
+(2+\sqrt 3)^{2^{p-2}}+(2-\sqrt 3)^{2^{p-2}} \equiv 0\pmod {M_p}\\\\
+(2+\sqrt 3)^{2^{p-1}}+[(2+\sqrt 3)(2-\sqrt 3)]^{2^{p-2}} \equiv 0\pmod {M_p}\\\\
 (2+\sqrt 3)^{2^{p-1}}\equiv -1\pmod {M_p}
 $$
 这说明了 $2 + \sqrt 3$ 的阶为 $2^p$，即 $(2 + \sqrt 3)^0,(2 + \sqrt 3)^1,(2 + \sqrt 3)^2,\cdots,(2+\sqrt 3)^{2^p-1}$ 两两不同。
@@ -230,24 +230,24 @@ $$
 那么，我们有：
 $$
 \begin{aligned}
-(6+2\sqrt 3)^{M_p}&=6^{M_p}+2^{M_p}(\sqrt 3)^{M_p}\\
-&=6+2\sqrt 3\cdot 3^{\frac{M_p-1}2}\\
+(6+2\sqrt 3)^{M_p}&=6^{M_p}+2^{M_p}(\sqrt 3)^{M_p}\\\\
+&=6+2\sqrt 3\cdot 3^{\frac{M_p-1}2}\\\\
 &=6-2\sqrt 3
 \end{aligned}
 $$
 由于 $2+\sqrt 3=\frac{(6+2\sqrt 3)^2}{24}$，进一步
 $$
 \begin{aligned}
-(2+\sqrt 3)^{\frac{M_p+1}2}&=\frac{(6+2\sqrt 3)^{M_p+1}}{24^{\frac{M_p+1}2}}\\
-&=\frac{(6+2\sqrt 3)(6-2\sqrt 3)}{24\cdot (2^{\frac{M_p-1}2})^3\cdot 3^{\frac{M_p-1}2}}\\
+(2+\sqrt 3)^{\frac{M_p+1}2}&=\frac{(6+2\sqrt 3)^{M_p+1}}{24^{\frac{M_p+1}2}}\\\\
+&=\frac{(6+2\sqrt 3)(6-2\sqrt 3)}{24\cdot (2^{\frac{M_p-1}2})^3\cdot 3^{\frac{M_p-1}2}}\\\\
 &=-1
 \end{aligned}
 $$
 最后，在两边同乘 $(2-\sqrt 3)^{\frac{M_p+1}4}$，并利用 $(2+\sqrt 3)(2-\sqrt 3)=1$
 $$
 \begin{aligned}
-(2+\sqrt 3)^{\frac{M_p+1}2}(2-\sqrt 3)^{\frac{M_p+1}4}&=-(2-\sqrt 3)^{\frac{M_p+1}4}\\
-(2+\sqrt 3)^{\frac{M_p+1}4}+(2-\sqrt 3)^{\frac{M_p+1}4}&=0\\
+(2+\sqrt 3)^{\frac{M_p+1}2}(2-\sqrt 3)^{\frac{M_p+1}4}&=-(2-\sqrt 3)^{\frac{M_p+1}4}\\\\
+(2+\sqrt 3)^{\frac{M_p+1}4}+(2-\sqrt 3)^{\frac{M_p+1}4}&=0\\\\
 (2+\sqrt 3)^{2^{p-2}}+(2-\sqrt 3)^{2^{p-2}}&=0
 \end{aligned}
 $$
@@ -261,15 +261,15 @@ $$
 设 $f_n=\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^n$，对于 $n\ge 2$，有
 $$
 \begin{aligned}
-f_{n+1}&=(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1})(\prod_{i=1}^{2^{n-1}}2i-1+2^n\bmod 2^{n+1})\bmod 2^{n+1}\\
-&=(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1})^2\bmod 2^{n+1}\\
+f_{n+1}&=(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1})(\prod_{i=1}^{2^{n-1}}2i-1+2^n\bmod 2^{n+1})\bmod 2^{n+1}\\\\
+&=(\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1})^2\bmod 2^{n+1}\\\\
 \end{aligned}
 $$
 设 $\prod_{i=1}^{2^{n-1}}2i-1\bmod 2^{n+1}=f_n+k2^n(k\in\{0,1\})$，继续推。
 $$
 \begin{aligned}
-f_{n+1}&=(f_n+k2^n)^2\bmod 2^{n+1}\\
-&=f_n^2+k2^{n+1}+k^22^{2n}\bmod 2^{n+1}\\
+f_{n+1}&=(f_n+k2^n)^2\bmod 2^{n+1}\\\\
+&=f_n^2+k2^{n+1}+k^22^{2n}\bmod 2^{n+1}\\\\
 &=f_n^2\bmod 2^{n+1}
 \end{aligned}
 $$

@@ -23,8 +23,8 @@ categories: JOISC
 
 对于一个位置，假设它依次进行操作的数分别为 $a_1,a_2,\cdots,a_k$，那么此时它的值为
 $$
-\max\{0,\max\{0,\max\{0,\cdots\max\{0,a_1\}\cdots+a_{k-1}\}+a_k\}\\
-=\max\{0,a_k,a_{k-1}+a_k,a_{k-2}+a_{k-1}+a_k,\cdots,a_1+a_2+\cdots+a_k\}\\
+\max\{0,\max\{0,\max\{0,\cdots\max\{0,a_1\}\cdots+a_{k-1}\}+a_k\}\\\\
+=\max\{0,a_k,a_{k-1}+a_k,a_{k-2}+a_{k-1}+a_k,\cdots,a_1+a_2+\cdots+a_k\}\\\\
 =\sum_{i=1}^ka_i-\min\{0,a_1,a_1+a_2,\cdots,a_1+a_2+\cdots+a_k\}
 $$
 即在不考虑再和 $0$ 取 ```max``` 的情况下，当前值减**历史**最小值。

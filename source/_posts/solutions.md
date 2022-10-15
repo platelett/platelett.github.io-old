@@ -387,8 +387,8 @@ $$
 根据期望的线性性质，期望步数可以分摊到经过每个状态上。所以后面那坨东西为：
 $$
 \begin{aligned}
-&\sum_{\forall i \in S,c_i<B_i}[到达c状态的概率]\cdot[离开c状态的期望步数]\\\\
-&=\sum_{\forall i \in S,c_i<B_i}\frac{(\sum_{i \in S}c_i)!}{\prod_{i \in S} c_i!}\prod_{i \in S}p_i^{c_i} \cdot \frac{\sum_{i=1}^n A_i}{\sum_{i \in S} A_i}\\\\
+&\sum_{\forall i \in S,c_i<B_i}[到达c状态的概率]\cdot[离开c状态的期望步数]\\\\\\\\
+&=\sum_{\forall i \in S,c_i<B_i}\frac{(\sum_{i \in S}c_i)!}{\prod_{i \in S} c_i!}\prod_{i \in S}p_i^{c_i} \cdot \frac{\sum_{i=1}^n A_i}{\sum_{i \in S} A_i}\\\\\\\\
 &=\sum_{\forall i \in S,c_i<B_i}\frac{(\sum_{i \in S}c_i)!}{\prod_{i \in S} c_i!}\prod_{i \in S}A_i^{c_i} \cdot \frac{\sum_{i=1}^n A_i}{(\sum_{i \in S} A_i)^{(\sum_{i \in S}c_i)+1}}
 \end{aligned}
 $$
@@ -396,7 +396,7 @@ $$
 把前面说的东西拼起来，答案为：
 $$
 \begin{aligned}
-&\sum_S(-1)^{|S|+1}\sum_{\forall i \in S,c_i<B_i}\frac{(\sum_{i \in S}c_i)!}{\prod_{i \in S} c_i!}\prod_{i \in S}A_i^{c_i} \cdot \frac{\sum_{i=1}^n A_i}{(\sum_{i \in S} A_i)^{(\sum_{i \in S}c_i)+1}}\\\\
+&\sum_S(-1)^{|S|+1}\sum_{\forall i \in S,c_i<B_i}\frac{(\sum_{i \in S}c_i)!}{\prod_{i \in S} c_i!}\prod_{i \in S}A_i^{c_i} \cdot \frac{\sum_{i=1}^n A_i}{(\sum_{i \in S} A_i)^{(\sum_{i \in S}c_i)+1}}\\\\\\\\
 &=(\sum_{i=1}^n A_i)\sum_S(-1)^{|S|+1}\sum_{\forall i \in S,c_i<B_i}\frac{(\sum_{i \in S}c_i)!}{(\sum_{i \in S} A_i)^{(\sum_{i \in S}c_i)+1}} \cdot \prod_{i \in S}\frac{A_i^{c_i}}{c_i!}
 \end{aligned}
 $$
@@ -545,29 +545,29 @@ $k \le 15$ 是此题的突破点，这意味着把 $256$ 平均分成 $16$ 段�
 维护最后一项 $a_n$​ 的分子分母 $x,y$​，一次变换后 $\frac {x'}{y'}=a_{n-1}+\frac 1{a_n}=\frac {a_{k-1}x+y}x$​。发现不会发生约分，并且相当于对 $(x,y)$​​ 做了一个线性变换：
 $$
 \begin{bmatrix}
-x'\\\\
+x'\\\\\\\\
 y'
 \end{bmatrix}
 =
 \begin{bmatrix}
-a_{n-1}&1\\\\
+a_{n-1}&1\\\\\\\\
 1&0
 \end{bmatrix}
 \begin{bmatrix}
-x\\\\
+x\\\\\\\\
 y
 \end{bmatrix}
 $$
 算出
 $$
 \begin{bmatrix}
-a&c\\\\
+a&c\\\\\\\\
 b&d
 \end{bmatrix}
 =
 \prod_{i=1}^n
 \begin{bmatrix}
-a_i&1\\\\
+a_i&1\\\\\\\\
 1&0
 \end{bmatrix}
 $$
@@ -575,55 +575,55 @@ $$
 
 然后考虑两种操作：
 
-- `W` 类型：因为 $\begin{bmatrix}x&1\\\\1&0\end{bmatrix}\begin{bmatrix}1&0\\\\1&1\end{bmatrix}=\begin{bmatrix}x+1&1\\\\1&0\end{bmatrix}$​，所以 'W' 操作就是在后面乘一个 $\begin{bmatrix}1&0\\\\1&1\end{bmatrix}$。
+- `W` 类型：因为 $\begin{bmatrix}x&1\\\\\\\\1&0\end{bmatrix}\begin{bmatrix}1&0\\\\\\\\1&1\end{bmatrix}=\begin{bmatrix}x+1&1\\\\\\\\1&0\end{bmatrix}$​，所以 'W' 操作就是在后面乘一个 $\begin{bmatrix}1&0\\\\\\\\1&1\end{bmatrix}$。
 
 - `E` 类型：虽然定义中如果最后一项为 $1$ 时要特别处理，但发现当最后一项为 $1$ 时两种处理方式的结果是一样的。
 
   给倒数第二项加 $1$ 的影响：
   $$
   \begin{bmatrix}
-  1&1\\\\
+  1&1\\\\\\\\
   1&0
   \end{bmatrix}
   \rightarrow
   \begin{bmatrix}
-  1&0\\\\
+  1&0\\\\\\\\
   1&1
   \end{bmatrix}
   \begin{bmatrix}
-  1&1\\\\
+  1&1\\\\\\\\
   1&0
   \end{bmatrix}
   =
   \begin{bmatrix}
-  1&1\\\\
+  1&1\\\\\\\\
   2&1
   \end{bmatrix}
   $$
   给数列的**最后一项**减 $1$，接着在数列尾再加两项，两项的值都是 $1$ 的影响：
   $$
   \begin{bmatrix}
-  1&1\\\\
+  1&1\\\\\\\\
   1&0
   \end{bmatrix}
   \rightarrow
   \begin{bmatrix}
-  0&1\\\\
+  0&1\\\\\\\\
   1&0
   \end{bmatrix}
   \begin{bmatrix}
-  1&1\\\\
+  1&1\\\\\\\\
   1&0
   \end{bmatrix}^2
   =
   \begin{bmatrix}
-  1&1\\\\
+  1&1\\\\\\\\
   2&1
   \end{bmatrix}
   $$
-  所以把 `E` 操作按第二种处理方式就行了，给数列的最后一项减 $1$​ 相当于乘 $\begin{bmatrix}1&0\\\\-1&1\end{bmatrix}$。
+  所以把 `E` 操作按第二种处理方式就行了，给数列的最后一项减 $1$​ 相当于乘 $\begin{bmatrix}1&0\\\\\\\\-1&1\end{bmatrix}$。
 
-  于是 `E` 操作相当于乘 $\begin{bmatrix}1&0\\\\-1&1\end{bmatrix}\begin{bmatrix}1&1\\\\1&0\end{bmatrix}^2=\begin{bmatrix}2&1\\\\-1&0\end{bmatrix}$。
+  于是 `E` 操作相当于乘 $\begin{bmatrix}1&0\\\\\\\\-1&1\end{bmatrix}\begin{bmatrix}1&1\\\\\\\\1&0\end{bmatrix}^2=\begin{bmatrix}2&1\\\\\\\\-1&0\end{bmatrix}$。
 
 此时这题就很容易了，`APPEND`，`FLIP ` 和 `REVERSE ` 都是可以平衡树维护的，每个结点不仅要维护区间矩阵乘积，还要维护倒着乘的结果，`FLIP` 后的结果，和 `FLIP` 后倒着乘的结果。
 
@@ -694,14 +694,14 @@ $$
 
 考虑分别对两类合法三角形 $ABC$​​​ 计数，先枚举点 $A$​，再枚举
 $$
-X_B\bmod 4,Y_B\bmod 4,\text{bounds}(A,B)\bmod 4\\\\X_C\bmod 4,Y_C\bmod 4,\text{bounds}(A,C)\bmod 4
+X_B\bmod 4,Y_B\bmod 4,\text{bounds}(A,B)\bmod 4\\\\\\\\X_C\bmod 4,Y_C\bmod 4,\text{bounds}(A,C)\bmod 4
 $$
 满足
 $$
-S \in \mathbb Z\\\\
-\text{bounds}(A,B)\equiv\text{bounds}(A,C)\pmod 2\\\\
-X_B\equiv X_C \pmod 2\\\\
-Y_B\equiv Y_C\pmod 2\\\\
+S \in \mathbb Z\\\\\\\\
+\text{bounds}(A,B)\equiv\text{bounds}(A,C)\pmod 2\\\\\\\\
+X_B\equiv X_C \pmod 2\\\\\\\\
+Y_B\equiv Y_C\pmod 2\\\\\\\\
 S\equiv \text{bounds}(A,B)+\text{bounds}(A,C)+\text{bounds}(B,C)\pmod 4
 $$
 使用 $cnt$ 数组可以 $O(1)$​​ 计算贡献。
@@ -867,9 +867,9 @@ $$
 
 对于两个距离为 $\sqrt D$​ 的点 $(x_1,y_1),(x_2,y_2)$​，考虑 $x_1-x_2,y_1-y_2$​​ 的奇偶性：
 $$
-x_1 \equiv x_2 \pmod 2,y_1 \equiv y_2 \pmod 2 \iff D \equiv 0 \pmod 4\\\\
-x_1 \equiv x_2 \pmod 2,y_1 \not\equiv y_2 \pmod 2 \iff D \equiv 1 \pmod 4\\\\
-x_1 \not\equiv x_2 \pmod 2,y_1 \not\equiv y_2 \pmod 2 \iff D \equiv 2 \pmod 4\\\\
+x_1 \equiv x_2 \pmod 2,y_1 \equiv y_2 \pmod 2 \iff D \equiv 0 \pmod 4\\\\\\\\
+x_1 \equiv x_2 \pmod 2,y_1 \not\equiv y_2 \pmod 2 \iff D \equiv 1 \pmod 4\\\\\\\\
+x_1 \not\equiv x_2 \pmod 2,y_1 \not\equiv y_2 \pmod 2 \iff D \equiv 2 \pmod 4\\\\\\\\
 $$
 因此 $D \bmod 4$​ 说明了两点坐标差的奇偶性。
 
@@ -886,14 +886,14 @@ $$
 
   对于两个距离为 $\sqrt D$ 的点 $(x_1,y_1),(x_2,y_2)$，由于 $x_1 \equiv x_2 \pmod 2,y_1 \equiv y_2 \pmod 2$，所以
   $$
-  \lfloor\frac {x_1}2\rfloor-\lfloor\frac {x_2}2\rfloor=\frac 12(x_1-x_2)\\\\
+  \lfloor\frac {x_1}2\rfloor-\lfloor\frac {x_2}2\rfloor=\frac 12(x_1-x_2)\\\\\\\\
   \lfloor\frac {y_1}2\rfloor-\lfloor\frac {y_2}2\rfloor=\frac 12(y_1-y_2)
   $$
   进一步：
   $$
   \begin{aligned}
-  &(x_1-x_2)^2+(y_1-y_2)^2=D\\\\
-  \Rightarrow &(\lfloor\frac {x_1}2\rfloor-\lfloor\frac {x_2}2\rfloor)^2+(\lfloor\frac {y_1}2\rfloor-\lfloor\frac {y_2}2\rfloor)^2=\frac D4\\\\
+  &(x_1-x_2)^2+(y_1-y_2)^2=D\\\\\\\\
+  \Rightarrow &(\lfloor\frac {x_1}2\rfloor-\lfloor\frac {x_2}2\rfloor)^2+(\lfloor\frac {y_1}2\rfloor-\lfloor\frac {y_2}2\rfloor)^2=\frac D4\\\\\\\\
   \Rightarrow &\text{color}(\lfloor\frac {x_1}2\rfloor,\lfloor\frac {y_1}2\rfloor,\frac D4)\ne\text{color}(\lfloor\frac {x_2}2\rfloor,\lfloor\frac {y_2}2\rfloor,\frac D4)
   \end{aligned}
   $$
@@ -1100,7 +1100,7 @@ $$
 
 完美匹配的存在性容易想到 Hall 定理，设 $f(S)$ 表示与点集 $S$ 距离恰好等于 $1$ 的点集，问题转化为判定：
 $$
-\forall |S|\le\frac n2,|T|=\frac n2,S \cap T=\varnothing\\\\
+\forall |S|\le\frac n2,|T|=\frac n2,S \cap T=\varnothing\\\\\\\\
 |f(S)\cap T| \ge |S|
 $$
 由于 $|f(S)\cap T|$ 最小值为 $|f(S)|+|S|-\frac n2$，条件改写为 $|f(S)|\ge\frac n2$。
@@ -1187,10 +1187,10 @@ $$
 
 反证法：假设对于一个 $l$，选择的 $r\in[r_1,r_2]$，其中 $r_2<n$，$s[l,r_2]$ 之后的子串为 $s[l',r']$。如果 $s[l,r_2+1]<s[l',r']$，直接在 $s[l,r_2]$ 后插入 $s[l,r_2+1]$，得到一组更优的解。否则 $s[l,r_2]<s[l',r']\le s[l,r_2+1]$，说明
 $$
-s[l',l'+r_1-l]=s[l,r_1]\\\\
-s[l',l'+r_1+1-l]=s[l,r_1+1]\\\\
-s[l',l'+r_1+2-l]=s[l,r_1+2]\\\\
-\cdots\\\\
+s[l',l'+r_1-l]=s[l,r_1]\\\\\\\\
+s[l',l'+r_1+1-l]=s[l,r_1+1]\\\\\\\\
+s[l',l'+r_1+2-l]=s[l,r_1+2]\\\\\\\\
+\cdots\\\\\\\\
 s[l',l'+r_2-l]=s[l,r_2]
 $$
 于是可以用前者们一一替换后者们，得到一组不存在 $l$ 作为左端点的子串的解。
@@ -1247,7 +1247,7 @@ $n\le 100$ 可以先两两询问 $\text{lcm}$，再逐个确定。当 $n>3$ 时�
 $$
 \text{lcm}(p',x)=
 \begin{cases}
-x&(x|p')\\\\
+x&(x|p')\\\\\\\\
 xp'&(x\not|p')
 \end{cases}
 $$

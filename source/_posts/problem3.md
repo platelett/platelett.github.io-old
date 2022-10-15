@@ -39,27 +39,27 @@ $$
 不难证明存在一个 $d$，满足
 $$
 \begin{cases}
-f_i \ge \frac in &(i \le d)\\
+f_i \ge \frac in &(i \le d)\\\\
 f_i < \frac in &(i > d)
 \end{cases}
 $$
 故
 $$
 f_i = \begin{cases}
-f_{i+1} &(i < d)\\
+f_{i+1} &(i < d)\\\\
 \dfrac {\frac in+(i-1)f_{i+1}}i &(i \ge d)
 \end{cases}
 $$
 考虑当 $i \ge d$ 时
 $$
-f_i=\frac {i-1}if_{i+1}+\frac 1n\\
+f_i=\frac {i-1}if_{i+1}+\frac 1n\\\\
 \frac 1{i-1}f_i=\frac 1if_{i+1}+\frac 1{n(i-1)}
 $$
 设 $g_i = \frac 1{i-1}f_i$，则
 $$
 \begin{aligned}
-&g_i=g_{i+1}+\frac 1{n(i-1)}\\
-&=\sum_{j=i-1}^n\frac 1{nj}\\
+&g_i=g_{i+1}+\frac 1{n(i-1)}\\\\
+&=\sum_{j=i-1}^n\frac 1{nj}\\\\
 &=\frac 1n\sum_{j=i-1}^n\frac 1j
 \end{aligned}
 \Rightarrow

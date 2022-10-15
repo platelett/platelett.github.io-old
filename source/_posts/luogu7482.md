@@ -23,11 +23,11 @@ f(l,r)=\max\{f(l,p-1)+f(p+1,r),f(l,p-2)+f(p+2,r)+A_p\}
 $$
 设
 $$
-x_i=\begin{cases}f(i,p-1)&(i < p)\\f(p+1,i)&(i>p)\\0&(i=p)\end{cases},y_i=\begin{cases}f(i,p-2)&(i<p-1)\\f(p+2,i)&(i>p+1)\\0&(p-1 \le i \le p+1)\end{cases}
+x_i=\begin{cases}f(i,p-1)&(i < p)\\\\f(p+1,i)&(i>p)\\\\0&(i=p)\end{cases},y_i=\begin{cases}f(i,p-2)&(i<p-1)\\\\f(p+2,i)&(i>p+1)\\\\0&(p-1 \le i \le p+1)\end{cases}
 $$
 $x,y$ 数组可以通过 ```DP``` 在 $O(n)$ 的时间内求出。
 $$
-f(l,r)=\max\{x_l+x_r,y_l+y_r+A_p\}\\
+f(l,r)=\max\{x_l+x_r,y_l+y_r+A_p\}\\\\
 x_l+x_r \ge y_l + y_r + A_p \iff (x_l - y_l) + (x_r - y_r) \ge A_p
 $$
 把所有除 $p$ 以外的位置按 $x_i-y_i$ 为关键字升序排序，再用双指针扫描一遍即可求出所有包含 $p$ （$p$ 是端点不算）的 $f$ 值之和，单次的复杂度为 $O(n\log n)$。

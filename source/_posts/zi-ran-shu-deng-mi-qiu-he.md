@@ -69,6 +69,6 @@ B^{-}_0=1\\
 $$
 另外第一伯努利数的指数型生成函数
 $$
-\sum_{k=0}^{\infin}B^{-}_k\frac{x^k}{k!}=\frac x{e^x-1}
+\sum_{k=0}^{\infty}B^{-}_k\frac{x^k}{k!}=\frac x{e^x-1}
 $$
 通过多项式求逆可以优化到 $O(m\log m)$。
