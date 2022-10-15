@@ -35,14 +35,13 @@ $$
 
 ### <3> 第二类斯特林数
 
+$$
+\sum_{i=0}^ni^m=\sum_{i=1}^m{m \brace i}\frac 1{i+1}(n+1)^{\underline{i+1}}
+$$
 预处理
 $$
-{0 \brace 0} = 1 \\
+{0 \brace 0} = 1 \\\\
 {n \brace m} = {n - 1 \brace m - 1} + m{n - 1 \brace m}
-$$
-结论
-$$
-\sum_{i=1}^mi^m=\sum_{i=1}^n{m \brace i}\frac 1{i+1}(n+1)^{\underline{i+1}}
 $$
 复杂度 $O(m^2)$ （无需求逆）或 $O(m\log m)$ （需要求第二类斯特林数-行）。
 
@@ -57,19 +56,19 @@ $$
 
 ### <5> 伯努利数
 
+$$
+\sum_{i=1}^ni^m=\frac 1{m+1}\sum_{i=0}^m\binom{m+1}iB^{+}_in^{m+1-i}
+$$
+
+其中 $B^{+}_n$ 表示 **第二伯努利数**，它和 **第一伯努利数** $B^{-}_n$ 的唯一区别是 $B^{+}_1=\frac 12,B^{-}_1=-\frac 12$。
+
 预处理
 $$
-B_0=1\\
-\sum_{i=0}^m\binom{m+1}iB_i=0
+B^{-}_0=1\\
+\sum_{i=0}^m\binom{m+1}iB^{-}_i=0
 $$
-结论
+另外第一伯努利数的指数型生成函数
 $$
-\sum_{i=1}^ni^m=\frac 1{m+1}\sum_{i=0}^m\binom{m+1}iB_in^{m+1-i}
+\sum_{k=0}^{\infin}B^{-}_k\frac{x^k}{k!}=\frac x{e^x-1}
 $$
-另外伯努利数的指数型生成函数
-$$
-B(x)=\frac x{e^x-1}
-$$
-通过多项式求逆
-
-可以优化到 $O(m\log m)$。
+通过多项式求逆可以优化到 $O(m\log m)$。
