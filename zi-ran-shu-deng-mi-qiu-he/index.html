@@ -303,7 +303,7 @@ pre_i=\prod_{j=1}^in-j,suf_i=\prod_{j=i}^{m+2}n-j
 \]</span> 复杂度 <span class="math inline">\(O(m^2)\)</span> （无需求逆）或 <span class="math inline">\(O(m\log m)\)</span> （需要求第二类斯特林数-行）。</p>
 <h3 id="递推">&lt;4&gt; 递推</h3>
 <p><span class="math display">\[
-f_i=\sum_{j=1}^nj^i\\
+f_i=\sum_{j=1}^nj^i\\\\
 f_i=\frac 1{i+1}\left((n+1)^{i+1}-\sum_{j=0}^{i-1}\binom{i+1}jf_j\right)
 \]</span></p>
 <p>复杂度 <span class="math inline">\(O(m^2)\)</span>。</p>
@@ -313,7 +313,7 @@ f_i=\frac 1{i+1}\left((n+1)^{i+1}-\sum_{j=0}^{i-1}\binom{i+1}jf_j\right)
 \]</span></p>
 <p>其中 <span class="math inline">\(B^{+}_n\)</span> 表示 <strong>第二伯努利数</strong>，它和 <strong>第一伯努利数</strong> <span class="math inline">\(B^{-}_n\)</span> 的唯一区别是 <span class="math inline">\(B^{+}_1=\frac 12,B^{-}_1=-\frac 12\)</span>。</p>
 <p>预处理 <span class="math display">\[
-B^{-}_0=1\\
+B^{-}_0=1\\\\
 \sum_{i=0}^m\binom{m+1}iB^{-}_i=0
 \]</span> 另外第一伯努利数的指数型生成函数 <span class="math display">\[
 \sum_{k=0}^{\infty}B^{-}_k\frac{x^k}{k!}=\frac x{e^x-1}
@@ -383,7 +383,7 @@ B^{-}_0=1\\
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:59</span>
+    <span title="站点阅读时长">2:58</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
