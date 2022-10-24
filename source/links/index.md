@@ -119,7 +119,7 @@ type: links
 
 <a href="https://huanyp.cn/" target="_blank">
 <div class="firends-item">
-<img src="mzx" />
+<img src="mzx.png" />
 <div class="right">
 <div class="top">
     mzx
