@@ -117,4 +117,18 @@ type: links
 </div>
 </a>
 
+<a href="https://huanyp.cn/" target="_blank">
+<div class="firends-item">
+<img src="mzx" />
+<div class="right">
+<div class="top">
+    mzx
+</div>
+<div class="bottom">
+    
+</div>
+</div>
+</div>
+</a>
+
 </div>
