@@ -14,7 +14,7 @@
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-category": "^1.0.0",
     "hexo-generator-index-pin-top": "^0.2.2",
-    "hexo-generator-searchdb": "^1.4.0",
+    "hexo-generator-searchdb": "^1.4.1",
     "hexo-generator-tag": "^2.0.0",
     "hexo-hide-posts": "^0.2.0",
     "hexo-image-link": "0.0.5",
