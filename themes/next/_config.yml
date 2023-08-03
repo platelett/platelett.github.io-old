@@ -86,7 +86,7 @@ hide_posts:
   public_generators: []
   noindex: true
 excerpt:
-  depth: 10
+  depth: 5
   excerpt_excludes: []
   more_excludes: []
   hideWholePostExcerpts: true
