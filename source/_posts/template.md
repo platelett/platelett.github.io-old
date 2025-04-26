@@ -47,7 +47,8 @@ struct IO {
         if (out > outBuf + outSZ - 32) [[unlikely]]
             fwrite(outBuf, 1, out - outBuf, stdout), out = outBuf;
         if (!x) return *out++ = 48, void();
-        if (x < 0) *out++ = 45, x = -x;
+        typename std::make_unsigned<T>::type u = x;
+        if (x < 0) *out++ = 45, u = -x;
         alignas(2) const char* digits =
         "0001020304050607080910111213141516171819"
         "2021222324252627282930313233343536373839"
@@ -56,8 +57,8 @@ struct IO {
         "8081828384858687888990919293949596979899";
         alignas(64) static char buf[20];
         char* p = buf + 20;
-        while (x >= 10) memcpy(p -= 2, digits + x % 100 * 2, 2), x /= 100;
-        if (x) *--p = 48 + x;
+        while (u >= 10) memcpy(p -= 2, digits + u % 100 * 2, 2), u /= 100;
+        if (u) *--p = 48 + u;
         auto len = buf + 20 - p;
         memcpy(out, p, len), out += len;
     }
